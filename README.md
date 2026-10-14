@@ -1,5 +1,7 @@
 # Valheim QuickFix
 
+By [garcipat](https://github.com/garcipat) · [Source code on GitHub](https://github.com/garcipat/valheim-quickfix)
+
 A small collection of quality-of-life fixes for Valheim. Client-side only: it works on any server, and
 other players don't need it.
 
@@ -27,4 +29,4 @@ For a manual install, put `ValheimQuickFix.dll` into `Valheim/BepInEx/plugins/`.
 
 ## Feedback
 
-Source code, changelog, and issue tracker: <https://github.com/garcipat/valheim-quickfix>
+Bug reports, ideas, and source code: <https://github.com/garcipat/valheim-quickfix>
