@@ -1,5 +1,6 @@
 using BepInEx;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 using HarmonyLib;
 
 namespace ValheimQuickFix
@@ -11,12 +12,15 @@ namespace ValheimQuickFix
         public const string PluginName = "Valheim QuickFix";
         public const string PluginVersion = "0.1.0";
 
+        internal static ManualLogSource Log;
         internal static ConfigEntry<bool> RestoreShieldEnabled;
 
         private Harmony _harmony;
 
         private void Awake()
         {
+            Log = Logger;
+
             RestoreShieldEnabled = Config.Bind(
                 "Weapon switching",
                 "RestoreShield",

@@ -1,35 +1,32 @@
 # Valheim QuickFix
 
-A small BepInEx plugin collecting quality-of-life fixes for Valheim. Client-side only.
+By [garcipat](https://github.com/garcipat) · [Source code on GitHub](https://github.com/garcipat/valheim-quickfix)
+
+A small collection of quality-of-life fixes for Valheim. Client-side only: it works on any server, and
+other players don't need it.
 
 ## Fixes
 
 - **Restore shield** — when a bow or two-handed weapon replaces your shield, switching back to a
-  one-handed weapon re-equips the shield automatically. Toggle: `RestoreShield` in
-  `BepInEx/config/dev.pgarcia.valheim.quickfix.cfg`.
+  one-handed weapon puts the shield back on automatically.
 
-## Install
+## Configuration
 
-Requires [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/).
-Copy `ValheimQuickFix.dll` into `Valheim/BepInEx/plugins/`.
+Every fix can be switched off on its own. Open the config in your mod manager (in Gale: the profile's
+**Config** page, `dev.pgarcia.valheim.quickfix.cfg`). The file is created the first time you start the game
+with the mod installed, and changes apply after a restart.
 
-## Build
+| Section            | Option          | Default | Description                                          |
+| ------------------ | --------------- | ------- | ---------------------------------------------------- |
+| `Weapon switching` | `RestoreShield` | `true`  | Re-equip the shield after switching back from a bow. |
 
-```bash
-dotnet build src/ValheimQuickFix -c Release
-```
+## Installation
 
-Builds without a Valheim install (publicized game assemblies come from the BepInEx NuGet feed).
-To copy the DLL into your game after each build:
+Install through a mod manager such as Gale or r2modman. It installs
+[BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/) automatically.
 
-```bash
-dotnet build src/ValheimQuickFix -c Release -p:PluginsDir="/path/to/Valheim/BepInEx/plugins"
-```
+For a manual install, put `ValheimQuickFix.dll` into `Valheim/BepInEx/plugins/`.
 
-## Docs
+## Feedback
 
-- [Architecture](docs/Architecture.md) · [Fixes](docs/Fixes.md) · [Development](docs/Development.md) · [Adding a fix](docs/AddingAFix.md)
-- [Changelog](CHANGELOG.md)
-
-Note: the NuGet game libs are version 0.202.14, older than the current game. Patched method
-signatures are stable, but verify in-game after game updates.
+Bug reports, ideas, and source code: <https://github.com/garcipat/valheim-quickfix>
