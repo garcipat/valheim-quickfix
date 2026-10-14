@@ -8,6 +8,11 @@ A small BepInEx plugin collecting quality-of-life fixes for Valheim. Client-side
   one-handed weapon re-equips the shield automatically. Toggle: `RestoreShield` in
   `BepInEx/config/dev.pgarcia.valheim.quickfix.cfg`.
 
+- **Push boat** — look at a boat from outside and press `E` to push it away from you, e.g. off a
+  beach. Toggle and strength are in the `Boats` config section.
+
+All options are in the BepInEx config file, which mod managers like Gale show on their config page.
+
 ## Install
 
 Requires [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/).
