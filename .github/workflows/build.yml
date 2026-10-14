@@ -13,8 +13,9 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      - run: dotnet build src/ValheimQuickFix -c Release
+      # Builds every mod and zips it exactly as it would be released.
+      - run: ./scripts/package.sh
       - uses: actions/upload-artifact@v4
         with:
-          name: ValheimQuickFix
-          path: src/ValheimQuickFix/bin/Release/net48/ValheimQuickFix.dll
+          name: mod-packages
+          path: dist/*.zip

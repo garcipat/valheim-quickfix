@@ -1,35 +1,33 @@
-# Valheim QuickFix
+# Valheim mods
 
-By [garcipat](https://github.com/garcipat) · [Source code on GitHub](https://github.com/garcipat/valheim-quickfix)
+By [garcipat](https://github.com/garcipat).
 
-A small collection of quality-of-life fixes for Valheim. Client-side only: it works on any server, and
-other players don't need it.
+Small client-side BepInEx mods for Valheim, built from one repo. Each mod is its own plugin with its own
+package, version, and changelog.
 
-## Fixes
+| Mod | What it does | Player docs |
+| --- | ------------ | ----------- |
+| **ValheimQuickFix** | Quality-of-life fixes: restore your shield after a bow, push boats from the shore. | [README](package/ValheimQuickFix/README.md) · [Changelog](package/ValheimQuickFix/CHANGELOG.md) |
 
-- **Restore shield** — when a bow or two-handed weapon replaces your shield, switching back to a
-  one-handed weapon puts the shield back on automatically.
-- **Push boat** — look at a boat from the shore (or from shallow water) and press `E` to push it away
-  from you, e.g. off a beach. Hold `E` to keep pushing. Not available while swimming or standing on the boat.
+Mods here are client-side only and need [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/).
+Install them through a mod manager such as Gale, or build them from source.
 
-## Configuration
+## Build
 
-Every fix can be switched off on its own. Open the config in your mod manager (in Gale: the profile's
-**Config** page, `dev.pgarcia.valheim.quickfix.cfg`). The file is created the first time you start the game
-with the mod installed, and changes apply after a restart.
+```bash
+dotnet build src/ValheimQuickFix -c Release
+./scripts/package.sh          # builds every mod and writes dist/<Mod>-<version>.zip for Gale / Thunderstore
+```
 
-| Section            | Option          | Default | Description                                          |
-| ------------------ | --------------- | ------- | ---------------------------------------------------- |
-| `Weapon switching` | `RestoreShield` | `true`  | Re-equip the shield after switching back from a bow. |
-| `Boats`            | `PushBoat`      | `true`  | Show the "Push boat" interaction.                    |
+Building needs no Valheim install. See [docs/Development.md](docs/Development.md) for deploying into a game,
+debugging, and releasing.
 
-## Installation
+## License
 
-Install through a mod manager such as Gale or r2modman. It installs
-[BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/) automatically.
+[MIT](LICENSE). Valheim and its game assemblies belong to Iron Gate and are not part of this repo or the
+mod packages.
 
-For a manual install, put `ValheimQuickFix.dll` into `Valheim/BepInEx/plugins/`.
+## Docs
 
-## Feedback
-
-Bug reports, ideas, and source code: <https://github.com/garcipat/valheim-quickfix>
+- [Architecture](docs/Architecture.md) · [Development](docs/Development.md)
+- [QuickFix fixes](docs/Fixes.md) · [Adding a fix](docs/AddingAFix.md)
