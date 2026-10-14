@@ -1,0 +1,39 @@
+# Config for the Thunderstore CLI (tcli). Keep [package] in sync with manifest.json;
+# scripts/package.sh checks that. Build + publish: see docs/Development.md.
+[config]
+schemaVersion = "0.0.1"
+
+[package]
+namespace = "garcipat"
+name = "ValheimQuickFix"
+versionNumber = "0.1.0"
+description = "Small client-side quality-of-life fixes: restore your shield after a bow, push boats from the shore."
+websiteUrl = "https://github.com/garcipat/valheim-quickfix"
+containsNsfwContent = false
+
+[package.dependencies]
+denikson-BepInExPack_Valheim = "5.4.2351"
+
+[build]
+icon = "./icon.png"
+readme = "./README.md"
+outdir = "../../dist/thunderstore"
+
+[[build.copy]]
+source = "../../src/ValheimQuickFix/bin/Release/net48/ValheimQuickFix.dll"
+target = ""
+
+[[build.copy]]
+source = "./CHANGELOG.md"
+target = ""
+
+[[build.copy]]
+source = "../../LICENSE"
+target = ""
+
+[publish]
+repository = "https://thunderstore.io"
+communities = [ "valheim" ]
+
+[publish.categories]
+valheim = [ "client-side", "tweaks", "utility" ]

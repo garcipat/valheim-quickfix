@@ -10,4 +10,4 @@
 5. **Test in-game** with `-p:PluginsDir=<Valheim>/BepInEx/plugins`. Check `BepInEx/LogOutput.log`
    for patch errors.
 6. **Document:** add a section to [Fixes.md](Fixes.md) and an entry under `Unreleased` in
-   [CHANGELOG.md](../CHANGELOG.md).
+   [the changelog](../package/ValheimQuickFix/CHANGELOG.md).
