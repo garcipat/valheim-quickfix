@@ -22,7 +22,7 @@ inventory and you must re-equip it by hand.
 
 ## Push boat
 
-**Config:** `Boats` → `PushBoat` (default `true`), `PushStrength` (default `3`, range 0.5–20, m/s²)
+**Config:** `Boats` → `PushBoat` (default `true`)
 **Patch:** `Ship.Awake` (Postfix) adds a `BoatPush` component — `Patches/PushBoatPatch.cs`
 
 **Problem:** a boat run aground can't be moved by the player standing next to it.
@@ -31,10 +31,10 @@ inventory and you must re-equip it by hand.
 
 1. Looking at a boat from outside it shows `[E] Push boat`.
 2. Pressing E pushes the boat away from the side you stand on, for a short burst. Holding E keeps pushing.
-3. No prompt and no push while you are standing on the boat.
+3. No prompt and no push while you are standing on the boat or swimming (wading in shallow water is fine).
 4. The boat's owner simulates its physics, so pressing E claims ownership of the boat first.
 
 **Known limits:** no check that the boat is actually grounded; you can push a floating boat too.
-Strength is a tuning value, expressed as acceleration so it feels the same for every boat.
-**Unverified in-game:** that the hull colliders deliver the hover ray to the component, and that
-holding E keeps the push going. See the PR notes.
+The push strength is a fixed 20 m/s² (acceleration, so it feels the same for every boat), chosen by testing in-game.
+**Compatibility notes:** the real `Hoverable` interface has a member (`GetHoverOffset`) that older
+compile-time libs lack, and `Character.IsSwimming` is looked up at runtime for the same reason.
