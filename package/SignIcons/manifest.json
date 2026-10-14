@@ -1,0 +1,10 @@
+{
+  "name": "SignIcons",
+  "author": "garcipat",
+  "version_number": "0.1.0",
+  "website_url": "https://github.com/garcipat/valheim-quickfix",
+  "description": "Show item icons on signs: write <icon=SwordIron> in a sign, just like <color=#hex>.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2351"
+  ]
+}

@@ -11,7 +11,8 @@
 
 ```bash
 dotnet build src/ValheimQuickFix -c Release
-dotnet build src/ValheimQuickFix -c Release -p:PluginsDir="/path/to/Valheim/BepInEx/plugins"
+dotnet build src/SignIcons -c Release
+dotnet build src/SignIcons -c Release -p:PluginsDir="/path/to/Valheim/BepInEx/plugins"
 ```
 
 The last form copies the DLL into the game after building. Shared settings live in `src/Directory.Build.props`.
@@ -19,7 +20,7 @@ The last form copies the DLL into the game after building. Shared settings live 
 ## Debugging
 
 - Logs: `Valheim/BepInEx/LogOutput.log`
-- Config: `Valheim/BepInEx/config/<plugin guid>.cfg` (`dev.pgarcia.valheim.quickfix.cfg`)
+- Config: `Valheim/BepInEx/config/<plugin guid>.cfg` (`dev.pgarcia.valheim.quickfix.cfg`; SignIcons has none)
 - Enable the BepInEx console via `BepInEx/config/BepInEx.cfg` → `[Logging.Console] Enabled = true`
 
 ## CI
@@ -31,7 +32,7 @@ and zipped exactly as they would be released, and uploads the zips as a workflow
 
 ```bash
 ./scripts/package.sh              # every mod
-./scripts/package.sh ValheimQuickFix    # one mod
+./scripts/package.sh SignIcons    # one mod
 ```
 
 Writes `dist/<Mod>-<version>.zip` containing the DLL plus the files in `package/<Mod>/` (`manifest.json`,
@@ -51,6 +52,7 @@ Each mod has a `package/<Mod>/thunderstore.toml` for the [Thunderstore CLI](http
 | Mod             | Categories                       |
 | --------------- | -------------------------------- |
 | ValheimQuickFix | `client-side`, `tweaks`, `utility` |
+| SignIcons       | `client-side`, `building`, `utility` |
 
 The category slugs are Valheim's own; the full list is at
 `https://thunderstore.io/api/experimental/community/valheim/category/`.

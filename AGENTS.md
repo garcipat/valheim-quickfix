@@ -1,9 +1,10 @@
 # Valheim mods — Agent Instructions
 
-Small client-side BepInEx plugins (C#, .NET Framework 4.8, HarmonyX), one project per mod, built from one repo.
-Currently:
+Two small client-side BepInEx plugins (C#, .NET Framework 4.8, HarmonyX) built from one repo:
 
 - **ValheimQuickFix** — a bundle of small, independent quality-of-life fixes for things the game gets wrong.
+- **SignIcons** — shows item icons on signs. A separate mod because it is new functionality, not a fix, and it
+  carries different risk (it drives TextMeshPro through reflection).
 
 New work that isn't a fix for something the game gets wrong belongs in its own mod, not in QuickFix.
 
