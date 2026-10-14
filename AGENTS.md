@@ -25,7 +25,8 @@ fixes for Valheim. One plugin, many small independent fixes.
   is disabled by a config toggle. Use Harmony field injection (`ref T ___m_field` in patch parameters)
   or `AccessTools.FieldRefAccess`. Wrap patch bodies in try/catch and log via `Plugin.Log`.
 - Match the existing code style (4-space indent, block-scoped namespaces, `internal` by default).
-- Keep `Plugin.PluginVersion`, the csproj `<Version>`, and `CHANGELOG.md` in sync on release.
+- Bump the version only when cutting a release, not on every change. Keep `Plugin.PluginVersion`, the csproj
+  `<Version>`, `package/manifest.json`, and `CHANGELOG.md` in sync when you do. `./scripts/package.sh` builds the Gale/Thunderstore zip.
 
 ## Build
 
