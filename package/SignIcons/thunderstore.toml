@@ -1,0 +1,39 @@
+# Config for the Thunderstore CLI (tcli). Keep [package] in sync with manifest.json;
+# scripts/package.sh checks that. Build + publish: see docs/Development.md.
+[config]
+schemaVersion = "0.0.1"
+
+[package]
+namespace = "garcipat"
+name = "SignIcons"
+versionNumber = "0.1.0"
+description = "Show item icons on signs: write <icon=SwordIron> in a sign, just like <color=#hex>."
+websiteUrl = "https://github.com/garcipat/valheim-quickfix"
+containsNsfwContent = false
+
+[package.dependencies]
+denikson-BepInExPack_Valheim = "5.4.2351"
+
+[build]
+icon = "./icon.png"
+readme = "./README.md"
+outdir = "../../dist/thunderstore"
+
+[[build.copy]]
+source = "../../src/SignIcons/bin/Release/net48/SignIcons.dll"
+target = ""
+
+[[build.copy]]
+source = "./CHANGELOG.md"
+target = ""
+
+[[build.copy]]
+source = "../../LICENSE"
+target = ""
+
+[publish]
+repository = "https://thunderstore.io"
+communities = [ "valheim" ]
+
+[publish.categories]
+valheim = [ "client-side", "building", "utility" ]
