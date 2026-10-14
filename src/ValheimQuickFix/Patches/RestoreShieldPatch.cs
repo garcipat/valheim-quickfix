@@ -1,3 +1,4 @@
+using System;
 using HarmonyLib;
 
 namespace ValheimQuickFix.Patches
@@ -6,6 +7,10 @@ namespace ValheimQuickFix.Patches
     /// Vanilla drops the shield when a bow or two-handed weapon is equipped and never brings it back.
     /// Remember the shield on the way out, and re-equip it when a one-handed weapon is equipped again.
     /// </summary>
+    /// <remarks>
+    /// The compile-time game libs are publicized, but the real game assembly is not: Humanoid.m_leftItem is
+    /// protected at runtime. It is read through Harmony's ___m_leftItem field injection, never directly.
+    /// </remarks>
     [HarmonyPatch(typeof(Humanoid), nameof(Humanoid.EquipItem))]
     internal static class RestoreShieldPatch
     {
@@ -25,54 +30,67 @@ namespace ValheimQuickFix.Patches
             return Player.m_localPlayer != null && humanoid == Player.m_localPlayer;
         }
 
-        private static void Prefix(Humanoid __instance, ItemDrop.ItemData item, out ItemDrop.ItemData __state)
+        private static void Prefix(Humanoid __instance, ItemDrop.ItemData item, ItemDrop.ItemData ___m_leftItem, out ItemDrop.ItemData __state)
         {
             __state = null;
-            if (!Plugin.RestoreShieldEnabled.Value || item == null || !IsLocalPlayer(__instance))
+            try
             {
-                return;
-            }
+                if (!Plugin.RestoreShieldEnabled.Value || item == null || !IsLocalPlayer(__instance))
+                {
+                    return;
+                }
 
-            var left = __instance.m_leftItem;
-            if (IsTwoHanded(item) && left != null && left.m_shared.m_itemType == ItemDrop.ItemData.ItemType.Shield)
+                if (IsTwoHanded(item) && ___m_leftItem != null && ___m_leftItem.m_shared.m_itemType == ItemDrop.ItemData.ItemType.Shield)
+                {
+                    __state = ___m_leftItem;
+                }
+            }
+            catch (Exception e)
             {
-                __state = left;
+                Plugin.Log.LogError($"RestoreShield prefix failed: {e}");
             }
         }
 
-        private static void Postfix(Humanoid __instance, ItemDrop.ItemData item, bool __result, ItemDrop.ItemData __state)
+        private static void Postfix(Humanoid __instance, ItemDrop.ItemData item, bool __result, ItemDrop.ItemData ___m_leftItem, ItemDrop.ItemData __state)
         {
-            if (!Plugin.RestoreShieldEnabled.Value || item == null || !__result || !IsLocalPlayer(__instance))
+            try
             {
-                return;
-            }
+                if (!Plugin.RestoreShieldEnabled.Value || item == null || !__result || !IsLocalPlayer(__instance))
+                {
+                    return;
+                }
 
-            if (__state != null)
-            {
-                _rememberedShield = __state;
-                return;
-            }
+                if (__state != null)
+                {
+                    _rememberedShield = __state;
+                    return;
+                }
 
-            var type = item.m_shared.m_itemType;
+                var type = item.m_shared.m_itemType;
 
-            // Equipping any shield by hand supersedes the remembered one.
-            if (type == ItemDrop.ItemData.ItemType.Shield)
-            {
+                // Equipping any shield by hand supersedes the remembered one.
+                if (type == ItemDrop.ItemData.ItemType.Shield)
+                {
+                    _rememberedShield = null;
+                    return;
+                }
+
+                if (type != ItemDrop.ItemData.ItemType.OneHandedWeapon || _rememberedShield == null)
+                {
+                    return;
+                }
+
+                var shield = _rememberedShield;
                 _rememberedShield = null;
-                return;
+
+                if (___m_leftItem == null && __instance.GetInventory().ContainsItem(shield))
+                {
+                    __instance.EquipItem(shield);
+                }
             }
-
-            if (type != ItemDrop.ItemData.ItemType.OneHandedWeapon || _rememberedShield == null)
+            catch (Exception e)
             {
-                return;
-            }
-
-            var shield = _rememberedShield;
-            _rememberedShield = null;
-
-            if (__instance.m_leftItem == null && __instance.GetInventory().ContainsItem(shield))
-            {
-                __instance.EquipItem(shield);
+                Plugin.Log.LogError($"RestoreShield postfix failed: {e}");
             }
         }
     }
