@@ -14,6 +14,7 @@ namespace ValheimQuickFix
 
         internal static ManualLogSource Log;
         internal static ConfigEntry<bool> RestoreShieldEnabled;
+        internal static ConfigEntry<bool> PushBoatEnabled;
 
         private Harmony _harmony;
 
@@ -26,6 +27,12 @@ namespace ValheimQuickFix
                 "RestoreShield",
                 true,
                 "Re-equip the shield automatically when switching from a bow or two-handed weapon back to a one-handed weapon.");
+
+            PushBoatEnabled = Config.Bind(
+                "Boats",
+                "PushBoat",
+                true,
+                "Show a \"Push boat\" interaction when standing next to a boat, to push it away from you (e.g. off a beach).");
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();
