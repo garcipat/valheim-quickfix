@@ -19,6 +19,11 @@ fixes for Valheim. One plugin, many small independent fixes.
   wholesale — keep the game's own logic running.
 - **No dependencies** beyond BepInEx, HarmonyX, Unity, and the game assemblies. Do not add
   Jotunn or other mods as dependencies without a reason documented in `docs/Architecture.md`.
+- **Never access private game members directly.** The compile-time game libs (`Valheim.GameLibs`) are
+  *publicized*, so `Humanoid.m_leftItem`, `Ship.m_body`, etc. compile, but the real game assembly keeps
+  them private/protected and the call throws `FieldAccessException` at runtime — even when the code path
+  is disabled by a config toggle. Use Harmony field injection (`ref T ___m_field` in patch parameters)
+  or `AccessTools.FieldRefAccess`. Wrap patch bodies in try/catch and log via `Plugin.Log`.
 - Match the existing code style (4-space indent, block-scoped namespaces, `internal` by default).
 - Keep `Plugin.PluginVersion`, the csproj `<Version>`, and `CHANGELOG.md` in sync on release.
 
