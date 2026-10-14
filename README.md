@@ -9,6 +9,8 @@ other players don't need it.
 
 - **Restore shield** — when a bow or two-handed weapon replaces your shield, switching back to a
   one-handed weapon puts the shield back on automatically.
+- **Push boat** — look at a boat from the shore (or from shallow water) and press `E` to push it away
+  from you, e.g. off a beach. Hold `E` to keep pushing. Not available while swimming or standing on the boat.
 
 ## Configuration
 
@@ -19,6 +21,7 @@ with the mod installed, and changes apply after a restart.
 | Section            | Option          | Default | Description                                          |
 | ------------------ | --------------- | ------- | ---------------------------------------------------- |
 | `Weapon switching` | `RestoreShield` | `true`  | Re-equip the shield after switching back from a bow. |
+| `Boats`            | `PushBoat`      | `true`  | Show the "Push boat" interaction.                    |
 
 ## Installation
 
