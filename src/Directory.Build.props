@@ -7,6 +7,8 @@
     <Authors>garcipat</Authors>
     <Company>garcipat</Company>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <!-- Releases pass the real version (-p:Version=X.Y.Z, taken from the tag); local builds are dev builds. -->
+    <Version Condition="'$(Version)' == ''">0.0.0-dev</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +18,26 @@
     <PackageReference Include="Valheim.GameLibs" Version="0.202.14-r.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
   </ItemGroup>
+
+  <!-- BepInPlugin needs the version as a compile-time constant, so write it from $(Version) into BuildInfo.Version. -->
+  <Target Name="GenerateBuildInfo" BeforeTargets="CoreCompile">
+    <PropertyGroup>
+      <BuildInfoFile>$(IntermediateOutputPath)BuildInfo.g.cs</BuildInfoFile>
+    </PropertyGroup>
+    <ItemGroup>
+      <BuildInfoLine Include="namespace $(RootNamespace)" />
+      <BuildInfoLine Include="{" />
+      <BuildInfoLine Include="    internal static class BuildInfo" />
+      <BuildInfoLine Include="    {" />
+      <BuildInfoLine Include="        public const string Version = &quot;$(Version)&quot;%3B" />
+      <BuildInfoLine Include="    }" />
+      <BuildInfoLine Include="}" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(BuildInfoFile)" Lines="@(BuildInfoLine)" Overwrite="true" WriteOnlyWhenDifferent="true" />
+    <ItemGroup>
+      <Compile Include="$(BuildInfoFile)" />
+    </ItemGroup>
+  </Target>
 
   <!-- Optional dev loop: pass -p:PluginsDir=/path/to/Valheim/BepInEx/plugins to copy the DLL after each build. -->
   <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(PluginsDir)' != ''">

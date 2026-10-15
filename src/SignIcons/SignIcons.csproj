@@ -3,7 +3,6 @@
   <PropertyGroup>
     <AssemblyName>SignIcons</AssemblyName>
     <RootNamespace>ValheimSignIcons</RootNamespace>
-    <Version>0.1.0</Version>
     <Product>Sign Icons</Product>
     <Description>Show item icons on Valheim signs with icon tags.</Description>
   </PropertyGroup>
