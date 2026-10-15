@@ -1,7 +1,7 @@
 ---
 name: release-mod
 description: Release a new version of one of the Valheim mods in this repo (ValheimQuickFix or SignIcons) — read its changelog, propose the next version, and push the <Mod>-vX.Y.Z tag that triggers the Release workflow. Use when the user asks to release, publish, tag, or ship a new version of a mod.
-argument-hint: <Mod> [version | dry-run]
+argument-hint: "[Mod] [version | dry-run]"
 disable-model-invocation: true
 ---
 
@@ -16,14 +16,26 @@ Each mod is versioned independently. This skill's job is to pick the right versi
 Invoking it is the user's request to create and push the tag, **after one confirmation** (step 6), because pushing it
 publishes a release. Never push anything else, and never move or delete an existing tag.
 
-Arguments: `$ARGUMENTS` — the mod, optionally an exact version, or `dry-run`.
+Arguments (all optional): `$ARGUMENTS` — the mod, then optionally an exact version or `dry-run`. Anything left out is asked
+for with a selection, so nothing has to be typed exactly.
 
-## 1. Which mod
+## 1. Which mod, and what to do
 
-The mod is a folder under `package/` (`ValheimQuickFix`, `SignIcons`, ...). If it is missing or unknown, list the
-folders and ask which one.
+The mods are the folders under `package/` (`ls package/`).
 
-If the argument says `dry-run` (or the user asks for a test run), skip to **Dry run** at the end.
+- **Mod given:** if `$ARGUMENTS` names one, use it. Match case-insensitively and accept an unambiguous prefix (`sign`
+  for `SignIcons`, `quick` for `ValheimQuickFix`).
+- **Mod missing or unclear:** ask with AskUserQuestion, with **one option per mod folder**, so the user just picks. Make
+  each option's description say where the mod stands, so the choice is informed:
+  `last release <Mod>-v0.1.0 · 3 unreleased changelog entries`, or `never released · 4 unreleased entries`
+  (last tag: `git tag --list '<Mod>-v*' --sort=-v:refname | head -1`; entries: the `- ` lines under `## [Unreleased]`
+  in `package/<Mod>/CHANGELOG.md`). Put a mod with unreleased entries first and mark it as recommended. With more than
+  four mods, offer the four with the most unreleased entries; the rest can be typed under Other.
+- **Release or dry run:** if the arguments don't say, ask it in the same AskUserQuestion call as a second question:
+  *Release* (recommended) or *Dry run* (builds the zip as a workflow artifact, publishes nothing). Skip the question when
+  the arguments gave an exact version or `dry-run`.
+
+If the choice is a dry run, skip to **Dry run** at the end.
 
 ## 2. Check the starting point
 
