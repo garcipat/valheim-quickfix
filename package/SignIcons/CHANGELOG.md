@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-15
+
 ### Added
 
 - Sign icons: `[ItemPrefabName]` in sign text, for example `[SwordIron]`, shows the item's icon. Without the mod the
