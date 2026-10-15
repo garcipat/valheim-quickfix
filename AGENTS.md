@@ -39,13 +39,15 @@ New work that isn't a fix for something the game gets wrong belongs in its own m
 - **Interfaces drift.** Game interfaces (`Hoverable`, ...) gain members between versions, and the compile-time libs
   are older than the live game. A class implementing one must declare any newer members as `public virtual`.
 - Match the existing code style (4-space indent, block-scoped namespaces, `internal` by default).
-- Bump a mod's version only when cutting a release, not on every change. Keep `Plugin.PluginVersion`, the csproj
-  `<Version>`, `package/<Mod>/manifest.json`, `package/<Mod>/thunderstore.toml`, and `package/<Mod>/CHANGELOG.md` in
-  sync when you do (`scripts/package.sh` fails if the manifest and toml disagree).
-- Author credit (`garcipat`) lives in each package README header, the root README, the DLL metadata
-  (`Authors`/`Company` in `src/Directory.Build.props`), and an `author` field in each `manifest.json`. Gale reads
-  that field to show the author for locally imported mods; Thunderstore's spec doesn't list it (it takes the author
-  from the upload team), so confirm it is accepted when publishing.
+- **Versions live in the release tag, not in files.** A release is a tag `<Mod>-vX.Y.Z` pushed on `main`; the Release
+  workflow builds that version into the DLL (the generated `BuildInfo.Version`, used by `Plugin.cs`) and stamps it into the
+  zip's manifest. `manifest.json` and `thunderstore.toml` hold a `0.0.0` placeholder, and local builds report `0.0.0-dev`.
+  Never write a real version into those files.
+- To release, use the `release-mod` skill (`/release-mod <Mod>`): it reads the mod's changelog, proposes the version,
+  and after one confirmation pushes the tag. The workflow does the rest and commits the renamed changelog section
+  back to `main`. A new mod must be added to the workflow's options and tag patterns.
+- Every player-visible change adds a line under `## [Unreleased]` in `package/<Mod>/CHANGELOG.md` in the same PR;
+  those lines become the release notes, and a release without any stops.
 - `package/<Mod>/README.md` ships inside the package and is shown as the mod description, so keep it player-facing.
   Build and development notes go in `docs/`.
 

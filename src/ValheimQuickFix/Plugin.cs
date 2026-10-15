@@ -10,7 +10,8 @@ namespace ValheimQuickFix
     {
         public const string PluginGuid = "dev.pgarcia.valheim.quickfix";
         public const string PluginName = "Valheim QuickFix";
-        public const string PluginVersion = "0.1.0";
+        // Comes from the release tag via the build (see Directory.Build.props); 0.0.0-dev for local builds.
+        public const string PluginVersion = BuildInfo.Version;
 
         internal static ManualLogSource Log;
         internal static ConfigEntry<bool> RestoreShieldEnabled;

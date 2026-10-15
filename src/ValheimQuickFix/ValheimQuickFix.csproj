@@ -3,7 +3,6 @@
   <PropertyGroup>
     <AssemblyName>ValheimQuickFix</AssemblyName>
     <RootNamespace>ValheimQuickFix</RootNamespace>
-    <Version>0.1.0</Version>
     <Product>Valheim QuickFix</Product>
     <Description>Small client-side quality-of-life fixes for Valheim.</Description>
   </PropertyGroup>
