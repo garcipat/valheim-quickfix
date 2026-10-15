@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-15
+
 ### Added
 
 - Restore shield: switching from a bow or two-handed weapon back to a one-handed weapon
