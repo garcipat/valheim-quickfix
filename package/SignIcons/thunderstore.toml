@@ -7,7 +7,7 @@ schemaVersion = "0.0.1"
 namespace = "garcipat"
 name = "SignIcons"
 versionNumber = "0.1.0"
-description = "Show item icons on signs: write <icon=SwordIron> in a sign, just like <color=#hex>."
+description = "Show item icons on signs: write [SwordIron] in a sign and the item's icon appears."
 websiteUrl = "https://github.com/garcipat/valheim-quickfix"
 containsNsfwContent = false
 

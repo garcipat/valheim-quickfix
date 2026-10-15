@@ -8,7 +8,7 @@ using UnityEngine;
 namespace ValheimSignIcons.Patches
 {
     /// <summary>
-    /// Lets sign text contain &lt;icon=ItemPrefabName&gt; tags, like &lt;color=#hex&gt;, and draws the item's icon
+    /// Lets sign text contain [ItemPrefabName] tokens, for example [SwordIron], and draws the item's icon
     /// at that position. The tag is plain sign text, so vanilla already syncs it; only players with this mod see icons.
     /// </summary>
     /// <remarks>
@@ -53,7 +53,7 @@ namespace ValheimSignIcons.Patches
         internal bool Active;
         internal string RawText;
         internal string ProcessedText;
-        internal List<string> IconOnlyNames;
+        internal List<List<string>> IconOnlyRows;
         internal readonly List<GameObject> Icons = new List<GameObject>();
 
         internal void DestroyIcons()
@@ -77,7 +77,7 @@ namespace ValheimSignIcons.Patches
         // Invisible placeholder the icon is laid over. Wrapped in a <link> so its glyph can be found after layout.
         private const string PlaceholderFormat = "<link=\"" + LinkPrefix + "{0}\"><alpha=#00>M<alpha=#FF></link>";
 
-        private static readonly Regex IconTag = new Regex(@"<icon=([^>]+)>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static readonly Regex IconTag = new Regex(@"\[([A-Za-z0-9_]+)\]", RegexOptions.Compiled);
 
         private static readonly FieldInfo WidgetField = AccessTools.Field(typeof(Sign), "m_textWidget");
 
@@ -129,7 +129,7 @@ namespace ValheimSignIcons.Patches
             var raw = _textProp.GetValue(widget, null) as string;
             var state = sign.GetComponent<SignIconState>();
 
-            if (string.IsNullOrEmpty(raw) || !IconTag.IsMatch(raw))
+            if (string.IsNullOrEmpty(raw) || !HasKnownIcon(raw))
             {
                 if (state != null && state.Active)
                 {
@@ -137,7 +137,7 @@ namespace ValheimSignIcons.Patches
                     state.Active = false;
                     state.RawText = null;
                     state.ProcessedText = null;
-                    state.IconOnlyNames = null;
+                    state.IconOnlyRows = null;
                 }
 
                 return;
@@ -154,9 +154,9 @@ namespace ValheimSignIcons.Patches
                 state.RawText = raw;
 
                 // A sign holding nothing but icons shows them large, filling the text area; no text is drawn.
-                List<string> names;
-                state.IconOnlyNames = TryGetIconOnly(raw, out names) ? names : null;
-                state.ProcessedText = state.IconOnlyNames != null
+                List<List<string>> rows;
+                state.IconOnlyRows = TryGetIconOnly(raw, out rows) ? rows : null;
+                state.ProcessedText = state.IconOnlyRows != null
                     ? string.Empty
                     : IconTag.Replace(raw, match =>
                     {
@@ -179,30 +179,63 @@ namespace ValheimSignIcons.Patches
         // Fraction of the text area the icons use when a sign holds only icons.
         private const float FillFraction = 0.9f;
 
-        // True when the text, apart from valid icon tags, holds no visible characters. Unknown icon names stay
-        // visible as text, so they keep a sign from counting as icon-only.
-        private static bool TryGetIconOnly(string raw, out List<string> names)
+        // True when at least one [Name] in the text is a real item. Brackets around anything else are plain text.
+        private static bool HasKnownIcon(string raw)
         {
-            var found = new List<string>();
-            var rest = IconTag.Replace(raw, match =>
+            foreach (Match match in IconTag.Matches(raw))
             {
-                var name = match.Groups[1].Value.Trim();
-                if (FindIcon(name) == null)
+                if (FindIcon(match.Groups[1].Value) != null)
                 {
-                    return match.Value;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // True when the text holds nothing but [Item] tokens (plus whitespace, rich-text tags, and '/' row breaks).
+        // Each '/' starts a new row, so [A][B]/[C][D] is two rows of two. Unknown [Names] stay visible as text, so they
+        // keep a sign from counting as icon-only, and a '/' in a sign that also has text is just text.
+        private static bool TryGetIconOnly(string raw, out List<List<string>> rows)
+        {
+            rows = null;
+            var found = new List<List<string>>();
+
+            // Tags are dropped first so the '/' of a closing tag such as </color> is not mistaken for a row break.
+            var plain = Regex.Replace(raw, "<[^>]*>", string.Empty);
+            foreach (var part in plain.Split('/'))
+            {
+                var names = new List<string>();
+                var rest = IconTag.Replace(part, match =>
+                {
+                    var name = match.Groups[1].Value.Trim();
+                    if (FindIcon(name) == null)
+                    {
+                        return match.Value;
+                    }
+
+                    names.Add(name);
+                    return string.Empty;
+                });
+
+                if (rest.Trim().Length != 0)
+                {
+                    return false;
                 }
 
-                found.Add(name);
-                return string.Empty;
-            });
+                if (names.Count > 0)
+                {
+                    found.Add(names);
+                }
+            }
 
-            names = found;
-            if (found.Count == 0 || rest.IndexOf("<icon=", StringComparison.OrdinalIgnoreCase) >= 0)
+            if (found.Count == 0)
             {
                 return false;
             }
 
-            return Regex.Replace(rest, "<[^>]*>", string.Empty).Trim().Length == 0;
+            rows = found;
+            return true;
         }
 
         private static void BuildIcons(Component widget, SignIconState state)
@@ -210,7 +243,7 @@ namespace ValheimSignIcons.Patches
             state.DestroyIcons();
 
             var canvas = widget.GetComponentInParent<Canvas>();
-            if (state.IconOnlyNames != null)
+            if (state.IconOnlyRows != null)
             {
                 BuildFilledIcons(widget, canvas, state);
             }
@@ -220,7 +253,8 @@ namespace ValheimSignIcons.Patches
             }
         }
 
-        // Icons laid in a row, centered in the widget's rect, as large as the rect allows.
+        // Icons laid out in rows, centered in the widget's rect. All icons share one cell size, as large as the
+        // rect allows for the tallest stack of rows and the widest row, so the rows line up.
         private static void BuildFilledIcons(Component widget, Canvas canvas, SignIconState state)
         {
             var rectTransform = widget.transform as RectTransform;
@@ -230,16 +264,28 @@ namespace ValheimSignIcons.Patches
             }
 
             var rect = rectTransform.rect;
-            var count = state.IconOnlyNames.Count;
-            var size = Mathf.Min(rect.height, rect.width / count) * FillFraction;
-            var left = rect.center.x - size * count * 0.5f + size * 0.5f;
-
-            for (var i = 0; i < count; i++)
+            var rows = state.IconOnlyRows;
+            var widest = 1;
+            foreach (var row in rows)
             {
-                var sprite = FindIcon(state.IconOnlyNames[i]);
-                if (sprite != null)
+                widest = Mathf.Max(widest, row.Count);
+            }
+
+            var cell = Mathf.Min(rect.height / rows.Count, rect.width / widest);
+            var size = cell * FillFraction;
+            var top = rect.center.y + cell * rows.Count * 0.5f;
+
+            for (var r = 0; r < rows.Count; r++)
+            {
+                var y = top - cell * (r + 0.5f);
+                var left = rect.center.x - cell * rows[r].Count * 0.5f + cell * 0.5f;
+                for (var i = 0; i < rows[r].Count; i++)
                 {
-                    CreateIcon(widget, canvas, state, sprite, new Vector3(left + size * i, rect.center.y, 0f), size);
+                    var sprite = FindIcon(rows[r][i]);
+                    if (sprite != null)
+                    {
+                        CreateIcon(widget, canvas, state, sprite, new Vector3(left + cell * i, y, 0f), size);
+                    }
                 }
             }
         }

@@ -8,5 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- Sign icons: `<icon=ItemPrefabName>` in sign text shows the item's icon, like `<color=#hex>` does for colors.
+- Sign icons: `[ItemPrefabName]` in sign text, for example `[SwordIron]`, shows the item's icon. Without the mod the
+  sign still reads as plain text. A sign holding only icons shows them large, and `/` between icons starts a new row,
+  for example `[SwordIron][Iron]/[Coal][Wood]`.
   No settings; disable the mod to turn it off.
