@@ -15,6 +15,8 @@ namespace ValheimQuickFix
         internal static ManualLogSource Log;
         internal static ConfigEntry<bool> RestoreShieldEnabled;
         internal static ConfigEntry<bool> PushBoatEnabled;
+        internal static ConfigEntry<bool> StackOnTombstonePickupEnabled;
+        internal static ConfigEntry<bool> RestoreTombstoneSlotsEnabled;
 
         private Harmony _harmony;
 
@@ -33,6 +35,18 @@ namespace ValheimQuickFix
                 "PushBoat",
                 true,
                 "Show a \"Push boat\" interaction when standing next to a boat, to push it away from you (e.g. off a beach).");
+
+            StackOnTombstonePickupEnabled = Config.Bind(
+                "Inventory",
+                "StackOnTombstonePickup",
+                true,
+                "After taking everything from a tombstone, merge partial stacks of the same item in your inventory so they don't take two slots.");
+
+            RestoreTombstoneSlotsEnabled = Config.Bind(
+                "Inventory",
+                "RestoreTombstoneSlots",
+                true,
+                "When taking everything from a tombstone, put each item back in its original slot, moving whatever you picked up there since to a free slot.");
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();

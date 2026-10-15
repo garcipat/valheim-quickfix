@@ -9,6 +9,12 @@ other players don't need it.
 
 - **Restore shield** — when a bow or two-handed weapon replaces your shield, switching back to a
   one-handed weapon puts the shield back on automatically.
+- **Stack on tombstone pickup** — after you take everything from your tombstone, partial stacks of the same item in
+  your inventory are merged, so you don't end up with two half stacks in two slots. Full and equipped stacks are
+  left alone.
+- **Restore tombstone slots** — taking everything from a tombstone puts your items back in the slots they came from.
+  If you picked something up in that slot since respawning, that item is moved to a free slot instead. Only
+  tombstones are affected, not chests.
 - **Push boat** — look at a boat from the shore (or from shallow water) and press `E` to push it away
   from you, e.g. off a beach. Hold `E` to keep pushing. Not available while swimming or standing on the boat.
 
@@ -22,6 +28,8 @@ with the mod installed, and changes apply after a restart.
 | ------------------ | --------------- | ------- | ---------------------------------------------------- |
 | `Weapon switching` | `RestoreShield` | `true`  | Re-equip the shield after switching back from a bow. |
 | `Boats`            | `PushBoat`      | `true`  | Show the "Push boat" interaction.                    |
+| `Inventory`        | `StackOnTombstonePickup` | `true` | Merge partial stacks after taking everything from a tombstone. |
+| `Inventory`        | `RestoreTombstoneSlots` | `true` | Put tombstone items back in their original slots. |
 
 ## Installation
 

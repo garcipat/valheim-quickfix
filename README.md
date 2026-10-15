@@ -7,7 +7,7 @@ package, version, and changelog.
 
 | Mod | What it does | Player docs |
 | --- | ------------ | ----------- |
-| **ValheimQuickFix** | Quality-of-life fixes: restore your shield after a bow, push boats from the shore. | [README](package/ValheimQuickFix/README.md) · [Changelog](package/ValheimQuickFix/CHANGELOG.md) |
+| **ValheimQuickFix** | Quality-of-life fixes: restore your shield after a bow, push boats from the shore, merge partial stacks and restore your slots on a tombstone pickup. | [README](package/ValheimQuickFix/README.md) · [Changelog](package/ValheimQuickFix/CHANGELOG.md) |
 | **SignIcons** | Show item icons on signs with `[ItemName]`. | [README](package/SignIcons/README.md) · [Changelog](package/SignIcons/CHANGELOG.md) |
 
 Both are client-side only and need [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/).

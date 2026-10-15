@@ -33,6 +33,9 @@ New work that isn't a fix for something the game gets wrong belongs in its own m
   them private/protected and the call throws `FieldAccessException` at runtime — even when the code path
   is disabled by a config toggle. Use Harmony field injection (`ref T ___m_field` in patch parameters)
   or `AccessTools.FieldRefAccess`/reflection. Wrap patch bodies in try/catch and log via `Plugin.Log`.
+- **Fields drift too.** Game fields get renamed or added between versions (`ItemData.m_equiped` became `m_equipped`,
+  `m_worldLevel` appeared later), so code touching one the compile-time libs may not match looks it up by name with
+  `AccessTools.Field` and disables itself, with a log line, if it is missing.
 - **Interfaces drift.** Game interfaces (`Hoverable`, ...) gain members between versions, and the compile-time libs
   are older than the live game. A class implementing one must declare any newer members as `public virtual`.
 - Match the existing code style (4-space indent, block-scoped namespaces, `internal` by default).
