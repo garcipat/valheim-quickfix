@@ -234,3 +234,24 @@ also drew honey leaking down the sides was dropped: primitives placed from the m
 
 **Known limits:** poles are matched by prefab name. The hive snaps to whichever of the pole's end or middle points is
 closest to where you aim.
+
+## More bears
+
+**Config:** `Enemies` → `MoreBears` (default `true`)
+**Patch:** `ZNetScene.Awake` (Postfix) — `Patches/MoreBearsPatch.cs`
+
+**Problem:** in the live game the Black Forest bear spawn entry (`Bjorn`, in `_SpawnList_base`) rolls once every 2000 s at
+15% by day and 20% by night, with `m_maxSpawned` 1, and `TrophyBjorn` drops at `m_chance` 0.1. Players can search several
+forests without finding a bear and rarely see a trophy.
+
+**Behavior:**
+
+1. Once, when the prefabs load, each `Bjorn` spawn entry gets a spawn interval of at most 1000 s and room for two bears
+   alive in the area. The spawn chance (15% / 20%) is left alone.
+2. Every `TrophyBjorn` entry on a `CharacterDrop` gets a chance of at least 0.2. The level multiplier and the game's
+   pseudo-random drop counter still apply.
+3. Values are set to a floor or ceiling, not scaled, so loading another world in the same session changes nothing more.
+
+**Known limits:** the toggle is read at load, so turning it off needs a game restart. Spawns and drops are decided by the
+machine that owns the zone or creature, so the fix only works in singleplayer or when you host. The Plains `Unbjorn` is
+unchanged. `SpawnSystemList` is missing from the compile-time libs, so it is found by name.

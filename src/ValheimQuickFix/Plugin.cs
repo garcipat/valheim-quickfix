@@ -26,6 +26,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> PlaceStacksKeepConsumablesEnabled;
         internal static ConfigEntry<bool> HideBeesWhenFullEnabled;
         internal static ConfigEntry<bool> HiveOnPoleSnapEnabled;
+        internal static ConfigEntry<bool> MoreBearsEnabled;
 
         private Harmony _harmony;
 
@@ -104,6 +105,12 @@ namespace ValheimQuickFix
                 "HiveSnapsToPoleMiddle",
                 true,
                 "While placing a beehive, pressing Q (or E) to pick its snap point also offers a snap point halfway along nearby poles, so the hive can sit in the middle of a pole.");
+
+            MoreBearsEnabled = Config.Bind(
+                "Enemies",
+                "MoreBears",
+                true,
+                "Make bears easier to find: they get a spawn roll every 17 minutes instead of every 33, up to two can live in an area, and drop their trophy 20% of the time instead of 10%. Takes effect on the next game start, and only when your machine runs the spawning (singleplayer or hosting).");
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();
