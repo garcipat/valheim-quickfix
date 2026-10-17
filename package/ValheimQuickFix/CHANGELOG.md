@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - Stack on take all: after "Take all" on any container, such as a chest or your tombstone, partial stacks of the same
   item in your inventory are merged instead of taking two slots. Configurable via `StackOnTakeAll`.
+- Ignore torches: enemies no longer stop to attack torches as structures. Only affects monsters simulated on your
+  machine, so singleplayer. Configurable via `IgnoreTorches`.
 
 ### Changed
 
