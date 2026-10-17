@@ -255,3 +255,28 @@ forests without finding a bear and rarely see a trophy.
 **Known limits:** the toggle is read at load, so turning it off needs a game restart. Spawns and drops are decided by the
 machine that owns the zone or creature, so the fix only works in singleplayer or when you host. The Plains `Unbjorn` is
 unchanged. `SpawnSystemList` is missing from the compile-time libs, so it is found by name.
+
+## Meaningful tool upgrades
+
+**Config:** `Tools` → `MeaningfulToolUpgrades` (default `false`), `ChopTierBonus` (default `5`) and `PickaxeTierBonus` (default `8`)
+**Patch:** `TreeBase.Damage`, `TreeLog.Damage`, `Destructible.Damage`, `MineRock.Damage`, `MineRock5.Damage` (Prefix) —
+`Patches/MeaningfulToolUpgradesPatch.cs`
+
+**Problem:** an axe gains 3 chop per upgrade level but only 10 between materials (stone 20, flint 30, bronze 40, iron 50),
+so with the wide random skill roll an iron axe barely fells a tree faster than a bronze one. Pickaxes are worse: a level-3
+bronze pickaxe (33) equals a level-1 iron one (33), as levels add 4 to 5 against 8 between bronze and iron. Slash damage
+is ignored by trees, so only chop counts.
+
+**Behavior:**
+
+1. A hit from the local player whose tool tier is above 0 gets `ChopTierBonus * toolTier` added to its chop damage and
+   `PickaxeTierBonus * toolTier` to its pickaxe damage, if it has any. This happens just before the tree, log, stump or rock
+   takes the hit.
+2. With the defaults, chop at level 1 goes stone 20, flint 35, bronze 50, iron 65 (was 20, 30, 40, 50); pickaxes go
+   bronze 33, iron 49, black metal 73 (was 25, 33, 49), so a level-1 iron pickaxe beats a level-3 bronze one (41). The +3 per upgrade level is unchanged.
+3. The item's stats, the tooltip and combat damage are untouched, since the bonus is on the hit and only reaches the
+   listed targets.
+
+**Known limits:** it applies by tool tier, so battleaxes and later axes get a bonus too (tier 3 and above). A flat bonus
+raises everything but keeps the gap in swings between two axes about the same, because swings go as health over damage.
+The bonus is not shown in the tooltip.

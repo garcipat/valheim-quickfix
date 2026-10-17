@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Meaningful tool upgrades (off by default): a better tool material now counts for more than a higher upgrade level.
+  Axes and pickaxes deal extra chop or mining damage to trees, logs, stumps and rocks, growing with the tool's tier, so
+  a level-1 iron axe out-chops a level-3 bronze one. Combat damage is unchanged. Turn it on with
+  `MeaningfulToolUpgrades`; `ChopTierBonus` (5 per tier by default) and `PickaxeTierBonus` (8 per tier) set the size.
 - More bears: bears were tuned so rarely that whole Black Forests could hold none. They now get a spawn roll every
   17 minutes instead of every 33, up to two can live in an area, and they drop their trophy 20% of the time instead of
   10%. Needs the machine running the spawning (singleplayer or host). Configurable via `MoreBears`.
