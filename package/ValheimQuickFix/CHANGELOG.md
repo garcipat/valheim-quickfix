@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- More bears: bears were tuned so rarely that whole Black Forests could hold none. They now get a spawn roll every
+  17 minutes instead of every 33, up to two can live in an area, and they drop their trophy 20% of the time instead of
+  10%. Needs the machine running the spawning (singleplayer or host). Configurable via `MoreBears`.
 - Beehive snaps to the middle of a pole: while placing a beehive, press Q (or E) to pick its snap point and aim at a
   pole; the pole now offers a snap point halfway along it, besides its ends. Configurable via `HiveSnapsToPoleMiddle`.
 - Place stacks keeps your gear: "Place stacks" and holding E on a container no longer move weapons and tools into a
