@@ -17,6 +17,8 @@ other players don't need it.
   tombstones are affected, not chests.
 - **Push boat** — look at a boat from the shore (or from shallow water) and press `E` to push it away
   from you, e.g. off a beach. Hold `E` to keep pushing. Not available while swimming or standing on the boat.
+- **Skip startup logos** — the Coffee Stain and Iron Gate logos shown on launch are skipped. The Unity splash screen
+  can't be skipped.
 
 ## Configuration
 
@@ -30,6 +32,7 @@ with the mod installed, and changes apply after a restart.
 | `Boats`            | `PushBoat`      | `true`  | Show the "Push boat" interaction.                    |
 | `Inventory`        | `StackOnTakeAll` | `true` | Merge partial stacks after "Take all" on any container. |
 | `Inventory`        | `RestoreTombstoneSlots` | `true` | Put tombstone items back in their original slots. |
+| `Startup`          | `SkipStartupLogos` | `true` | Skip the Coffee Stain and Iron Gate logos. |
 
 ## Installation
 

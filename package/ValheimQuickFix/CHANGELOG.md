@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Skip startup logos: the Coffee Stain and Iron Gate logos shown on launch are skipped. The Unity splash screen stays.
+  Configurable via `SkipStartupLogos`.
 - Stack on take all: after "Take all" on any container, such as a chest or your tombstone, partial stacks of the same
   item in your inventory are merged instead of taking two slots. Configurable via `StackOnTakeAll`.
 
