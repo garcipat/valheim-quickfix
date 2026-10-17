@@ -18,6 +18,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> PushBoatEnabled;
         internal static ConfigEntry<bool> StackOnTakeAllEnabled;
         internal static ConfigEntry<bool> RestoreTombstoneSlotsEnabled;
+        internal static ConfigEntry<bool> FairResourceRoundingEnabled;
 
         private Harmony _harmony;
 
@@ -48,6 +49,12 @@ namespace ValheimQuickFix
                 "RestoreTombstoneSlots",
                 true,
                 "When taking everything from a tombstone, put each item back in its original slot, moving whatever you picked up there since to a free slot.");
+
+            FairResourceRoundingEnabled = Config.Bind(
+                "Drops",
+                "FairResourceRounding",
+                true,
+                "With a fractional resource rate in the world settings (for example 1.5x), round the number of dropped resources up or down at random instead of always up, so 1.5x averages 1.5 and 4.5 gives 4 or 5.");
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();
