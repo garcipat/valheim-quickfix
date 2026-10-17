@@ -22,6 +22,8 @@ New work that isn't a fix for something the game gets wrong belongs in its own m
 
 - **QuickFix: one fix = one patch file = one config toggle.** Each fix is enabled via a `ConfigEntry<bool>`
   bound in `Plugin.Awake`, and every patch method returns early when its toggle is off.
+- **Config sections are fixed: `Inventory`, `Gear`, `Building & Travel`, `Enemies & Drops`, `General`.** Put a new
+  setting in the one that fits. Never add a section without asking first; there are too many config pages already.
 - **Client-side only.** No server sync, no networking, no RPCs. Guard patches with
   `Player.m_localPlayer` so remote players are never affected.
 - **Minimal patches.** Prefer Prefix/Postfix over Transpilers. Never replace vanilla methods
