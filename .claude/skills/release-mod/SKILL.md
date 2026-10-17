@@ -9,8 +9,8 @@ disable-model-invocation: true
 
 A release is a tag `<Mod>-vX.Y.Z` pushed on `main`. The tag is the only place the version is written: the Release
 workflow (`.github/workflows/release.yml`) builds it into the DLL, stamps it into the zip, turns the mod's
-`Unreleased` changelog entries into the release notes, creates the GitHub release, and commits the renamed changelog
-section back to `main`. There are no version fields in files and nothing to bump.
+`Unreleased` changelog entries into the release notes, creates the GitHub release, and opens a pull request with the renamed
+changelog section for `main` (which only takes pull requests). There are no version fields in files and nothing to bump.
 
 Each mod is versioned independently. This skill's job is to pick the right version and push that tag.
 Invoking it is the user's request to create and push the tag, **after one confirmation** (step 6), because pushing it
@@ -92,7 +92,7 @@ git ls-remote --tags origin '<Mod>-v<version>'    # must print nothing
 
 Show a short summary: mod, version, tag, the commit it goes on (`git log -1 --oneline`), and the changelog entries that
 will become the release notes. Then ask once with AskUserQuestion whether to push the tag. State what happens: the
-workflow builds the zip, publishes the release, and commits the renamed changelog section to `main`.
+workflow builds the zip, publishes the release, and opens a pull request with the renamed changelog section.
 
 On yes:
 
@@ -108,8 +108,9 @@ git push origin <Mod>-v<version>
 - `gh run watch <id>` until it finishes. On failure, show the failing step's log (`gh run view <id> --log-failed`) and
   explain; do not retry by moving the tag.
 - On success verify: `gh release view <Mod>-v<version> --json name,isPrerelease,assets -q .` shows the zip, and
-  `git fetch origin && git log -3 --oneline origin/main` shows the `Changelog: release ...` commit. A workflow
-  annotation saying the changelog could not be committed means the user has to rename `[Unreleased]` by hand; say so.
+  `gh pr list --search 'Changelog: release <Mod> <version>'` shows the changelog pull request; give the user its link and
+  tell them to merge it before other changes touch the changelog. A workflow annotation saying the pull request could
+  not be opened or the changelog changed since the tag means the user has to rename `[Unreleased]` by hand; say so.
 - Tell the user the release is out and suggest importing the zip into Gale for a last check. Publishing to Thunderstore
   is separate (`tcli`, see `docs/Development.md`).
 
@@ -127,6 +128,6 @@ Then follow the run as in step 7 and point the user to the artifact. The workflo
 ## Don'ts
 
 - No AI or tool attribution anywhere (tag message, release notes, commits).
-- Do not edit versions in files, edit the changelog, or commit anything; the workflow does the changelog commit.
+- Do not edit versions in files, edit the changelog, or commit anything; the workflow opens the changelog pull request.
 - Do not push a tag that is not on `origin/main`, and do not force-push or delete tags.
 - Do not release a different mod than the one the user named.
