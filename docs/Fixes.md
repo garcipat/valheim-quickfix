@@ -280,3 +280,29 @@ is ignored by trees, so only chop counts.
 **Known limits:** it applies by tool tier, so battleaxes and later axes get a bonus too (tier 3 and above). A flat bonus
 raises everything but keeps the gap in swings between two axes about the same, because swings go as health over damage.
 The bonus is not shown in the tooltip.
+
+## Repair all on hold
+
+**Config:** `Inventory` → `RepairAllOnHold` (default `true`)
+**Patch:** `CraftingStation.Interact` (Prefix), `Player.Update` (Postfix), `CraftingStation.GetHoverText` (Postfix) — `Patches/RepairAllOnHoldPatch.cs`
+
+**Problem:** repairing is only the Repair button in the crafting window, one item per click, so a full set of worn gear
+takes a click per piece.
+
+**Behavior:**
+
+1. Pressing E on a station that can repair (`m_canRepair`, read by name: workbench, forge, ...) no longer opens the
+   crafting window at once; the press is recorded instead.
+2. If E is still down half a second later (the game repeats the interaction about every 0.2 s), the game's own
+   `InventoryGui.RepairOneItem` runs until `HaveRepairableItems` is false, without opening the window. Skill gain,
+   effects and messages are the vanilla ones, once per item. It runs once per press, and says "No more item to repair" if
+   nothing is damaged.
+3. If E comes up first (a tap), `Player.Update` opens the window then, by calling the station's own `Interact`. A tap
+   therefore opens it on release instead of on press.
+4. The repair reads `Player.m_currentStation`, which is only set while the window is open, so the station is put there for
+   the repair and the old value restored. The field is written directly: `SetCraftingStation` would also hide the hand items.
+5. The station's hover text gets "(Hold to repair all)" appended while you are within use distance.
+
+**Known limits:** `RepairOneItem`, `HaveRepairableItems`, `InUseDistance`, `m_canRepair` and `m_currentStation` are private or
+missing from the compile-time libs, so they are found by name; the patch disables itself with a log line if one is
+missing. The hint is plain English, not localized. Looking away from the station before releasing E still opens its window.
