@@ -22,6 +22,8 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> SkipStartupLogosEnabled;
         internal static ConfigEntry<bool> FairResourceRoundingEnabled;
         internal static ConfigEntry<bool> IgnoreTorchesEnabled;
+        internal static ConfigEntry<bool> PlaceStacksKeepEquipmentEnabled;
+        internal static ConfigEntry<bool> PlaceStacksKeepConsumablesEnabled;
 
         private Harmony _harmony;
 
@@ -30,7 +32,7 @@ namespace ValheimQuickFix
             Log = Logger;
 
             RestoreShieldEnabled = Config.Bind(
-                "Weapon switching",
+                "Combat",
                 "RestoreShield",
                 true,
                 "Re-equip the shield automatically when switching from a bow or two-handed weapon back to a one-handed weapon.");
@@ -72,10 +74,22 @@ namespace ValheimQuickFix
                 "With a fractional resource rate in the world settings (for example 1.5x), round the number of dropped resources up or down at random instead of always up, so 1.5x averages 1.5 and 4.5 gives 4 or 5.");
 
             IgnoreTorchesEnabled = Config.Bind(
-                "Combat",
+                "Enemies",
                 "IgnoreTorches",
                 true,
                 "Enemies ignore torches instead of stopping to attack them as structures. Only affects monsters simulated on your machine (always the case in singleplayer).");
+
+            PlaceStacksKeepEquipmentEnabled = Config.Bind(
+                "Inventory",
+                "PlaceStacksKeepEquipment",
+                true,
+                "\"Place stacks\" (and holding E on a container) no longer moves weapons and tools into a container that already holds one with the same name. Ammo, materials and other items are moved as before.");
+
+            PlaceStacksKeepConsumablesEnabled = Config.Bind(
+                "Inventory",
+                "PlaceStacksKeepConsumables",
+                true,
+                "\"Place stacks\" (and holding E on a container) no longer moves cooked and brewed food and potions into a container that already holds some. Raw food such as berries and mushrooms is still moved. Turn this off to keep restocking chests with all of them.");
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();

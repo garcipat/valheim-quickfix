@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Place stacks keeps your gear: "Place stacks" and holding E on a container no longer move weapons and tools into a
+  container that already holds one with the same name, such as a spare hoe into a chest with a hoe, and no longer move
+  cooked or brewed food and potions either. Raw food such as berries and mushrooms, ammo, materials and other items are
+  moved as before. Configurable separately via
+  `PlaceStacksKeepEquipment` and `PlaceStacksKeepConsumables`.
 - Floors count as a roof: standing under a floor, such as a second storey or a deck, now counts as being under a roof,
   so it keeps the rain off you. Sheltered and the Rested bonus still need walls, as with any roof. Configurable via
   `FloorsNotLeaky`.
@@ -23,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- Config sections: `RestoreShield` moved from `Weapon switching` to `Combat`, and `IgnoreTorches` from `Combat` to the new
+  `Enemies` section. A moved setting goes back to its default once, so check it after updating.
 - "Stack on tombstone pickup" is now part of "Stack on take all", which covers tombstones too. The `StackOnTombstonePickup`
   setting is replaced by `StackOnTakeAll`; a leftover `StackOnTombstonePickup` line in your config file is ignored.
 

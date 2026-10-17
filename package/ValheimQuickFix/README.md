@@ -23,6 +23,10 @@ other players don't need it.
   can't be skipped.
 - **Ignore torches** — enemies no longer stop to attack your torches as if they were buildings. Only monsters
   simulated on your machine are affected, so this works in singleplayer but not against monsters on a server.
+- **Place stacks keeps your gear** — "Place stacks" (and holding `E` on a container) no longer moves your weapons
+  and tools, or your cooked food and potions, into a container that already holds one with the same name. Your spare hoe
+  stays with you instead of ending up in the chest next to the other hoe. Raw food such as berries and mushrooms is
+  still moved. Equipment and consumables can be switched on or off separately.
 
 ## Configuration
 
@@ -32,13 +36,15 @@ with the mod installed, and changes apply after a restart.
 
 | Section            | Option          | Default | Description                                          |
 | ------------------ | --------------- | ------- | ---------------------------------------------------- |
-| `Weapon switching` | `RestoreShield` | `true`  | Re-equip the shield after switching back from a bow. |
+| `Combat`           | `RestoreShield` | `true`  | Re-equip the shield after switching back from a bow. |
 | `Boats`            | `PushBoat`      | `true`  | Show the "Push boat" interaction.                    |
 | `Inventory`        | `StackOnTakeAll` | `true` | Merge partial stacks after "Take all" on any container. |
 | `Inventory`        | `RestoreTombstoneSlots` | `true` | Put tombstone items back in their original slots. |
 | `Building`         | `FloorsNotLeaky` | `true` | A floor above you counts as a roof. |
 | `Startup`          | `SkipStartupLogos` | `true` | Skip the Coffee Stain and Iron Gate logos. |
-| `Combat`           | `IgnoreTorches` | `true`  | Enemies don't attack torches as structures. |
+| `Enemies`          | `IgnoreTorches` | `true`  | Enemies don't attack torches as structures. |
+| `Inventory`        | `PlaceStacksKeepEquipment` | `true` | "Place stacks" leaves weapons and tools alone. |
+| `Inventory`        | `PlaceStacksKeepConsumables` | `true` | "Place stacks" leaves cooked food and potions alone. |
 
 ## Installation
 
