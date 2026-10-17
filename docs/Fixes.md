@@ -88,3 +88,19 @@ slot, so your layout is not restored.
 **Known limits:** a displaced item loses its hotbar slot if it was on the hotbar. Works together with
 *Stack on take all*: after slots are restored, partial stacks are topped up, earliest slot first.
 
+
+## Ignore torches
+
+**Config:** `Combat` → `IgnoreTorches` (default `true`)
+**Patch:** `BaseAI.FindClosestStaticPriorityTarget` and `BaseAI.FindRandomStaticTarget` (Postfix) — `Patches/IgnoreTorchesPatch.cs`
+
+**Problem:** enemies treat standing and wall torches as structures to attack, and stop to smash them instead of
+going after you.
+
+**Behavior:** when a monster picks a structure to attack and it is a torch, the choice is discarded and the monster
+carries on as if the torch were not there. Torches are matched by prefab name (contains `torch`); braziers and
+other fires are not affected.
+
+**Known limits:** only the peer that owns a monster runs its AI, so this only affects monsters simulated on your
+machine (always in singleplayer; on a server only those you own). A monster that is already attacking a torch is
+not interrupted until it next picks a target.

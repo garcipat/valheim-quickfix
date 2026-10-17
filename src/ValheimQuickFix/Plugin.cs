@@ -18,6 +18,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> PushBoatEnabled;
         internal static ConfigEntry<bool> StackOnTakeAllEnabled;
         internal static ConfigEntry<bool> RestoreTombstoneSlotsEnabled;
+        internal static ConfigEntry<bool> IgnoreTorchesEnabled;
 
         private Harmony _harmony;
 
@@ -48,6 +49,12 @@ namespace ValheimQuickFix
                 "RestoreTombstoneSlots",
                 true,
                 "When taking everything from a tombstone, put each item back in its original slot, moving whatever you picked up there since to a free slot.");
+
+            IgnoreTorchesEnabled = Config.Bind(
+                "Combat",
+                "IgnoreTorches",
+                true,
+                "Enemies ignore torches instead of stopping to attack them as structures. Only affects monsters simulated on your machine (always the case in singleplayer).");
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();
