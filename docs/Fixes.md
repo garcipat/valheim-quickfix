@@ -283,7 +283,7 @@ The bonus is not shown in the tooltip.
 
 ## Repair all on hold
 
-**Config:** `Crafting` → `RepairAllOnHold` (default `true`)
+**Config:** `Inventory` → `RepairAllOnHold` (default `true`)
 **Patch:** `CraftingStation.Interact` (Prefix), `Player.Update` (Postfix), `CraftingStation.GetHoverText` (Postfix) — `Patches/RepairAllOnHoldPatch.cs`
 
 **Problem:** repairing is only the Repair button in the crafting window, one item per click, so a full set of worn gear

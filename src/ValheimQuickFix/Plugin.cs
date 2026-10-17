@@ -123,7 +123,7 @@ namespace ValheimQuickFix
                 "Make a better tool material count for more than a higher upgrade level: axes and pickaxes deal extra chop / mining damage to trees, logs, stumps and rocks, growing with the tool's tier (stone 0, flint 1, bronze 2, iron 3 for axes). Combat damage is not affected.");
 
             RepairAllOnHoldEnabled = Config.Bind(
-                "Crafting",
+                "Inventory",
                 "RepairAllOnHold",
                 true,
                 "Holding E on a workbench, forge or any other station that can repair repairs every damaged item you carry at once, instead of one per click of the Repair button. The station's hover text says so.");

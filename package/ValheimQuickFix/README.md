@@ -51,7 +51,7 @@ with the mod installed, and changes apply after a restart.
 | `Inventory`        | `PlaceStacksKeepConsumables` | `true` | "Place stacks" leaves cooked food and potions alone. |
 | `Building`         | `HideBeesWhenFull` | `true` | Full beehives lose their bees. |
 | `Building`         | `HiveSnapsToPoleMiddle` | `true` | Beehives can snap to the middle of a pole. |
-| `Crafting`         | `RepairAllOnHold` | `true` | Hold E on a workbench or forge to repair every item at once. |
+| `Inventory`        | `RepairAllOnHold` | `true` | Hold E on a workbench or forge to repair every item at once. |
 
 ## Installation
 
