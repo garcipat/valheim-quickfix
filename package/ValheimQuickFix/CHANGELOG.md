@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Beehive snaps to the middle of a pole: while placing a beehive, press Q (or E) to pick its snap point and aim at a
+  pole; the pole now offers a snap point halfway along it, besides its ends. Configurable via `HiveSnapsToPoleMiddle`.
 - Place stacks keeps your gear: "Place stacks" and holding E on a container no longer move weapons and tools into a
   container that already holds one with the same name, such as a spare hoe into a chest with a hoe, and no longer move
   cooked or brewed food and potions either. Raw food such as berries and mushrooms, ammo, materials and other items are
