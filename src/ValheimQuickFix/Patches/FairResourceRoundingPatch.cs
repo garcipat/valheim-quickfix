@@ -62,7 +62,14 @@ namespace ValheimQuickFix.Patches
         }
 
         // Positional arguments (__0 = item data, __1 = amount, __instance = Game) because the names differ across versions.
-        private static void Postfix(object __instance, ItemDrop.ItemData __0, int __1, ref int __result)
+        // The game overwrites its own amount argument with the scaled value, so by the Postfix __1 is no longer what was
+        // asked for; keep the original amount from here.
+        private static void Prefix(int __1, out int __state)
+        {
+            __state = __1;
+        }
+
+        private static void Postfix(object __instance, ItemDrop.ItemData __0, int __state, ref int __result)
         {
             try
             {
@@ -73,7 +80,7 @@ namespace ValheimQuickFix.Patches
                 }
 
                 var max = __0.m_shared.m_maxStackSize > 1 ? __0.m_shared.m_maxStackSize : 1000;
-                __result = Mathf.Clamp(FairRounding.RandomRound(__1 * rate), 1, max);
+                __result = Mathf.Clamp(FairRounding.RandomRound(__state * rate), 1, max);
             }
             catch (Exception e)
             {
@@ -207,7 +214,6 @@ namespace ValheimQuickFix.Patches
                         }
                     }
                 }
-
                 var counts = new Dictionary<GameObject, int>();
                 var order = new List<GameObject>();
                 foreach (var item in extra)
