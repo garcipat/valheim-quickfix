@@ -89,6 +89,20 @@ slot, so your layout is not restored.
 *Stack on take all*: after slots are restored, partial stacks are topped up, earliest slot first.
 
 
+## Skip startup logos
+
+**Config:** `Startup` → `SkipStartupLogos` (default `true`)
+**Patch:** `SceneLoader.Awake` (Postfix) — `Patches/SkipStartupLogosPatch.cs`
+
+**Problem:** the first scene shows the Coffee Stain and Iron Gate logos for about two seconds each before the game loads.
+
+**Behavior:** `SceneLoader._showLogos` is cleared after `Awake`, so its loading coroutine goes straight past both logos
+(the scene still loads in the background as usual).
+
+**Known limits:** the Unity splash screen is drawn by the engine before any game code runs and is not affected.
+**Compatibility notes:** `SceneLoader` and `_showLogos` are looked up by name; the fix disables itself with a log line if
+either is missing.
+
 ## Fair resource rounding
 
 **Config:** `Drops` → `FairResourceRounding` (default `true`)

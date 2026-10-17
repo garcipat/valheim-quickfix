@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Skip startup logos: the Coffee Stain and Iron Gate logos shown on launch are skipped. The Unity splash screen stays.
+  Configurable via `SkipStartupLogos`.
 - Fair resource rounding: with a fractional resource rate in the world settings (such as 1.5x), the number of dropped
   resources is rounded up or down at random instead of always up, so 1.5x averages 1.5 and 4.5 gives 4 or 5.
   Configurable via `FairResourceRounding`.

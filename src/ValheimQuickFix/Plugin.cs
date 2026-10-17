@@ -18,6 +18,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> PushBoatEnabled;
         internal static ConfigEntry<bool> StackOnTakeAllEnabled;
         internal static ConfigEntry<bool> RestoreTombstoneSlotsEnabled;
+        internal static ConfigEntry<bool> SkipStartupLogosEnabled;
         internal static ConfigEntry<bool> FairResourceRoundingEnabled;
         internal static ConfigEntry<bool> IgnoreTorchesEnabled;
 
@@ -50,6 +51,12 @@ namespace ValheimQuickFix
                 "RestoreTombstoneSlots",
                 true,
                 "When taking everything from a tombstone, put each item back in its original slot, moving whatever you picked up there since to a free slot.");
+
+            SkipStartupLogosEnabled = Config.Bind(
+                "Startup",
+                "SkipStartupLogos",
+                true,
+                "Skip the Coffee Stain and Iron Gate logos shown when the game starts. The Unity splash screen cannot be skipped.");
 
             FairResourceRoundingEnabled = Config.Bind(
                 "Drops",
