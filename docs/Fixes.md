@@ -113,3 +113,19 @@ always gives 2 and 3 x 1.5 = 4.5 always gives 5: at 1.5x you get closer to 2x.
 player's game (or the server) are unaffected. The extra loot-table roll draws the table's drop chance again.
 **Compatibility notes:** `Game.m_resourceRate`, `Game.ScaleDrops` and `m_nonScaledDropTypes` are newer than the compile-time
 libs, so everything is looked up by name at runtime and the fix disables itself with a log line if one is missing.
+
+## Ignore torches
+
+**Config:** `Combat` → `IgnoreTorches` (default `true`)
+**Patch:** `BaseAI.FindClosestStaticPriorityTarget` and `BaseAI.FindRandomStaticTarget` (Postfix) — `Patches/IgnoreTorchesPatch.cs`
+
+**Problem:** enemies treat standing and wall torches as structures to attack, and stop to smash them instead of
+going after you.
+
+**Behavior:** when a monster picks a structure to attack and it is a torch, the choice is discarded and the monster
+carries on as if the torch were not there. Torches are matched by prefab name (contains `torch`); braziers and
+other fires are not affected.
+
+**Known limits:** only the peer that owns a monster runs its AI, so this only affects monsters simulated on your
+machine (always in singleplayer; on a server only those you own). A monster that is already attacking a torch is
+not interrupted until it next picks a target.
