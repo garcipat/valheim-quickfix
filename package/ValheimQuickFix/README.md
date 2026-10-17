@@ -19,6 +19,8 @@ other players don't need it.
   from you, e.g. off a beach. Hold `E` to keep pushing. Not available while swimming or standing on the boat.
 - **Skip startup logos** — the Coffee Stain and Iron Gate logos shown on launch are skipped. The Unity splash screen
   can't be skipped.
+- **Ignore torches** — enemies no longer stop to attack your torches as if they were buildings. Only monsters
+  simulated on your machine are affected, so this works in singleplayer but not against monsters on a server.
 
 ## Configuration
 
@@ -33,6 +35,7 @@ with the mod installed, and changes apply after a restart.
 | `Inventory`        | `StackOnTakeAll` | `true` | Merge partial stacks after "Take all" on any container. |
 | `Inventory`        | `RestoreTombstoneSlots` | `true` | Put tombstone items back in their original slots. |
 | `Startup`          | `SkipStartupLogos` | `true` | Skip the Coffee Stain and Iron Gate logos. |
+| `Combat`           | `IgnoreTorches` | `true`  | Enemies don't attack torches as structures. |
 
 ## Installation
 
