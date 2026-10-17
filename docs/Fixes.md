@@ -197,3 +197,22 @@ and potions.
 **Known limits:** item types are matched by name, so a type this list doesn't know stays unprotected. Cooked food and
 potions that really would merge into a partial stack in the container are kept too. Raw meat counts as an ingredient,
 so it is moved. Shields and armor are not protected.
+
+## Bees leave a full hive
+
+**Config:** `Building` → `HideBeesWhenFull`, default `true`
+**Patch:** `Beehive.UpdateBees` and `Beehive.RPC_Extract` (Postfix) — `Patches/HideBeesWhenFullPatch.cs`
+
+**Problem:** a full beehive looks exactly like an empty one. The bees show whenever the hive has a valid biome, free
+space above it and it is daytime, whatever its honey level, so the only way to know is to walk up and read the hover text.
+
+**Behavior:**
+
+1. A hive is full when its ZDO `level` is at least `m_maxHoney`. The ZDO reaches every client, so nothing is networked.
+2. While full, the bee effect is switched off after vanilla has set it. Vanilla never switches it on for a hive that is
+   blocked or in the wrong biome, so this only ever hides it.
+3. `UpdateBees` runs every 10 s, so the bees lag the honey level by up to that; `RPC_Extract` refreshes them at once on
+   the machine that owns the hive.
+
+**Known limits:** the bees are daylight-only in vanilla, so at night every hive looks the same. A first attempt that
+also drew honey leaking down the sides was dropped: primitives placed from the mesh bounds floated in the air.
