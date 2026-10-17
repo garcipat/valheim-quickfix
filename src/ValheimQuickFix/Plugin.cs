@@ -19,6 +19,9 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> StackOnTakeAllEnabled;
         internal static ConfigEntry<bool> RestoreTombstoneSlotsEnabled;
         internal static ConfigEntry<bool> FloorsNotLeakyEnabled;
+        internal static ConfigEntry<bool> SkipStartupLogosEnabled;
+        internal static ConfigEntry<bool> FairResourceRoundingEnabled;
+        internal static ConfigEntry<bool> IgnoreTorchesEnabled;
 
         private Harmony _harmony;
 
@@ -55,6 +58,24 @@ namespace ValheimQuickFix
                 "FloorsNotLeaky",
                 true,
                 "Count floors (wooden floors, stone floors, ...) as a roof for whoever stands under them, so a second storey keeps the rain off you.");
+
+            SkipStartupLogosEnabled = Config.Bind(
+                "Startup",
+                "SkipStartupLogos",
+                true,
+                "Skip the Coffee Stain and Iron Gate logos shown when the game starts. The Unity splash screen cannot be skipped.");
+
+            FairResourceRoundingEnabled = Config.Bind(
+                "Drops",
+                "FairResourceRounding",
+                true,
+                "With a fractional resource rate in the world settings (for example 1.5x), round the number of dropped resources up or down at random instead of always up, so 1.5x averages 1.5 and 4.5 gives 4 or 5.");
+
+            IgnoreTorchesEnabled = Config.Bind(
+                "Combat",
+                "IgnoreTorches",
+                true,
+                "Enemies ignore torches instead of stopping to attack them as structures. Only affects monsters simulated on your machine (always the case in singleplayer).");
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();

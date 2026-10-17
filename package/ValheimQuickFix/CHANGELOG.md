@@ -11,8 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Floors count as a roof: standing under a floor, such as a second storey or a deck, now counts as being under a roof,
   so it keeps the rain off you. Sheltered and the Rested bonus still need walls, as with any roof. Configurable via
   `FloorsNotLeaky`.
+- Skip startup logos: the Coffee Stain and Iron Gate logos shown on launch are skipped. The Unity splash screen stays.
+  Configurable via `SkipStartupLogos`.
+- Fair resource rounding: with a fractional resource rate in the world settings (such as 1.5x), the number of dropped
+  resources is rounded up or down at random instead of always up, so 1.5x averages 1.5 and 4.5 gives 4 or 5.
+  Configurable via `FairResourceRounding`.
 - Stack on take all: after "Take all" on any container, such as a chest or your tombstone, partial stacks of the same
   item in your inventory are merged instead of taking two slots. Configurable via `StackOnTakeAll`.
+- Ignore torches: enemies no longer stop to attack torches as structures. Only affects monsters simulated on your
+  machine, so singleplayer. Configurable via `IgnoreTorches`.
 
 ### Changed
 
