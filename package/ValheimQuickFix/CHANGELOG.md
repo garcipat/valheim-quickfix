@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Repair everything at once: hold E on a workbench, forge or any other station that can repair, and every damaged item
+  you carry is repaired without opening the crafting window, instead of one per click of the Repair button. A tap opens
+  the window as before, when you let go of E. The station's hover text shows
+  "(Hold to repair all)". Configurable via `RepairAllOnHold`.
 - Meaningful tool upgrades (off by default): a better tool material now counts for more than a higher upgrade level.
   Axes and pickaxes deal extra chop or mining damage to trees, logs, stumps and rocks, growing with the tool's tier, so
   a level-1 iron axe out-chops a level-3 bronze one. Combat damage is unchanged. Turn it on with

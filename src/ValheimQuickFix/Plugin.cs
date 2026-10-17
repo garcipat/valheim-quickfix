@@ -28,6 +28,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> HiveOnPoleSnapEnabled;
         internal static ConfigEntry<bool> MoreBearsEnabled;
         internal static ConfigEntry<bool> MeaningfulToolUpgradesEnabled;
+        internal static ConfigEntry<bool> RepairAllOnHoldEnabled;
         internal static ConfigEntry<float> ChopTierBonus;
         internal static ConfigEntry<float> PickaxeTierBonus;
 
@@ -120,6 +121,12 @@ namespace ValheimQuickFix
                 "MeaningfulToolUpgrades",
                 false,
                 "Make a better tool material count for more than a higher upgrade level: axes and pickaxes deal extra chop / mining damage to trees, logs, stumps and rocks, growing with the tool's tier (stone 0, flint 1, bronze 2, iron 3 for axes). Combat damage is not affected.");
+
+            RepairAllOnHoldEnabled = Config.Bind(
+                "Crafting",
+                "RepairAllOnHold",
+                true,
+                "Holding E on a workbench, forge or any other station that can repair repairs every damaged item you carry at once, instead of one per click of the Repair button. The station's hover text says so.");
 
             ChopTierBonus = Config.Bind(
                 "Tools",
