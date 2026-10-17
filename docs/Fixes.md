@@ -4,7 +4,7 @@ Behavior of each fix. Implementation lives in `src/ValheimQuickFix/Patches/`.
 
 ## Restore shield
 
-**Config:** `Weapon switching` → `RestoreShield` (default `true`)
+**Config:** `Combat` → `RestoreShield` (default `true`)
 **Patch:** `Humanoid.EquipItem` (Prefix + Postfix) — `Patches/RestoreShieldPatch.cs`
 
 **Problem:** with a shield and one-handed weapon equipped, equipping a bow (or any two-handed
@@ -153,7 +153,7 @@ libs, so everything is looked up by name at runtime and the fix disables itself 
 
 ## Ignore torches
 
-**Config:** `Combat` → `IgnoreTorches` (default `true`)
+**Config:** `Enemies` → `IgnoreTorches` (default `true`)
 **Patch:** `BaseAI.FindClosestStaticPriorityTarget` and `BaseAI.FindRandomStaticTarget` (Postfix) — `Patches/IgnoreTorchesPatch.cs`
 
 **Problem:** enemies treat standing and wall torches as structures to attack, and stop to smash them instead of
@@ -166,3 +166,34 @@ other fires are not affected.
 **Known limits:** only the peer that owns a monster runs its AI, so this only affects monsters simulated on your
 machine (always in singleplayer; on a server only those you own). A monster that is already attacking a torch is
 not interrupted until it next picks a target.
+
+## Place stacks keeps your gear
+
+**Config:** `Inventory` → `PlaceStacksKeepEquipment` (weapons and tools) and `PlaceStacksKeepConsumables` (cooked and brewed food and potions), both default `true`
+**Patch:** `Inventory.StackAll` (Prefix, Finalizer) and `Humanoid.IsItemEquiped` (Postfix) — `Patches/PlaceStacksKeepGearPatch.cs`
+
+**Problem:** the "Place stacks" button, and holding E on a container, call `Inventory.StackAll`. It moves every item you
+carry into a container that already holds an item with the same name and only skips equipped items. It never checks
+that the item can actually stack, so a spare hoe goes into a chest that holds a hoe, and so do weapons, tools, food
+and potions.
+
+**Behavior:**
+
+1. While `StackAll` runs for your own inventory, `Humanoid.IsItemEquiped` also answers `true` for items of type
+   OneHandedWeapon, TwoHandedWeapon, TwoHandedWeaponLeft, Bow, Torch and Tool when `PlaceStacksKeepEquipment` is on, and
+   for Consumable items that the game produces when `PlaceStacksKeepConsumables` is on.
+   "Produced" means the item is the output of a cauldron recipe, a `CookingStation` conversion or a `Fermenter` conversion,
+   which covers cooked meat, cauldron food and mead. Anything a cooking station or fermenter takes as input is an
+   ingredient and is not protected, even if a cauldron recipe makes it, so mead bases and raw meat move like any stack. Consumables made at any other crafting station (for
+   example the food preparation table) are not protected; the log lists them per station. Raw berries and mushrooms are only ingredients, so they are
+   moved like any other stack. The list is built from the cauldron recipes in `ObjectDB.m_recipes` and the scene prefabs on first use, cached,
+   rebuilt only if the item database changes, and logged once. If it can't be built, every consumable is protected.
+   `StackAll` skips equipped items, so those stay with you.
+2. Everything else is moved as before: ammo, materials, trophies, armor, and so on. The two switches are independent, so
+   food and potions can keep restocking chests while weapons and tools stay put. They share one patch because it is one
+   mechanism with a per-category filter.
+3. The flag is cleared in a Finalizer, so it can't stay set if the game throws partway through.
+
+**Known limits:** item types are matched by name, so a type this list doesn't know stays unprotected. Cooked food and
+potions that really would merge into a partial stack in the container are kept too. Raw meat counts as an ingredient,
+so it is moved. Shields and armor are not protected.
