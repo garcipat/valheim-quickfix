@@ -100,8 +100,11 @@ The `Release` workflow (`.github/workflows/release.yml`) then:
    (`scripts/update-changelog.sh`); it stops if there are none;
 3. builds with that version and packages the zip (`scripts/package.sh --version X.Y.Z`);
 4. creates the GitHub release `<Mod> X.Y.Z` with the zip (a hyphenated version is a pre-release);
-5. commits the renamed changelog section back to `main` as `github-actions[bot]`. It skips this with a warning if the mod's
-   `Unreleased` entries changed on `main` since the tag; then rename the section by hand.
+5. opens a pull request `Changelog: release <Mod> X.Y.Z` with the renamed changelog section, from a
+   `release/changelog-<Mod>-X.Y.Z` branch (`main` only takes pull requests, so the workflow cannot push to it). Merge it
+   before other changes touch the changelog. It skips this with a warning if the mod's `Unreleased` entries changed on
+   `main` since the tag; then rename the section by hand. Needs "Allow GitHub Actions to create pull requests" under
+   Settings → Actions → General; without it the branch is pushed and the warning says to open the pull request yourself.
 
 **Dry run:** Actions → Release → *Run workflow*, pick the mod and a version. It builds the package from `main`
 and uploads it as a workflow artifact. No tag, no release, no commit. (`/release-mod <Mod> dry-run` starts it for you.)

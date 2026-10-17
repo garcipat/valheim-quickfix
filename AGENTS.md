@@ -44,7 +44,7 @@ New work that isn't a fix for something the game gets wrong belongs in its own m
   zip's manifest. `manifest.json` and `thunderstore.toml` hold a `0.0.0` placeholder, and local builds report `0.0.0-dev`.
   Never write a real version into those files.
 - To release, use the `release-mod` skill (`/release-mod <Mod>`): it reads the mod's changelog, proposes the version,
-  and after one confirmation pushes the tag. The workflow does the rest and commits the renamed changelog section
+  and after one confirmation pushes the tag. The workflow does the rest and opens a pull request with the renamed changelog section
   back to `main`. A new mod must be added to the workflow's options and tag patterns.
 - Every player-visible change adds a line under `## [Unreleased]` in `package/<Mod>/CHANGELOG.md` in the same PR;
   those lines become the release notes, and a release without any stops.

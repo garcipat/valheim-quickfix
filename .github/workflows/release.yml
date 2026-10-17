@@ -4,7 +4,8 @@ name: Release
 #
 #  - Release: push a tag <Mod>-vX.Y.Z (for example SignIcons-v0.1.0) on main. The tag is the only place the version
 #    is written: it is built into the DLL and stamped into the zip's manifest, and the mod's CHANGELOG.md "Unreleased"
-#    entries become the release notes and are renamed to that version (committed back to main afterwards).
+#    entries become the release notes and are renamed to that version (proposed to main as a pull request afterwards,
+#    because main only takes pull requests; it needs "Allow GitHub Actions to create pull requests" in the repo settings).
 #    The release-mod skill does this for you.
 #  - Dry run: Actions > Release > Run workflow, pick the mod and a version. Builds the package from main's current
 #    state and uploads it as a workflow artifact; no release, no tag, nothing is committed.
@@ -35,9 +36,10 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-    # Only the release step and the changelog commit need write access.
+    # Only the release step and the changelog pull request need write access.
     permissions:
       contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -84,11 +86,13 @@ jobs:
           [ "$PRERELEASE" = "true" ] && args+=(--prerelease)
           gh release create "$TAG" "dist/$MOD-$VERSION.zip" "${args[@]}"
 
-      # The tag stays on the commit that was released; main gets the renamed section afterwards. Skipped, with a
-      # warning, when main's Unreleased entries changed since the tag: they must not be released by accident.
-      - name: Commit the changelog to main
+      # The tag stays on the commit that was released; main gets the renamed section afterwards, through a pull request
+      # because main's ruleset declines direct pushes. Skipped, with a warning, when main's Unreleased entries changed
+      # since the tag: they must not be released by accident.
+      - name: Open a pull request with the changelog
         if: steps.target.outputs.dry_run != 'true'
         env:
+          GH_TOKEN: ${{ github.token }}
           MOD: ${{ steps.target.outputs.mod }}
           VERSION: ${{ steps.target.outputs.version }}
         run: |
@@ -106,8 +110,16 @@ jobs:
           git diff --quiet && exit 0
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          branch="release/changelog-$MOD-$VERSION"
+          git switch -c "$branch"
           git commit -m "Changelog: release $MOD $VERSION" "package/$MOD/CHANGELOG.md"
-          git push origin HEAD:main || echo "::warning::Could not push the changelog to main; rename [Unreleased] to $VERSION by hand."
+          if ! git push origin "$branch"; then
+            echo "::warning::Could not push the changelog branch; rename [Unreleased] to $VERSION in package/$MOD/CHANGELOG.md by hand."
+            exit 0
+          fi
+          gh pr create --base main --head "$branch" --title "Changelog: release $MOD $VERSION" \
+            --body "Renames \`[Unreleased]\` to \`[$VERSION]\` in \`package/$MOD/CHANGELOG.md\`, as the Release workflow does for the release notes. Merge it before other changes touch the changelog." \
+            || echo "::warning::Could not open the changelog pull request; branch $branch is pushed, open it by hand (the repo setting 'Allow GitHub Actions to create pull requests' must be on)."
 
       - name: Upload the package (dry run)
         if: steps.target.outputs.dry_run == 'true'

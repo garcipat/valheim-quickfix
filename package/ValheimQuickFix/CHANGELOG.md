@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-17
+
 ### Added
 
 - Portals on a button (off by default): tap E on a portal to go through it, hold E to rename it (the dialog opens at once, and typing starts when you let go of E). The opening can be
