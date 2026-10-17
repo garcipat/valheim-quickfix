@@ -29,6 +29,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> MoreBearsEnabled;
         internal static ConfigEntry<bool> MeaningfulToolUpgradesEnabled;
         internal static ConfigEntry<bool> RepairAllOnHoldEnabled;
+        internal static ConfigEntry<bool> PortalPressOrHoldEnabled;
         internal static ConfigEntry<float> ChopTierBonus;
         internal static ConfigEntry<float> PickaxeTierBonus;
 
@@ -127,6 +128,12 @@ namespace ValheimQuickFix
                 "RepairAllOnHold",
                 true,
                 "Holding E on a workbench, forge or any other station that can repair repairs every damaged item you carry at once, instead of one per click of the Repair button. The station's hover text says so.");
+
+            PortalPressOrHoldEnabled = Config.Bind(
+                "Portals",
+                "PortalPressOrHold",
+                false,
+                "Pressing E on a portal sends you through it, and holding E opens the tag dialog to rename it. The opening of the portal can be aimed at, not only its frame.");
 
             ChopTierBonus = Config.Bind(
                 "Tools",

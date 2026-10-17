@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Portals on a button (off by default): tap E on a portal to go through it, hold E to rename it (the dialog opens at once, and typing starts when you let go of E). The opening can be
+  aimed at, not only the frame, and the hover text shows "Go through (Hold to set tag)". Walking in still works. Turn it on with
+  `PortalPressOrHold`.
 - Repair everything at once: hold E on a workbench, forge or any other station that can repair, and every damaged item
   you carry is repaired without opening the crafting window, instead of one per click of the Repair button. A tap opens
   the window as before, when you let go of E. The station's hover text shows
@@ -21,13 +24,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   10%. Needs the machine running the spawning (singleplayer or host). Configurable via `MoreBears`.
 - Beehive snaps to the middle of a pole: while placing a beehive, press Q (or E) to pick its snap point and aim at a
   pole; the pole now offers a snap point halfway along it, besides its ends. Configurable via `HiveSnapsToPoleMiddle`.
+- Bees leave a full hive: the bees around a beehive disappear while it holds its maximum honey, so you can see from a
+  distance which hives are ready, and return once you take the honey. Configurable via `HideBeesWhenFull`.
+
+## [0.2.0] - 2026-10-17
+
+### Added
+
 - Place stacks keeps your gear: "Place stacks" and holding E on a container no longer move weapons and tools into a
   container that already holds one with the same name, such as a spare hoe into a chest with a hoe, and no longer move
   cooked or brewed food and potions either. Raw food such as berries and mushrooms, ammo, materials and other items are
   moved as before. Configurable separately via
   `PlaceStacksKeepEquipment` and `PlaceStacksKeepConsumables`.
-- Bees leave a full hive: the bees around a beehive disappear while it holds its maximum honey, so you can see from a
-  distance which hives are ready, and return once you take the honey. Configurable via `HideBeesWhenFull`.
 - Floors count as a roof: standing under a floor, such as a second storey or a deck, now counts as being under a roof,
   so it keeps the rain off you. Sheltered and the Rested bonus still need walls, as with any roof. Configurable via
   `FloorsNotLeaky`.
