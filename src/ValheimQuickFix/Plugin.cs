@@ -40,13 +40,13 @@ namespace ValheimQuickFix
             Log = Logger;
 
             RestoreShieldEnabled = Config.Bind(
-                "Combat",
+                "Gear",
                 "RestoreShield",
                 true,
                 "Re-equip the shield automatically when switching from a bow or two-handed weapon back to a one-handed weapon.");
 
             PushBoatEnabled = Config.Bind(
-                "Boats",
+                "Building & Travel",
                 "PushBoat",
                 true,
                 "Show a \"Push boat\" interaction when standing next to a boat, to push it away from you (e.g. off a beach).");
@@ -64,25 +64,25 @@ namespace ValheimQuickFix
                 "When taking everything from a tombstone, put each item back in its original slot, moving whatever you picked up there since to a free slot.");
 
             FloorsNotLeakyEnabled = Config.Bind(
-                "Building",
+                "Building & Travel",
                 "FloorsNotLeaky",
                 true,
                 "Count floors (wooden floors, stone floors, ...) as a roof for whoever stands under them, so a second storey keeps the rain off you.");
 
             SkipStartupLogosEnabled = Config.Bind(
-                "Startup",
+                "General",
                 "SkipStartupLogos",
                 true,
                 "Skip the Coffee Stain and Iron Gate logos shown when the game starts. The Unity splash screen cannot be skipped.");
 
             FairResourceRoundingEnabled = Config.Bind(
-                "Drops",
+                "Enemies & Drops",
                 "FairResourceRounding",
                 true,
                 "With a fractional resource rate in the world settings (for example 1.5x), round the number of dropped resources up or down at random instead of always up, so 1.5x averages 1.5 and 4.5 gives 4 or 5.");
 
             IgnoreTorchesEnabled = Config.Bind(
-                "Enemies",
+                "Enemies & Drops",
                 "IgnoreTorches",
                 true,
                 "Enemies ignore torches instead of stopping to attack them as structures. Only affects monsters simulated on your machine (always the case in singleplayer).");
@@ -100,25 +100,25 @@ namespace ValheimQuickFix
                 "\"Place stacks\" (and holding E on a container) no longer moves cooked and brewed food and potions into a container that already holds some. Raw food such as berries and mushrooms is still moved. Turn this off to keep restocking chests with all of them.");
 
             HideBeesWhenFullEnabled = Config.Bind(
-                "Building",
+                "Building & Travel",
                 "HideBeesWhenFull",
                 true,
                 "Hide the bees around a beehive while it is full, so you can tell from a distance that there is honey to take. They come back once you take it.");
 
             HiveOnPoleSnapEnabled = Config.Bind(
-                "Building",
+                "Building & Travel",
                 "HiveSnapsToPoleMiddle",
                 true,
                 "While placing a beehive, pressing Q (or E) to pick its snap point also offers a snap point halfway along nearby poles, so the hive can sit in the middle of a pole.");
 
             MoreBearsEnabled = Config.Bind(
-                "Enemies",
+                "Enemies & Drops",
                 "MoreBears",
                 true,
                 "Make bears easier to find: they get a spawn roll every 17 minutes instead of every 33, up to two can live in an area, and drop their trophy 20% of the time instead of 10%. Takes effect on the next game start, and only when your machine runs the spawning (singleplayer or hosting).");
 
             MeaningfulToolUpgradesEnabled = Config.Bind(
-                "Tools",
+                "Gear",
                 "MeaningfulToolUpgrades",
                 false,
                 "Make a better tool material count for more than a higher upgrade level: axes and pickaxes deal extra chop / mining damage to trees, logs, stumps and rocks, growing with the tool's tier (stone 0, flint 1, bronze 2, iron 3 for axes). Combat damage is not affected.");
@@ -130,13 +130,13 @@ namespace ValheimQuickFix
                 "Holding E on a workbench, forge or any other station that can repair repairs every damaged item you carry at once, instead of one per click of the Repair button. The station's hover text says so.");
 
             PortalPressOrHoldEnabled = Config.Bind(
-                "Portals",
+                "Building & Travel",
                 "PortalPressOrHold",
                 false,
                 "Pressing E on a portal sends you through it, and holding E opens the tag dialog to rename it. The opening of the portal can be aimed at, not only its frame.");
 
             ChopTierBonus = Config.Bind(
-                "Tools",
+                "Gear",
                 "ChopTierBonus",
                 5f,
                 new ConfigDescription(
@@ -144,7 +144,7 @@ namespace ValheimQuickFix
                     new AcceptableValueRange<float>(0f, 50f)));
 
             PickaxeTierBonus = Config.Bind(
-                "Tools",
+                "Gear",
                 "PickaxeTierBonus",
                 8f,
                 new ConfigDescription(

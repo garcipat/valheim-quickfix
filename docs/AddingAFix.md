@@ -4,6 +4,7 @@
    method that causes the problem.
 2. **Add a config toggle** in `Plugin.Awake`:
    `MyFixEnabled = Config.Bind("Section", "MyFix", true, "What it does.");`
+   Reuse a section that fits (`Inventory`, `Gear`, `Building & Travel`, `Enemies & Drops`, `General`) rather than adding a new one (a new section needs the maintainer's agreement first).
 3. **Create `Patches/MyFixPatch.cs`** with a `[HarmonyPatch(typeof(X), nameof(X.Method))]` class.
    Return early when the toggle is off, and guard with `Player.m_localPlayer` where relevant.
 4. **Build:** `dotnet build src/ValheimQuickFix -c Release`.

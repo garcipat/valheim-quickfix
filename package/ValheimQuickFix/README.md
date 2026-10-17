@@ -40,19 +40,19 @@ with the mod installed, and changes apply after a restart.
 
 | Section            | Option          | Default | Description                                          |
 | ------------------ | --------------- | ------- | ---------------------------------------------------- |
-| `Combat`           | `RestoreShield` | `true`  | Re-equip the shield after switching back from a bow. |
-| `Boats`            | `PushBoat`      | `true`  | Show the "Push boat" interaction.                    |
+| `Gear`           | `RestoreShield` | `true`  | Re-equip the shield after switching back from a bow. |
+| `Building & Travel`            | `PushBoat`      | `true`  | Show the "Push boat" interaction.                    |
 | `Inventory`        | `StackOnTakeAll` | `true` | Merge partial stacks after "Take all" on any container. |
 | `Inventory`        | `RestoreTombstoneSlots` | `true` | Put tombstone items back in their original slots. |
-| `Building`         | `FloorsNotLeaky` | `true` | A floor above you counts as a roof. |
-| `Startup`          | `SkipStartupLogos` | `true` | Skip the Coffee Stain and Iron Gate logos. |
-| `Enemies`          | `IgnoreTorches` | `true`  | Enemies don't attack torches as structures. |
+| `Building & Travel`         | `FloorsNotLeaky` | `true` | A floor above you counts as a roof. |
+| `General`          | `SkipStartupLogos` | `true` | Skip the Coffee Stain and Iron Gate logos. |
+| `Enemies & Drops`          | `IgnoreTorches` | `true`  | Enemies don't attack torches as structures. |
 | `Inventory`        | `PlaceStacksKeepEquipment` | `true` | "Place stacks" leaves weapons and tools alone. |
 | `Inventory`        | `PlaceStacksKeepConsumables` | `true` | "Place stacks" leaves cooked food and potions alone. |
-| `Building`         | `HideBeesWhenFull` | `true` | Full beehives lose their bees. |
-| `Building`         | `HiveSnapsToPoleMiddle` | `true` | Beehives can snap to the middle of a pole. |
+| `Building & Travel`         | `HideBeesWhenFull` | `true` | Full beehives lose their bees. |
+| `Building & Travel`         | `HiveSnapsToPoleMiddle` | `true` | Beehives can snap to the middle of a pole. |
 | `Inventory`        | `RepairAllOnHold` | `true` | Hold E on a workbench or forge to repair every item at once. |
-| `Portals`          | `PortalPressOrHold` | `false` | Tap E on a portal to go through, hold E to rename it. |
+| `Building & Travel`          | `PortalPressOrHold` | `false` | Tap E on a portal to go through, hold E to rename it. |
 
 ## Installation
 

@@ -4,7 +4,7 @@ Behavior of each fix. Implementation lives in `src/ValheimQuickFix/Patches/`.
 
 ## Restore shield
 
-**Config:** `Combat` → `RestoreShield` (default `true`)
+**Config:** `Gear` → `RestoreShield` (default `true`)
 **Patch:** `Humanoid.EquipItem` (Prefix + Postfix) — `Patches/RestoreShieldPatch.cs`
 
 **Problem:** with a shield and one-handed weapon equipped, equipping a bow (or any two-handed
@@ -22,7 +22,7 @@ inventory and you must re-equip it by hand.
 
 ## Push boat
 
-**Config:** `Boats` → `PushBoat` (default `true`)
+**Config:** `Building & Travel` → `PushBoat` (default `true`)
 **Patch:** `Ship.Awake` (Postfix) adds a `BoatPush` component — `Patches/PushBoatPatch.cs`
 
 **Problem:** a boat run aground can't be moved by the player standing next to it.
@@ -91,7 +91,7 @@ slot, so your layout is not restored.
 
 ## Floors count as a roof
 
-**Config:** `Building` → `FloorsNotLeaky` (default `true`)
+**Config:** `Building & Travel` → `FloorsNotLeaky` (default `true`)
 **Patch:** `Cover.IsUnderRoof` (Postfix) — `Patches/FloorRoofPatch.cs`
 
 **Problem:** `Cover.IsUnderRoof` casts a sphere straight up from a point and treats any hit as a roof, except objects tagged
@@ -114,7 +114,7 @@ Pieces are matched by prefab name, not by a game-defined category.
 
 ## Skip startup logos
 
-**Config:** `Startup` → `SkipStartupLogos` (default `true`)
+**Config:** `General` → `SkipStartupLogos` (default `true`)
 **Patch:** `SceneLoader.Awake` (Postfix) — `Patches/SkipStartupLogosPatch.cs`
 
 **Problem:** the first scene shows the Coffee Stain and Iron Gate logos for about two seconds each before the game loads.
@@ -128,7 +128,7 @@ either is missing.
 
 ## Fair resource rounding
 
-**Config:** `Drops` → `FairResourceRounding` (default `true`)
+**Config:** `Enemies & Drops` → `FairResourceRounding` (default `true`)
 **Patches:** `Game.ScaleDrops(ItemData, int)` and `Game.ScaleDrops(int, int)` (Postfix), `DropTable.GetDropList(int)`
 (Prefix + Postfix + Finalizer) — `Patches/FairResourceRoundingPatch.cs`
 
@@ -153,7 +153,7 @@ libs, so everything is looked up by name at runtime and the fix disables itself 
 
 ## Ignore torches
 
-**Config:** `Enemies` → `IgnoreTorches` (default `true`)
+**Config:** `Enemies & Drops` → `IgnoreTorches` (default `true`)
 **Patch:** `BaseAI.FindClosestStaticPriorityTarget` and `BaseAI.FindRandomStaticTarget` (Postfix) — `Patches/IgnoreTorchesPatch.cs`
 
 **Problem:** enemies treat standing and wall torches as structures to attack, and stop to smash them instead of
@@ -200,7 +200,7 @@ so it is moved. Shields and armor are not protected.
 
 ## Bees leave a full hive
 
-**Config:** `Building` → `HideBeesWhenFull`, default `true`
+**Config:** `Building & Travel` → `HideBeesWhenFull`, default `true`
 **Patch:** `Beehive.UpdateBees` and `Beehive.RPC_Extract` (Postfix) — `Patches/HideBeesWhenFullPatch.cs`
 
 **Problem:** a full beehive looks exactly like an empty one. The bees show whenever the hive has a valid biome, free
@@ -219,7 +219,7 @@ also drew honey leaking down the sides was dropped: primitives placed from the m
 
 ## Beehive snaps to a pole's middle
 
-**Config:** `Building` → `HiveSnapsToPoleMiddle` (default `true`)
+**Config:** `Building & Travel` → `HiveSnapsToPoleMiddle` (default `true`)
 **Patch:** `Piece.GetSnapPoints` (both overloads, Postfix) — `Patches/HiveOnPoleSnapPatch.cs`
 
 **Problem:** a pole only has snap points at its ends, so a beehive cannot be snapped to the middle of one.
@@ -237,7 +237,7 @@ closest to where you aim.
 
 ## More bears
 
-**Config:** `Enemies` → `MoreBears` (default `true`)
+**Config:** `Enemies & Drops` → `MoreBears` (default `true`)
 **Patch:** `ZNetScene.Awake` (Postfix) — `Patches/MoreBearsPatch.cs`
 
 **Problem:** in the live game the Black Forest bear spawn entry (`Bjorn`, in `_SpawnList_base`) rolls once every 2000 s at
@@ -258,7 +258,7 @@ unchanged. `SpawnSystemList` is missing from the compile-time libs, so it is fou
 
 ## Meaningful tool upgrades
 
-**Config:** `Tools` → `MeaningfulToolUpgrades` (default `false`), `ChopTierBonus` (default `5`) and `PickaxeTierBonus` (default `8`)
+**Config:** `Gear` → `MeaningfulToolUpgrades` (default `false`), `ChopTierBonus` (default `5`) and `PickaxeTierBonus` (default `8`)
 **Patch:** `TreeBase.Damage`, `TreeLog.Damage`, `Destructible.Damage`, `MineRock.Damage`, `MineRock5.Damage` (Prefix) —
 `Patches/MeaningfulToolUpgradesPatch.cs`
 
@@ -309,7 +309,7 @@ missing. The hint is plain English, not localized. Looking away from the station
 
 ## Portal press or hold
 
-**Config:** `Portals` → `PortalPressOrHold` (default `false`)
+**Config:** `Building & Travel` → `PortalPressOrHold` (default `false`)
 **Patch:** `TeleportWorld.Interact` (Prefix), `Player.Update` (Postfix), `TeleportWorld.GetHoverText` (Postfix), `TeleportWorld.Awake` (Postfix) — `Patches/PortalPressOrHoldPatch.cs`
 
 **Problem:** E on a portal only opens the tag dialog, so renaming is the only thing the key does, and the portal can only be
