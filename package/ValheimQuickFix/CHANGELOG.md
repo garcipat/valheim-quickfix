@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Floors count as a roof: standing under a floor, such as a second storey or a deck, now counts as being under a roof,
+  so it keeps the rain off you. Sheltered and the Rested bonus still need walls, as with any roof. Configurable via
+  `FloorsNotLeaky`.
 - Stack on take all: after "Take all" on any container, such as a chest or your tombstone, partial stacks of the same
   item in your inventory are merged instead of taking two slots. Configurable via `StackOnTakeAll`.
 

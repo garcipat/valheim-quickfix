@@ -88,3 +88,26 @@ slot, so your layout is not restored.
 **Known limits:** a displaced item loses its hotbar slot if it was on the hotbar. Works together with
 *Stack on take all*: after slots are restored, partial stacks are topped up, earliest slot first.
 
+
+## Floors count as a roof
+
+**Config:** `Building` → `FloorsNotLeaky` (default `true`)
+**Patch:** `Cover.IsUnderRoof` (Postfix) — `Patches/FloorRoofPatch.cs`
+
+**Problem:** `Cover.IsUnderRoof` casts a sphere straight up from a point and treats any hit as a roof, except objects tagged
+`leaky`. Floors carry that tag, so standing under a floor (a second storey, a deck) never counts as being under a roof, even
+though `Cover.GetCoverForPoint` counts the same floor as cover. `Player.InShelter` needs both, so the Rested bonus and
+sleeping fail under a floor.
+
+**Behavior:**
+
+1. When vanilla finds no roof, the same upward cast is repeated with the same layers.
+2. A hit counts as a roof if it is tagged `leaky`, belongs to a building `Piece`, and the piece's name contains "floor".
+3. Everything else stays as vanilla: other leaky objects (and anything not part of a piece) still let rain through.
+4. The first time each leaky piece is seen above a point, its name is logged with whether it counts, so pieces that
+   should count too (roof ribs, grates, ...) can be added.
+
+**Known limits:** `Cover` is static and is also used for rain, wetness and fireplaces, so those follow the new result.
+The "Sheltered" status and the Rested bonus still need walls: `Player.InShelter` also wants 14 of the 17 cover rays to
+hit something, and a roof alone gives at most 9, same as a normal roof.
+Pieces are matched by prefab name, not by a game-defined category.

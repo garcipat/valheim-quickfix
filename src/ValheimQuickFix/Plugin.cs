@@ -18,6 +18,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> PushBoatEnabled;
         internal static ConfigEntry<bool> StackOnTakeAllEnabled;
         internal static ConfigEntry<bool> RestoreTombstoneSlotsEnabled;
+        internal static ConfigEntry<bool> FloorsNotLeakyEnabled;
 
         private Harmony _harmony;
 
@@ -48,6 +49,12 @@ namespace ValheimQuickFix
                 "RestoreTombstoneSlots",
                 true,
                 "When taking everything from a tombstone, put each item back in its original slot, moving whatever you picked up there since to a free slot.");
+
+            FloorsNotLeakyEnabled = Config.Bind(
+                "Building",
+                "FloorsNotLeaky",
+                true,
+                "Count floors (wooden floors, stone floors, ...) as a roof for whoever stands under them, so a second storey keeps the rain off you.");
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();
