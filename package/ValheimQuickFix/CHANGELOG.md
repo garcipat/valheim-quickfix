@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Stack on take all: after "Take all" on any container, such as a chest or your tombstone, partial stacks of the same
+  item in your inventory are merged instead of taking two slots. Configurable via `StackOnTakeAll`.
+
+### Changed
+
+- "Stack on tombstone pickup" is now part of "Stack on take all", which covers tombstones too. The `StackOnTombstonePickup`
+  setting is replaced by `StackOnTakeAll`; a leftover `StackOnTombstonePickup` line in your config file is ignored.
+
 ## [0.1.0] - 2026-10-15
 
 ### Added
