@@ -306,3 +306,32 @@ takes a click per piece.
 **Known limits:** `RepairOneItem`, `HaveRepairableItems`, `InUseDistance`, `m_canRepair` and `m_currentStation` are private or
 missing from the compile-time libs, so they are found by name; the patch disables itself with a log line if one is
 missing. The hint is plain English, not localized. Looking away from the station before releasing E still opens its window.
+
+## Portal press or hold
+
+**Config:** `Portals` → `PortalPressOrHold` (default `false`)
+**Patch:** `TeleportWorld.Interact` (Prefix), `Player.Update` (Postfix), `TeleportWorld.GetHoverText` (Postfix), `TeleportWorld.Awake` (Postfix) — `Patches/PortalPressOrHoldPatch.cs`
+
+**Problem:** E on a portal only opens the tag dialog, so renaming is the only thing the key does, and the portal can only be
+aimed at by its frame: the opening is a trigger volume that the hover ray skips.
+
+**Behavior:**
+
+1. Pressing E on a portal records the press instead of opening the dialog.
+2. If E is still down half a second later (the game repeats the interaction about every 0.2 s), the game's own
+   `Interact` runs again (so the private-area check and the tag dialog are vanilla), once per press. The dialog's input
+   field is then made read-only, because a field opened under a held E is typed full of "e" by the key's auto-repeat.
+3. `Player.Update` watches for E to come up. A tap calls the game's own `TeleportWorld.Teleport`, so an unlinked portal,
+   the no-portal rules, boss events and the metal check behave as when walking in; a tap on an unlinked portal does
+   nothing. After a hold, the field becomes editable one frame after E is up, so the last repeated character is not typed.
+4. The hover text reads "Go through (Hold to set tag)" in place of the "Set tag" line.
+5. On `Awake` a script-less trigger `BoxCollider` copying the portal's `TeleportWorldTrigger` is added as its child on the
+   `piece_nonsolid` layer, so the hover ray hits the opening and `GetComponentInParent` resolves it to the portal. Walking
+   in still goes through the original trigger. The log line at load names the trigger's layer and whether that layer is in
+   `Player.m_interactMask`.
+
+**Known limits:** `Player.m_interactMask` is private, so it is read by name. The extra collider needs the opening to be a
+`BoxCollider` and the hover ray to hit trigger colliders; if not, the patch logs a warning and only the frame is hoverable.
+The hint is plain English, not localized. `TextInput.m_inputField` is private and its TextMeshPro type is not in the compile-time libs, so it is reached by name and
+`readOnly` is set by reflection; the patch disables itself with a log line if the field is missing. "Held" is the `Use` button or
+the raw E key. Looking away from the portal before releasing E still sends you through.

@@ -52,6 +52,7 @@ with the mod installed, and changes apply after a restart.
 | `Building`         | `HideBeesWhenFull` | `true` | Full beehives lose their bees. |
 | `Building`         | `HiveSnapsToPoleMiddle` | `true` | Beehives can snap to the middle of a pole. |
 | `Inventory`        | `RepairAllOnHold` | `true` | Hold E on a workbench or forge to repair every item at once. |
+| `Portals`          | `PortalPressOrHold` | `false` | Tap E on a portal to go through, hold E to rename it. |
 
 ## Installation
 
