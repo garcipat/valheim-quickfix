@@ -27,6 +27,9 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> HideBeesWhenFullEnabled;
         internal static ConfigEntry<bool> HiveOnPoleSnapEnabled;
         internal static ConfigEntry<bool> MoreBearsEnabled;
+        internal static ConfigEntry<bool> MeaningfulToolUpgradesEnabled;
+        internal static ConfigEntry<float> ChopTierBonus;
+        internal static ConfigEntry<float> PickaxeTierBonus;
 
         private Harmony _harmony;
 
@@ -111,6 +114,28 @@ namespace ValheimQuickFix
                 "MoreBears",
                 true,
                 "Make bears easier to find: they get a spawn roll every 17 minutes instead of every 33, up to two can live in an area, and drop their trophy 20% of the time instead of 10%. Takes effect on the next game start, and only when your machine runs the spawning (singleplayer or hosting).");
+
+            MeaningfulToolUpgradesEnabled = Config.Bind(
+                "Tools",
+                "MeaningfulToolUpgrades",
+                false,
+                "Make a better tool material count for more than a higher upgrade level: axes and pickaxes deal extra chop / mining damage to trees, logs, stumps and rocks, growing with the tool's tier (stone 0, flint 1, bronze 2, iron 3 for axes). Combat damage is not affected.");
+
+            ChopTierBonus = Config.Bind(
+                "Tools",
+                "ChopTierBonus",
+                5f,
+                new ConfigDescription(
+                    "MeaningfulToolUpgrades: chop damage added per tool tier. A tier-3 iron axe gets 3 times this. Axes gain 3 per upgrade level for comparison.",
+                    new AcceptableValueRange<float>(0f, 50f)));
+
+            PickaxeTierBonus = Config.Bind(
+                "Tools",
+                "PickaxeTierBonus",
+                8f,
+                new ConfigDescription(
+                    "MeaningfulToolUpgrades: mining damage added per tool tier. A tier-2 iron pickaxe gets 2 times this. Pickaxes gain 4 to 5 per upgrade level for comparison. Higher than the axe value because pickaxe tiers start at 1.",
+                    new AcceptableValueRange<float>(0f, 50f)));
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();
