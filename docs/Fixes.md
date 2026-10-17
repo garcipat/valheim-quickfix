@@ -101,7 +101,8 @@ always gives 2 and 3 x 1.5 = 4.5 always gives 5: at 1.5x you get closer to 2x.
 
 **Behavior:**
 
-1. Fixed and ranged amounts (pickables, monster drops, ...): the scaled amount is rounded down or up at random in
+1. Fixed and ranged amounts (pickables, monster drops, ...): a ranged amount is first rolled as a whole number (the game
+   rolls a float between min and max + 1, which averages too high), then the scaled amount is rounded down or up at random in
    proportion to its fractional part, so 4.5 gives 4 or 5, 50% each. The game's minimum of 1 and its stack-size cap stay.
 2. Loot tables (trees, rocks, containers, ...) at a fractional rate above 1x: the game rolls the whole steps of the rate
    (the `1` of 1.5x), then the table is rolled once more at normal size and each item kept in proportion to the fraction,

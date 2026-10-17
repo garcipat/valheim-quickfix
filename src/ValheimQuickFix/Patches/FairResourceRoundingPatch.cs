@@ -115,8 +115,10 @@ namespace ValheimQuickFix.Patches
                     return;
                 }
 
-                // Same roll as the game's, rounded fairly instead of to the nearest; at least 1, as in the game.
-                __result = Mathf.Max(1, FairRounding.RandomRound(UnityEngine.Random.Range((float)__0, (float)__1) * rate));
+                // The game rolls a float here, but its callers pass an exclusive maximum (stack 1 arrives as 1..2), so
+                // that float roll averages too high. Roll a whole number like the game does at 1x, then scale it and
+                // round fairly; at least 1, as in the game.
+                __result = Mathf.Max(1, FairRounding.RandomRound(UnityEngine.Random.Range(__0, __1) * rate));
             }
             catch (Exception e)
             {
