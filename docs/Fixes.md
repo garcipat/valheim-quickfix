@@ -216,3 +216,21 @@ space above it and it is daytime, whatever its honey level, so the only way to k
 
 **Known limits:** the bees are daylight-only in vanilla, so at night every hive looks the same. A first attempt that
 also drew honey leaking down the sides was dropped: primitives placed from the mesh bounds floated in the air.
+
+## Beehive snaps to a pole's middle
+
+**Config:** `Building` → `HiveSnapsToPoleMiddle` (default `true`)
+**Patch:** `Piece.GetSnapPoints` (both overloads, Postfix) — `Patches/HiveOnPoleSnapPatch.cs`
+
+**Problem:** a pole only has snap points at its ends, so a beehive cannot be snapped to the middle of one.
+
+**Behavior:**
+
+1. While the local player places a beehive and has picked a manual snap point (Q / E), each nearby piece whose name
+   contains "pole" offers an extra snap point halfway along it (the average of its own snap points).
+2. The extra points are hidden, untagged child transforms, so vanilla scans and other pieces never see them. Auto-snap
+   (no manual point chosen) is unchanged.
+3. If the beehive has no snap point of its own, the ghost gets one at its origin so Q has something to select.
+
+**Known limits:** poles are matched by prefab name. The hive snaps to whichever of the pole's end or middle points is
+closest to where you aim.

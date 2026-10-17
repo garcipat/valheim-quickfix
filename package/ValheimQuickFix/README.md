@@ -29,6 +29,8 @@ other players don't need it.
   still moved. Equipment and consumables can be switched on or off separately.
 - **Bees leave a full hive** — the bees around a beehive disappear while it holds its maximum honey, so you can see
   from a distance which hives are ready. They return once you take the honey.
+- **Beehive snaps to a pole's middle** — while placing a beehive, press `Q` (or `E`) to pick its snap point and aim
+  at a pole: the pole now also offers a snap point halfway along it, not just at its ends.
 
 ## Configuration
 
@@ -48,6 +50,7 @@ with the mod installed, and changes apply after a restart.
 | `Inventory`        | `PlaceStacksKeepEquipment` | `true` | "Place stacks" leaves weapons and tools alone. |
 | `Inventory`        | `PlaceStacksKeepConsumables` | `true` | "Place stacks" leaves cooked food and potions alone. |
 | `Building`         | `HideBeesWhenFull` | `true` | Full beehives lose their bees. |
+| `Building`         | `HiveSnapsToPoleMiddle` | `true` | Beehives can snap to the middle of a pole. |
 
 ## Installation
 

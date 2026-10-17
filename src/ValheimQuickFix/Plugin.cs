@@ -25,6 +25,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> PlaceStacksKeepEquipmentEnabled;
         internal static ConfigEntry<bool> PlaceStacksKeepConsumablesEnabled;
         internal static ConfigEntry<bool> HideBeesWhenFullEnabled;
+        internal static ConfigEntry<bool> HiveOnPoleSnapEnabled;
 
         private Harmony _harmony;
 
@@ -97,6 +98,12 @@ namespace ValheimQuickFix
                 "HideBeesWhenFull",
                 true,
                 "Hide the bees around a beehive while it is full, so you can tell from a distance that there is honey to take. They come back once you take it.");
+
+            HiveOnPoleSnapEnabled = Config.Bind(
+                "Building",
+                "HiveSnapsToPoleMiddle",
+                true,
+                "While placing a beehive, pressing Q (or E) to pick its snap point also offers a snap point halfway along nearby poles, so the hive can sit in the middle of a pole.");
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();
