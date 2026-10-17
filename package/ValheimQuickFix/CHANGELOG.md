@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   cooked or brewed food and potions either. Raw food such as berries and mushrooms, ammo, materials and other items are
   moved as before. Configurable separately via
   `PlaceStacksKeepEquipment` and `PlaceStacksKeepConsumables`.
+- Bees leave a full hive: the bees around a beehive disappear while it holds its maximum honey, so you can see from a
+  distance which hives are ready, and return once you take the honey. Configurable via `HideBeesWhenFull`.
 - Floors count as a roof: standing under a floor, such as a second storey or a deck, now counts as being under a roof,
   so it keeps the rain off you. Sheltered and the Rested bonus still need walls, as with any roof. Configurable via
   `FloorsNotLeaky`.

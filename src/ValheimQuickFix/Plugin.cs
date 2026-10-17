@@ -24,6 +24,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> IgnoreTorchesEnabled;
         internal static ConfigEntry<bool> PlaceStacksKeepEquipmentEnabled;
         internal static ConfigEntry<bool> PlaceStacksKeepConsumablesEnabled;
+        internal static ConfigEntry<bool> HideBeesWhenFullEnabled;
 
         private Harmony _harmony;
 
@@ -90,6 +91,12 @@ namespace ValheimQuickFix
                 "PlaceStacksKeepConsumables",
                 true,
                 "\"Place stacks\" (and holding E on a container) no longer moves cooked and brewed food and potions into a container that already holds some. Raw food such as berries and mushrooms is still moved. Turn this off to keep restocking chests with all of them.");
+
+            HideBeesWhenFullEnabled = Config.Bind(
+                "Building",
+                "HideBeesWhenFull",
+                true,
+                "Hide the bees around a beehive while it is full, so you can tell from a distance that there is honey to take. They come back once you take it.");
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();

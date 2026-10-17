@@ -27,6 +27,8 @@ other players don't need it.
   and tools, or your cooked food and potions, into a container that already holds one with the same name. Your spare hoe
   stays with you instead of ending up in the chest next to the other hoe. Raw food such as berries and mushrooms is
   still moved. Equipment and consumables can be switched on or off separately.
+- **Bees leave a full hive** — the bees around a beehive disappear while it holds its maximum honey, so you can see
+  from a distance which hives are ready. They return once you take the honey.
 
 ## Configuration
 
@@ -45,6 +47,7 @@ with the mod installed, and changes apply after a restart.
 | `Enemies`          | `IgnoreTorches` | `true`  | Enemies don't attack torches as structures. |
 | `Inventory`        | `PlaceStacksKeepEquipment` | `true` | "Place stacks" leaves weapons and tools alone. |
 | `Inventory`        | `PlaceStacksKeepConsumables` | `true` | "Place stacks" leaves cooked food and potions alone. |
+| `Building`         | `HideBeesWhenFull` | `true` | Full beehives lose their bees. |
 
 ## Installation
 
