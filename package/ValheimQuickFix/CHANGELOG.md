@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Floors count as a roof: standing under a floor, such as a second storey or a deck, now counts as being under a roof,
+  so it keeps the rain off you. Sheltered and the Rested bonus still need walls, as with any roof. Configurable via
+  `FloorsNotLeaky`.
 - Skip startup logos: the Coffee Stain and Iron Gate logos shown on launch are skipped. The Unity splash screen stays.
   Configurable via `SkipStartupLogos`.
 - Fair resource rounding: with a fractional resource rate in the world settings (such as 1.5x), the number of dropped

@@ -17,6 +17,8 @@ other players don't need it.
   tombstones are affected, not chests.
 - **Push boat** — look at a boat from the shore (or from shallow water) and press `E` to push it away
   from you, e.g. off a beach. Hold `E` to keep pushing. Not available while swimming or standing on the boat.
+- **Floors count as a roof** — standing under a floor, such as a second storey or a deck, counts as being under a roof,
+  so it keeps the rain off you. Sheltered and the Rested bonus still need walls, as with any roof.
 - **Skip startup logos** — the Coffee Stain and Iron Gate logos shown on launch are skipped. The Unity splash screen
   can't be skipped.
 - **Ignore torches** — enemies no longer stop to attack your torches as if they were buildings. Only monsters
@@ -34,6 +36,7 @@ with the mod installed, and changes apply after a restart.
 | `Boats`            | `PushBoat`      | `true`  | Show the "Push boat" interaction.                    |
 | `Inventory`        | `StackOnTakeAll` | `true` | Merge partial stacks after "Take all" on any container. |
 | `Inventory`        | `RestoreTombstoneSlots` | `true` | Put tombstone items back in their original slots. |
+| `Building`         | `FloorsNotLeaky` | `true` | A floor above you counts as a roof. |
 | `Startup`          | `SkipStartupLogos` | `true` | Skip the Coffee Stain and Iron Gate logos. |
 | `Combat`           | `IgnoreTorches` | `true`  | Enemies don't attack torches as structures. |
 
