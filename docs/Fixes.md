@@ -39,29 +39,31 @@ The push strength is a fixed 20 m/s² (acceleration, so it feels the same for ev
 **Compatibility notes:** the real `Hoverable` interface has a member (`GetHoverOffset`) that older
 compile-time libs lack, and `Character.IsSwimming` is looked up at runtime for the same reason.
 
-## Stack on tombstone pickup
+## Stack on take all
 
-**Config:** `Inventory` → `StackOnTombstonePickup` (default `true`)
-**Patch:** `TombStone.OnTakeAllSuccess` (Postfix) — `Patches/StackOnTombstonePickupPatch.cs`
+**Config:** `Inventory` → `StackOnTakeAll` (default `true`)
+**Patch:** `Container.RPC_TakeAllResponse` (Postfix) — `Patches/StackOnTakeAllPatch.cs`
 
-**Problem:** after taking everything from your tombstone, two slots can hold the same item as partial stacks (for
-example wood 20 and wood 15). `Inventory.MoveAll` first puts each item back at its original grid slot, which never merges
-into another stack, and only merges the items whose slot was already taken.
+**Problem:** "Take all" on any container (chest, tombstone, ...) goes through `Inventory.MoveAll`, which puts each item in
+the slot it had in the container. That never merges into another stack, so a stack taken into an empty slot can sit
+next to a partial stack of the same item you already carry (for example wood 20 and wood 15 in two slots). A chest's
+grid differs from yours, so its slot numbers land on arbitrary slots of your inventory, which makes this common.
+Moving a single item (clicking it) does merge in vanilla.
 
-**Behavior:**
+**Behavior:** after a granted take-all, partial stacks of the same item in your inventory are topped up:
 
-1. After a successful take-all from a tombstone, partial stacks of the same item in your inventory are merged. "Same item"
-   is the game's own rule: same item name, quality, and world level.
+1. "Same item" is the game's own rule: same item name, quality, and world level.
 2. The earliest partial stack (hotbar first, then row by row) is topped up from the latest one, until at most one partial
    stack of that item remains. Full stacks are never touched, so nothing is rearranged.
 3. Equipped stacks (such as arrows equipped as ammo) are skipped.
+4. It applies to every container, tombstones included, and only to the player who took the items.
 
-**Known limits:** only the "take all" path is covered, which includes the automatic take-all when everything fits. Dragging
-single items out of the open tombstone window is vanilla behavior and still can leave partial stacks.
+**Known limits:** "Take all" only, which includes the automatic take-all when a whole tombstone fits. Dragging single items
+out of an open container is vanilla behavior and can still leave partial stacks.
 
 **Compatibility notes:** `ItemData.m_equipped` was spelled `m_equiped` and `m_worldLevel` did not exist in the compile-time
-libs (0.202), so both are looked up by name at runtime. If the equipped flag can't be found the fix disables itself and
-logs why, rather than risk merging away an equipped stack.
+libs (0.202), so both are looked up by name at runtime (`ItemFields`). If the equipped flag can't be found the fix disables
+itself and logs why, rather than risk merging away an equipped stack.
 
 ## Restore tombstone slots
 
@@ -83,6 +85,6 @@ slot, so your layout is not restored.
    not picked up and stays in the tombstone.
 5. Only tombstones are affected; "take all" from a chest or any other container is untouched.
 
-**Known limits:** a displaced item loses its hotbar slot if it was on the hotbar. Works together with the stack merge
-fix above: after slots are restored, partial stacks are topped up, earliest slot first.
+**Known limits:** a displaced item loses its hotbar slot if it was on the hotbar. Works together with
+*Stack on take all*: after slots are restored, partial stacks are topped up, earliest slot first.
 

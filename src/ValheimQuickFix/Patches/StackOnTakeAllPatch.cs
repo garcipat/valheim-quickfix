@@ -5,25 +5,25 @@ using HarmonyLib;
 namespace ValheimQuickFix.Patches
 {
     /// <summary>
-    /// Taking everything from a tombstone puts each item back at its original grid slot first, which never merges
-    /// into another stack. A partial stack from the corpse can therefore sit next to a partial stack of the same item
-    /// you were already carrying. After a successful take-all, top those partial stacks up.
+    /// "Take all" on any container (chest, tombstone, ...) moves each item to the slot it had in the container, which
+    /// never merges into another stack: a stack taken into an empty slot sits next to a partial stack of the same item
+    /// you already carry. After a granted take-all, top those partial stacks up.
     /// </summary>
     /// <remarks>
-    /// TombStone.OnTakeAllSuccess is private, so it is patched by name. It runs only for the local player, after the
-    /// items have been moved into their inventory.
+    /// This runs after the vanilla <c>Inventory.MoveAll</c> inside <c>Container.RPC_TakeAllResponse</c>, which every
+    /// container shares (tombstones included) and which only runs on the player who took the items.
     /// </remarks>
-    [HarmonyPatch(typeof(TombStone), "OnTakeAllSuccess")]
-    internal static class StackOnTombstonePickupPatch
+    [HarmonyPatch(typeof(Container), "RPC_TakeAllResponse")]
+    internal static class StackOnTakeAllPatch
     {
         private static bool _loggedMissingField;
 
-        private static void Postfix()
+        private static void Postfix(bool granted)
         {
             try
             {
                 var player = Player.m_localPlayer;
-                if (!Plugin.StackOnTombstonePickupEnabled.Value || player == null)
+                if (!Plugin.StackOnTakeAllEnabled.Value || !granted || player == null)
                 {
                     return;
                 }
@@ -34,7 +34,7 @@ namespace ValheimQuickFix.Patches
                     if (!_loggedMissingField)
                     {
                         _loggedMissingField = true;
-                        Plugin.Log.LogError("StackOnTombstonePickup disabled: ItemData has no equipped field in this game version");
+                        Plugin.Log.LogError("StackOnTakeAll disabled: ItemData has no equipped field in this game version");
                     }
 
                     return;
@@ -44,7 +44,7 @@ namespace ValheimQuickFix.Patches
             }
             catch (Exception e)
             {
-                Plugin.Log.LogError($"StackOnTombstonePickup failed: {e}");
+                Plugin.Log.LogError($"StackOnTakeAll failed: {e}");
             }
         }
 
