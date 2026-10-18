@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- The settings are now grouped into five sections instead of nine: `Inventory`, `Gear`, `Building & Travel`,
+  `Enemies & Drops` and `General`. A setting that moved starts at its default value; if you had changed it, set it again
+  or delete the config file to start fresh.
+
 ### Fixed
 
 - Axes, pickaxes and other tools did no damage to trees, rocks and spawners on the current game version, even with
