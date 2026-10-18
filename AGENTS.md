@@ -21,30 +21,17 @@ New work that isn't a fix for something the game gets wrong belongs in its own m
 ## Conventions
 
 - **QuickFix: one fix = one patch file = one config toggle.** Each fix is enabled via a `ConfigEntry<bool>`
-  bound in `Plugin.Awake`, and every patch method returns early when its toggle is off.
+  bound in the plugin's startup, and every patch method returns early when its toggle is off.
 - **Config sections are fixed: `Inventory`, `Gear`, `Building & Travel`, `Enemies & Drops`, `General`.** Put a new
   setting in the one that fits. Never add a section without asking first; there are too many config pages already.
-- **Client-side only.** No server sync, no networking, no RPCs. Guard patches with
-  `Player.m_localPlayer` so remote players are never affected.
+- **Client-side only.** No server sync, no networking, no RPCs. Remote players must never be affected.
 - **Minimal patches.** Prefer Prefix/Postfix over Transpilers. Never replace vanilla methods
   wholesale — keep the game's own logic running.
 - **No dependencies** beyond BepInEx, HarmonyX, Unity, and the game assemblies. Do not add
   Jotunn or other mods as dependencies without a reason documented in `docs/Architecture.md`.
-- **Never access private game members directly.** The compile-time game libs (`Valheim.GameLibs`) are
-  *publicized*, so `Humanoid.m_leftItem`, `Ship.m_body`, etc. compile, but the real game assembly keeps
-  them private/protected and the call throws `FieldAccessException` at runtime — even when the code path
-  is disabled by a config toggle. Use Harmony field injection (`ref T ___m_field` in patch parameters)
-  or `AccessTools.FieldRefAccess`/reflection. Wrap patch bodies in try/catch and log via `Plugin.Log`.
-- **Fields drift too.** Game fields get renamed or added between versions (`ItemData.m_equiped` became `m_equipped`,
-  `m_worldLevel` appeared later), so code touching one the compile-time libs may not match looks it up by name with
-  `AccessTools.Field` and disables itself, with a log line, if it is missing.
-  A field can also change *type*, which fails outside the patch's own `try` and aborts the game method, so read such
-  fields by name and convert.
-- **Interfaces drift.** Game interfaces (`Hoverable`, ...) gain members between versions, and the compile-time libs
-  are older than the live game. A class implementing one must declare any newer members as `public virtual`.
 - Match the existing code style (4-space indent, block-scoped namespaces, `internal` by default).
 - **Versions live in the release tag, not in files.** A release is a tag `<Mod>-vX.Y.Z` pushed on `main`; the Release
-  workflow builds that version into the DLL (the generated `BuildInfo.Version`, used by `Plugin.cs`) and stamps it into the
+  workflow builds that version into the DLL and stamps it into the
   zip's manifest. `manifest.json` and `thunderstore.toml` hold a `0.0.0` placeholder, and local builds report `0.0.0-dev`.
   Never write a real version into those files.
 - To release, use the `release-mod` skill (`/release-mod <Mod>`): it reads the mod's changelog, proposes the version,
