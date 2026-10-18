@@ -38,6 +38,9 @@ New work that isn't a fix for something the game gets wrong belongs in its own m
 - **Fields drift too.** Game fields get renamed or added between versions (`ItemData.m_equiped` became `m_equipped`,
   `m_worldLevel` appeared later), so code touching one the compile-time libs may not match looks it up by name with
   `AccessTools.Field` and disables itself, with a log line, if it is missing.
+  A field can also change *type* (`HitData.m_toolTier` is an `int` in the libs, a `short` live): the access then throws
+  `MissingFieldException` when the method is JIT-compiled, outside its own `try`, and the prefix aborts the game method.
+  Read such fields by name and convert.
 - **Interfaces drift.** Game interfaces (`Hoverable`, ...) gain members between versions, and the compile-time libs
   are older than the live game. A class implementing one must declare any newer members as `public virtual`.
 - Match the existing code style (4-space indent, block-scoped namespaces, `internal` by default).

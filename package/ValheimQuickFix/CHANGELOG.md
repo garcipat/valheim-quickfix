@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Axes, pickaxes and other tools did no damage to trees, rocks and spawners on the current game version: the tool-tier
+  field has a different type there, which made the Meaningful tool upgrades patch fail before the hit was applied, even
+  with `MeaningfulToolUpgrades` off.
+
 ## [0.3.0] - 2026-10-17
 
 ### Added

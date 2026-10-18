@@ -10,7 +10,7 @@ namespace ValheimQuickFix.Patches
     /// </summary>
     /// <remarks>
     /// The bonus is added to the <see cref="HitData"/> just before the target takes it, so the item's own stats, combat
-    /// damage and the tooltip are untouched. <c>HitData.m_toolTier</c> is the tier of the tool that made the hit, set by
+    /// damage and the tooltip are untouched. <c>HitData.m_toolTier</c> (read by name, see <see cref="HitDataAccess"/>) is the tier of the tool that made the hit, set by
     /// the attack. Only hits from the local player are changed. Tree, log, stump and rock health live in the target's
     /// own <c>Damage</c> methods, one patch each.
     /// </remarks>
@@ -50,7 +50,13 @@ namespace ValheimQuickFix.Patches
         {
             try
             {
-                if (!Plugin.MeaningfulToolUpgradesEnabled.Value || hit == null || hit.m_toolTier <= 0)
+                if (!Plugin.MeaningfulToolUpgradesEnabled.Value || hit == null)
+                {
+                    return;
+                }
+
+                var toolTier = HitDataAccess.ToolTier(hit);
+                if (toolTier <= 0)
                 {
                     return;
                 }
@@ -64,12 +70,12 @@ namespace ValheimQuickFix.Patches
                 // Only add to a damage type the tool actually deals, so other tools and weapons are untouched.
                 if (hit.m_damage.m_chop > 0f)
                 {
-                    hit.m_damage.m_chop += Plugin.ChopTierBonus.Value * hit.m_toolTier;
+                    hit.m_damage.m_chop += Plugin.ChopTierBonus.Value * toolTier;
                 }
 
                 if (hit.m_damage.m_pickaxe > 0f)
                 {
-                    hit.m_damage.m_pickaxe += Plugin.PickaxeTierBonus.Value * hit.m_toolTier;
+                    hit.m_damage.m_pickaxe += Plugin.PickaxeTierBonus.Value * toolTier;
                 }
             }
             catch (Exception e)
