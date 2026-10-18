@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Axes, pickaxes and other tools did no damage to trees, rocks and spawners on the current game version, even with
+  `MeaningfulToolUpgrades` off.
+
 ## [0.3.0] - 2026-10-17
 
 ### Added
