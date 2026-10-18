@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-10-18
+
 ### Changed
 
 - The settings are now grouped into five sections instead of nine: `Inventory`, `Gear`, `Building & Travel`,
