@@ -1,0 +1,39 @@
+# Config for the Thunderstore CLI (tcli). Keep [package] in sync with manifest.json (scripts/package.sh checks that).
+# versionNumber is a placeholder: the release version comes from the tag (tcli build --package-version). Build + publish: see docs/Development.md.
+[config]
+schemaVersion = "0.0.1"
+
+[package]
+namespace = "garcipat"
+name = "ItemCompare"
+versionNumber = "0.0.0"
+description = "Compare an item with the one you wear: hover gear and see old -> new stats in green or red."
+websiteUrl = "https://github.com/garcipat/valheim-quickfix"
+containsNsfwContent = false
+
+[package.dependencies]
+denikson-BepInExPack_Valheim = "5.4.2351"
+
+[build]
+icon = "./icon.png"
+readme = "./README.md"
+outdir = "../../dist/thunderstore"
+
+[[build.copy]]
+source = "../../src/ItemCompare/bin/Release/net48/ItemCompare.dll"
+target = ""
+
+[[build.copy]]
+source = "./CHANGELOG.md"
+target = ""
+
+[[build.copy]]
+source = "../../LICENSE"
+target = ""
+
+[publish]
+repository = "https://thunderstore.io"
+communities = [ "valheim" ]
+
+[publish.categories]
+valheim = [ "client-side", "tweaks", "utility" ]

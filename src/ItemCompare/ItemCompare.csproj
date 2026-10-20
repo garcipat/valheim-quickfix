@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>ItemCompare</AssemblyName>
+    <RootNamespace>ValheimItemCompare</RootNamespace>
+    <Product>Item Compare</Product>
+    <Description>Compare an item's stats with the equipped one in its tooltip.</Description>
+  </PropertyGroup>
+
+</Project>
