@@ -2,7 +2,7 @@
 
 ## Overview
 
-The repo holds two independent [BepInEx 5](https://github.com/BepInEx/BepInEx) plugins. On startup each
+The repo holds three independent [BepInEx 5](https://github.com/BepInEx/BepInEx) plugins. On startup each
 `Plugin.Awake` binds its config entries and calls `Harmony.PatchAll()`, which discovers every `[HarmonyPatch]`
 class in that assembly.
 
@@ -12,9 +12,13 @@ src/
  ├─ ValheimQuickFix/             fixes for things the game gets wrong
  │   ├─ Plugin.cs                one ConfigEntry<bool> per fix
  │   └─ Patches/<Fix>Patch.cs    Prefix / Postfix on vanilla methods
- └─ SignIcons/                   item icons on signs
-     ├─ Plugin.cs
-     └─ Patches/SignIconPatch.cs
+ ├─ SignIcons/                   item icons on signs
+ │   ├─ Plugin.cs
+ │   └─ Patches/SignIconPatch.cs
+ └─ ItemCompare/                 old -> new stats against the equipped item in tooltips
+     ├─ Plugin.cs                Mode / CompareKey config
+     ├─ StatDiff.cs              which stats, how they are compared and coloured
+     └─ Patches/TooltipComparePatch.cs
 package/<Mod>/                   Thunderstore skeleton (manifest, thunderstore.toml, icon, README, CHANGELOG)
 ```
 
@@ -42,5 +46,5 @@ and interface drift. TextMeshPro and `UnityEngine.UI` are not available as packa
 - **Patches over replacements.** Prefix/Postfix keep vanilla logic intact and coexist better with other mods
   patching the same methods.
 - **No Jotunn.** The mods add no items, recipes, or assets, so the extra dependency isn't needed.
-- **Two mods, one repo.** Shared build setup and CI, but separate packages: new functionality gets its own mod
+- **Several mods, one repo.** Shared build setup and CI, but separate packages: new functionality gets its own mod
   instead of growing QuickFix.

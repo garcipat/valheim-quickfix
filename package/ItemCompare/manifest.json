@@ -1,0 +1,10 @@
+{
+  "name": "ItemCompare",
+  "author": "garcipat",
+  "version_number": "0.0.0",
+  "website_url": "https://github.com/garcipat/valheim-quickfix",
+  "description": "Compare an item with the one you wear: hover gear and see old -> new stats in green or red.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2351"
+  ]
+}
