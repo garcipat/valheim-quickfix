@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Portals no longer get blocked when several players use them one after another: a player standing in the opening is
   invisible and walk-through on your screen until they are gone. Only affects your own view, so each player needs the
   mod. Configurable via `GhostPortalPlayers`.
+- With `PortalPressOrHold` on, every portal that loaded wrote an `InvalidCastException` to the log. Nothing was broken
+  in-game, but the log was filled with errors.
 
 ## [0.3.1] - 2026-10-18
 
