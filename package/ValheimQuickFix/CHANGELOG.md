@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-10-23
+
 ### Changed
 
 - The mod description now lists every fix, including Meaningful tool upgrades, Fair resource rounding and More bears.
