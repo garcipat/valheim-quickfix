@@ -254,7 +254,7 @@ closest to where you aim.
 
 ## More bears
 
-**Config:** `Enemies & Drops` → `MoreBears` (default `true`)
+**Config:** `Enemies & Drops` → `MoreBears` (default `false`)
 **Patch:** `ZNetScene.Awake` (Postfix) — `Patches/MoreBearsPatch.cs`
 
 **Problem:** in the live game the Black Forest bear spawn entry (`Bjorn`, in `_SpawnList_base`) rolls once every 2000 s at

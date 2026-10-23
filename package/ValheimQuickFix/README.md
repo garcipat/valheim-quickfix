@@ -25,6 +25,15 @@ other players don't need it.
   times as fast. The speed-up can be set from 1x to 2x.
 - **Ignore torches** — enemies no longer stop to attack your torches as if they were buildings. Only monsters
   simulated on your machine are affected, so this works in singleplayer but not against monsters on a server.
+- **Fair resource rounding** — with a fractional resource rate in the world settings (such as 1.5x), the number of
+  dropped resources is rounded up or down at random instead of always up, so 1.5x really averages 1.5 and 4.5 gives 4
+  or 5. Only drops rolled on your machine are affected.
+- **More bears** (off by default) — bears get a spawn roll every 17 minutes instead of every 33, up to two can live in an area, and they
+  drop their trophy 20% of the time instead of 10%. Only works in singleplayer or when you host.
+- **Meaningful tool upgrades** (off by default) — a better tool material counts for more than a higher upgrade level.
+  Axes and pickaxes deal extra chop or mining damage to trees, logs, stumps and rocks, growing with the tool's tier, so
+  a level-1 iron axe out-chops a level-3 bronze one. Combat damage is unchanged. The bonus per tier can be set
+  separately for axes and pickaxes.
 - **Place stacks keeps your gear** — "Place stacks" (and holding `E` on a container) no longer moves your weapons
   and tools, or your cooked food and potions, into a container that already holds one with the same name. Your spare hoe
   stays with you instead of ending up in the chest next to the other hoe. Raw food such as berries and mushrooms is
@@ -33,8 +42,15 @@ other players don't need it.
   from a distance which hives are ready. They return once you take the honey.
 - **Beehive snaps to a pole's middle** — while placing a beehive, press `Q` (or `E`) to pick its snap point and aim
   at a pole: the pole now also offers a snap point halfway along it, not just at its ends.
+- **Repair all on hold** — hold `E` on a workbench, forge or any other station that can repair to repair every damaged
+  item you carry at once, instead of one per click of the Repair button. A tap opens the crafting window as before.
 - **Fill smelters on hold** — hold `E` on the ore or fuel slot of a smelter, kiln, blast furnace, spinning wheel or
   other processing station to fill it as full as it goes in one go. A tap still adds one piece.
+- **Portal press or hold** (off by default) — tap `E` on a portal to go through it, hold `E` to rename it. The opening
+  of the portal can be aimed at, not only its frame. Walking in still works.
+- **Portals don't get blocked** — a player who walks into a portal stays solid in its opening for a couple of seconds
+  and blocks whoever follows. While they stand there they are invisible and walk-through on your screen. Only affects
+  your own view, so each player needs the mod.
 
 ## Configuration
 
@@ -53,6 +69,11 @@ with the mod installed, and changes apply after a restart.
 | `General`          | `SittingStaminaRegen` | `false` | Stamina regenerates faster while sitting. |
 | `General`          | `SittingStaminaMultiplier` | `1.5` | How much faster, from 1 to 2 in steps of 0.1. |
 | `Enemies & Drops`          | `IgnoreTorches` | `true`  | Enemies don't attack torches as structures. |
+| `Enemies & Drops`  | `FairResourceRounding` | `true` | Round fractional resource drops up or down at random. |
+| `Enemies & Drops`  | `MoreBears` | `false` | Bears spawn more often and drop their trophy more often. |
+| `Gear`             | `MeaningfulToolUpgrades` | `false` | Better axe and pickaxe materials deal extra chop / mining damage. |
+| `Gear`             | `ChopTierBonus` | `5` | Chop damage added per axe tier (0 to 50). |
+| `Gear`             | `PickaxeTierBonus` | `8` | Mining damage added per pickaxe tier (0 to 50). |
 | `Inventory`        | `PlaceStacksKeepEquipment` | `true` | "Place stacks" leaves weapons and tools alone. |
 | `Inventory`        | `PlaceStacksKeepConsumables` | `true` | "Place stacks" leaves cooked food and potions alone. |
 | `Building & Travel`         | `HideBeesWhenFull` | `true` | Full beehives lose their bees. |
