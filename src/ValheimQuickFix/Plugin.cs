@@ -31,6 +31,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> RepairAllOnHoldEnabled;
         internal static ConfigEntry<bool> PortalPressOrHoldEnabled;
         internal static ConfigEntry<bool> SmelterFillOnHoldEnabled;
+        internal static ConfigEntry<bool> GhostPortalPlayersEnabled;
         internal static ConfigEntry<float> ChopTierBonus;
         internal static ConfigEntry<float> PickaxeTierBonus;
 
@@ -141,6 +142,12 @@ namespace ValheimQuickFix
                 "SmelterFillOnHold",
                 true,
                 "Holding E on the ore or fuel slot of a smelter, kiln, blast furnace, spinning wheel or other processing station fills it as full as it goes from what you carry, instead of one piece per press. A tap still adds one.");
+
+            GhostPortalPlayersEnabled = Config.Bind(
+                "Building & Travel",
+                "GhostPortalPlayers",
+                true,
+                "Another player walking into a portal stays solid in its opening for a couple of seconds and blocks you from following. While they stand in the opening they are made see-through and walk-through on your screen. Only affects what you see; each player needs the mod for themselves.");
 
             ChopTierBonus = Config.Bind(
                 "Gear",

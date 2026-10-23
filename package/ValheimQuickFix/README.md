@@ -56,6 +56,7 @@ with the mod installed, and changes apply after a restart.
 | `Crafting`         | `RepairAllOnHold` | `true` | Hold E on a workbench or forge to repair every item at once. |
 | `Building & Travel`          | `PortalPressOrHold` | `false` | Tap E on a portal to go through, hold E to rename it. |
 | `Crafting`         | `SmelterFillOnHold` | `true` | Hold E on a smelter's ore or fuel slot to fill it at once. |
+| `Building & Travel`          | `GhostPortalPlayers` | `true` | Players standing in a portal opening are invisible and walk-through, so they do not block it. |
 
 ## Installation
 
