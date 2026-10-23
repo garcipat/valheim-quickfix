@@ -33,6 +33,8 @@ other players don't need it.
   from a distance which hives are ready. They return once you take the honey.
 - **Beehive snaps to a pole's middle** — while placing a beehive, press `Q` (or `E`) to pick its snap point and aim
   at a pole: the pole now also offers a snap point halfway along it, not just at its ends.
+- **Fill smelters on hold** — hold `E` on the ore or fuel slot of a smelter, kiln, blast furnace, spinning wheel or
+  other processing station to fill it as full as it goes in one go. A tap still adds one piece.
 
 ## Configuration
 
@@ -55,8 +57,9 @@ with the mod installed, and changes apply after a restart.
 | `Inventory`        | `PlaceStacksKeepConsumables` | `true` | "Place stacks" leaves cooked food and potions alone. |
 | `Building & Travel`         | `HideBeesWhenFull` | `true` | Full beehives lose their bees. |
 | `Building & Travel`         | `HiveSnapsToPoleMiddle` | `true` | Beehives can snap to the middle of a pole. |
-| `Inventory`        | `RepairAllOnHold` | `true` | Hold E on a workbench or forge to repair every item at once. |
+| `Crafting`         | `RepairAllOnHold` | `true` | Hold E on a workbench or forge to repair every item at once. |
 | `Building & Travel`          | `PortalPressOrHold` | `false` | Tap E on a portal to go through, hold E to rename it. |
+| `Crafting`         | `SmelterFillOnHold` | `true` | Hold E on a smelter's ore or fuel slot to fill it at once. |
 | `Building & Travel`          | `GhostPortalPlayers` | `true` | Players standing in a portal opening are invisible and walk-through, so they do not block it. |
 
 ## Installation

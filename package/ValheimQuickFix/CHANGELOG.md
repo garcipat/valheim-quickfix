@@ -8,8 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Fill smelters at once: hold E on the ore or fuel slot of a smelter, kiln, blast furnace, spinning wheel or other
+  processing station to fill it as full as it goes from what you carry. A tap still adds one. Turn it off with
+  `SmelterFillOnHold`.
 - Faster stamina while sitting (off by default): sitting on the ground or in a chair regenerates stamina 1.5 times as
   fast. Turn it on with `SittingStaminaRegen`; `SittingStaminaMultiplier` sets the speed-up (1 to 2, in steps of 0.1).
+
+### Changed
+
+- New config section `Crafting` for the station settings: `RepairAllOnHold` moved there from `Inventory`. If you had
+  turned it off, turn it off again in its new place.
 
 ### Fixed
 
