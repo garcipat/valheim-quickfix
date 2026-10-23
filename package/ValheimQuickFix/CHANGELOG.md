@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-23
+
 ### Added
 
 - Fill smelters at once: hold E on the ore or fuel slot of a smelter, kiln, blast furnace, spinning wheel or other
