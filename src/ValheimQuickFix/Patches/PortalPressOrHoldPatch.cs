@@ -39,6 +39,13 @@ namespace ValheimQuickFix.Patches
         private static int _unlockFrame;
         private static bool _reentering;
 
+        // The field is a LayerMask in some game versions and a plain int in others.
+        private static int ReadInteractMask(Player player)
+        {
+            var value = InteractMask.GetValue(player);
+            return value is LayerMask mask ? mask.value : Convert.ToInt32(value);
+        }
+
         private static bool Available()
         {
             if (InteractMask != null && InputField != null)
@@ -238,7 +245,7 @@ namespace ValheimQuickFix.Patches
                     copy.size = source.size;
 
                     var player = Player.m_localPlayer;
-                    var inMask = player != null && Available() ? (((LayerMask)InteractMask.GetValue(player)).value & (1 << layer)) != 0 : (bool?)null;
+                    var inMask = player != null && Available() ? (ReadInteractMask(player) & (1 << layer)) != 0 : (bool?)null;
                     Plugin.Log.LogInfo($"PortalPressOrHold: added hover collider to portal opening (trigger layer {LayerMask.LayerToName(trigger.gameObject.layer)}, size {source.size}, '{HoverLayer}' in interact mask: {(inMask.HasValue ? inMask.ToString() : "unknown")})");
                 }
                 catch (Exception e)

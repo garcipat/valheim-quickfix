@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- With `PortalPressOrHold` on, every portal that loaded wrote an `InvalidCastException` to the log. Nothing was broken
+  in-game, but the log was filled with errors.
+
 ## [0.3.1] - 2026-10-18
 
 ### Changed
