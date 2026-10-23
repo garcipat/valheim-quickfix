@@ -335,3 +335,26 @@ aimed at by its frame: the opening is a trigger volume that the hover ray skips.
 The hint is plain English, not localized. `TextInput.m_inputField` is private and its TextMeshPro type is not in the compile-time libs, so it is reached by name and
 `readOnly` is set by reflection; the patch disables itself with a log line if the field is missing. "Held" is the `Use` button or
 the raw E key. Looking away from the portal before releasing E still sends you through.
+
+## Ghost portal players
+
+**Config:** `Building & Travel` → `GhostPortalPlayers` (default `true`)
+**Patch:** `TeleportWorld.Awake` (Postfix) — `Patches/GhostPortalPlayersPatch.cs`
+
+**Problem:** A player who walks into a portal keeps standing in its opening for about two seconds (`Player.UpdateTeleport`
+moves them only after `m_teleportTimer > 2`), and `m_teleporting` is not synced. On every other client that avatar is
+solid, so the next player cannot get in while several people use the portal.
+
+**Behavior:**
+
+1. On `Awake` a `GhostZone` component is added next to the portal's `TeleportWorldTrigger`.
+2. About every 0.1 s it compares each remote player's collider centre with the opening (`Collider.ClosestPoint`, 0.5 m
+   margin). Positions are used instead of `OnTriggerEnter`, which depends on the physics layer matrix.
+3. A remote player in the opening has their collider's layer moved to `character_ghost` (the game's own ghost layer, left
+   alone by `Character.UpdateLayer`) and their renderers disabled, on this client only. Both are re-applied every frame
+   while ghosted, since the game can switch renderers back on.
+4. Once they are out of the opening, destroyed, or the toggle is off, the layer and renderers are put back.
+
+**Known limits:** Client-side only, so each player who is being blocked needs the mod. Someone standing in the opening
+without teleporting is invisible too. The nameplate stays. A piece of gear equipped while the player is hidden shows up
+until they are restored.
