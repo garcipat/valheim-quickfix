@@ -53,6 +53,7 @@ with the mod installed, and changes apply after a restart.
 | `Building & Travel`         | `HiveSnapsToPoleMiddle` | `true` | Beehives can snap to the middle of a pole. |
 | `Inventory`        | `RepairAllOnHold` | `true` | Hold E on a workbench or forge to repair every item at once. |
 | `Building & Travel`          | `PortalPressOrHold` | `false` | Tap E on a portal to go through, hold E to rename it. |
+| `Building & Travel`          | `GhostPortalPlayers` | `true` | Players standing in a portal opening are invisible and walk-through, so they do not block it. |
 
 ## Installation
 

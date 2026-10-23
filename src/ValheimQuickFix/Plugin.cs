@@ -30,6 +30,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> MeaningfulToolUpgradesEnabled;
         internal static ConfigEntry<bool> RepairAllOnHoldEnabled;
         internal static ConfigEntry<bool> PortalPressOrHoldEnabled;
+        internal static ConfigEntry<bool> GhostPortalPlayersEnabled;
         internal static ConfigEntry<float> ChopTierBonus;
         internal static ConfigEntry<float> PickaxeTierBonus;
 
@@ -134,6 +135,12 @@ namespace ValheimQuickFix
                 "PortalPressOrHold",
                 false,
                 "Pressing E on a portal sends you through it, and holding E opens the tag dialog to rename it. The opening of the portal can be aimed at, not only its frame.");
+
+            GhostPortalPlayersEnabled = Config.Bind(
+                "Building & Travel",
+                "GhostPortalPlayers",
+                true,
+                "Another player walking into a portal stays solid in its opening for a couple of seconds and blocks you from following. While they stand in the opening they are made see-through and walk-through on your screen. Only affects what you see; each player needs the mod for themselves.");
 
             ChopTierBonus = Config.Bind(
                 "Gear",
