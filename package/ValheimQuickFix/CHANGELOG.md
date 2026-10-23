@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Fill smelters at once: hold E on the ore or fuel slot of a smelter, kiln, blast furnace, spinning wheel or other
+  processing station to fill it as full as it goes from what you carry. A tap still adds one. Turn it off with
+  `SmelterFillOnHold`.
+
+### Changed
+
+- New config section `Crafting` for the station settings: `RepairAllOnHold` moved there from `Inventory`. If you had
+  turned it off, turn it off again in its new place.
+
 ### Fixed
 
 - Portals no longer get blocked when several players use them one after another: a player standing in the opening is
