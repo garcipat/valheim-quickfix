@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Faster stamina while sitting (off by default): sitting on the ground or in a chair regenerates stamina 1.5 times as
+  fast. Turn it on with `SittingStaminaRegen`; `SittingStaminaMultiplier` sets the speed-up (1 to 2, in steps of 0.1).
+
 ### Fixed
 
 - Portals no longer get blocked when several players use them one after another: a player standing in the opening is

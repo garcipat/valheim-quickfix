@@ -126,6 +126,23 @@ Pieces are matched by prefab name, not by a game-defined category.
 **Compatibility notes:** `SceneLoader` and `_showLogos` are looked up by name; the fix disables itself with a log line if
 either is missing.
 
+## Sitting stamina regen
+
+**Config:** `General` → `SittingStaminaRegen` (default `false`), `SittingStaminaMultiplier` (default `1.5`, 1 to 2 in
+steps of 0.1)
+**Patch:** `SEMan.ModifyStaminaRegen` (Postfix) — `Patches/SittingStaminaRegenPatch.cs`
+
+**Problem:** sitting down to catch your breath does nothing for stamina; it comes back as fast as when standing still.
+
+**Behavior:** `Player.UpdateStats` gets its stamina regen multiplier from `SEMan.ModifyStaminaRegen`. While the local
+player sits (`Player.IsSitting`: on the ground with the sit emote, or in a chair or bench), that multiplier is
+multiplied by `SittingStaminaMultiplier`. Everything else stays vanilla: the delay after spending stamina, the world's
+stamina regen setting, and the bonuses from status effects such as Rested, which the multiplier stacks with.
+The multiplier is read every frame, so a change applies without a restart; values in between the 0.1 steps (from a
+hand-edited config) are rounded to the nearest step.
+
+**Known limits:** only your own character is affected.
+
 ## Fair resource rounding
 
 **Config:** `Enemies & Drops` → `FairResourceRounding` (default `true`)

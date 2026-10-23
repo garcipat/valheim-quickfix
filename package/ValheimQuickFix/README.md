@@ -21,6 +21,8 @@ other players don't need it.
   so it keeps the rain off you. Sheltered and the Rested bonus still need walls, as with any roof.
 - **Skip startup logos** — the Coffee Stain and Iron Gate logos shown on launch are skipped. The Unity splash screen
   can't be skipped.
+- **Faster stamina while sitting** (off by default) — sitting on the ground or in a chair regenerates stamina 1.5
+  times as fast. The speed-up can be set from 1x to 2x.
 - **Ignore torches** — enemies no longer stop to attack your torches as if they were buildings. Only monsters
   simulated on your machine are affected, so this works in singleplayer but not against monsters on a server.
 - **Place stacks keeps your gear** — "Place stacks" (and holding `E` on a container) no longer moves your weapons
@@ -46,6 +48,8 @@ with the mod installed, and changes apply after a restart.
 | `Inventory`        | `RestoreTombstoneSlots` | `true` | Put tombstone items back in their original slots. |
 | `Building & Travel`         | `FloorsNotLeaky` | `true` | A floor above you counts as a roof. |
 | `General`          | `SkipStartupLogos` | `true` | Skip the Coffee Stain and Iron Gate logos. |
+| `General`          | `SittingStaminaRegen` | `false` | Stamina regenerates faster while sitting. |
+| `General`          | `SittingStaminaMultiplier` | `1.5` | How much faster, from 1 to 2 in steps of 0.1. |
 | `Enemies & Drops`          | `IgnoreTorches` | `true`  | Enemies don't attack torches as structures. |
 | `Inventory`        | `PlaceStacksKeepEquipment` | `true` | "Place stacks" leaves weapons and tools alone. |
 | `Inventory`        | `PlaceStacksKeepConsumables` | `true` | "Place stacks" leaves cooked food and potions alone. |

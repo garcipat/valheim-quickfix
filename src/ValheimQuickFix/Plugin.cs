@@ -31,6 +31,8 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> RepairAllOnHoldEnabled;
         internal static ConfigEntry<bool> PortalPressOrHoldEnabled;
         internal static ConfigEntry<bool> GhostPortalPlayersEnabled;
+        internal static ConfigEntry<bool> SittingStaminaRegenEnabled;
+        internal static ConfigEntry<float> SittingStaminaMultiplier;
         internal static ConfigEntry<float> ChopTierBonus;
         internal static ConfigEntry<float> PickaxeTierBonus;
 
@@ -141,6 +143,28 @@ namespace ValheimQuickFix
                 "GhostPortalPlayers",
                 true,
                 "Another player walking into a portal stays solid in its opening for a couple of seconds and blocks you from following. While they stand in the opening they are made see-through and walk-through on your screen. Only affects what you see; each player needs the mod for themselves.");
+
+            SittingStaminaRegenEnabled = Config.Bind(
+                "General",
+                "SittingStaminaRegen",
+                false,
+                "Stamina regenerates faster while you sit, on the ground or in a chair. How much faster is set by SittingStaminaMultiplier.");
+
+            SittingStaminaMultiplier = Config.Bind(
+                "General",
+                "SittingStaminaMultiplier",
+                1.5f,
+                new ConfigDescription(
+                    "SittingStaminaRegen: how much faster stamina regenerates while sitting, from 1 (no change) to 2 (twice as fast), in steps of 0.1. Stacks with the regen bonuses of status effects and food.",
+                    new AcceptableValueRange<float>(1f, 2f)));
+            SittingStaminaMultiplier.SettingChanged += (_, __) =>
+            {
+                var snapped = Patches.SittingStaminaRegenPatch.Multiplier();
+                if (SittingStaminaMultiplier.Value != snapped)
+                {
+                    SittingStaminaMultiplier.Value = snapped;
+                }
+            };
 
             ChopTierBonus = Config.Bind(
                 "Gear",
