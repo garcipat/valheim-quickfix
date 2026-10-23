@@ -283,7 +283,7 @@ The bonus is not shown in the tooltip.
 
 ## Repair all on hold
 
-**Config:** `Inventory` → `RepairAllOnHold` (default `true`)
+**Config:** `Crafting` → `RepairAllOnHold` (default `true`)
 **Patch:** `CraftingStation.Interact` (Prefix), `Player.Update` (Postfix), `CraftingStation.GetHoverText` (Postfix) — `Patches/RepairAllOnHoldPatch.cs`
 
 **Problem:** repairing is only the Repair button in the crafting window, one item per click, so a full set of worn gear
@@ -335,3 +335,30 @@ aimed at by its frame: the opening is a trigger volume that the hover ray skips.
 The hint is plain English, not localized. `TextInput.m_inputField` is private and its TextMeshPro type is not in the compile-time libs, so it is reached by name and
 `readOnly` is set by reflection; the patch disables itself with a log line if the field is missing. "Held" is the `Use` button or
 the raw E key. Looking away from the portal before releasing E still sends you through.
+
+## Smelter fill on hold
+
+**Config:** `Crafting` → `SmelterFillOnHold` (default `true`)
+**Patch:** `Switch.Interact` (Prefix, Postfix), `Smelter.OnHoverAddOre` / `OnHoverAddFuel` (Postfix) — `Patches/SmelterFillOnHoldPatch.cs`
+
+**Problem:** a smelter, kiln, blast furnace, spinning wheel, eitr refinery or any other `Smelter` takes one E press per
+piece of ore or fuel, so filling one is a lot of presses (or a slow hold, on stations that repeat).
+
+**Behavior:**
+
+1. A press on the ore or fuel slot runs as in vanilla and adds one piece. The slot's fill level after the press is
+   recorded.
+2. While E stays down, the game's own hold repeats on those slots are skipped. Half a second after the press, the game's
+   own `OnAddOre` / `OnAddFuel` is called until the slot is full or you run out, once per press. Item checks, messages and
+   the add RPC are vanilla.
+3. The number of free slots is worked out once, from the larger of the slot's current level and the level the press
+   should have reached, because when another player owns the smelter its queue only updates when the RPC arrives. Fuel
+   uses the game's own rule that it can go in while at most one below the maximum.
+4. Ore goes in in the order the station lists its conversions, the same as vanilla E presses: with copper and tin in the
+   bag, the copper goes first. The queue itself takes mixed ore, as in vanilla.
+5. The hover text of both slots gets "(Hold to fill)" appended.
+
+**Known limits:** `OnAddOre`, `OnAddFuel`, `GetQueueSize`, `GetFuel` and the hover methods are private, so they are found by
+name; the patch disables itself with a log line if one is missing. Two players filling the same smelter at the same time
+can put a piece or two past its maximum, as vanilla can. Campfires, hearths and other `Fireplace` pieces are not covered.
+The hint is plain English, not localized.

@@ -30,6 +30,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> MeaningfulToolUpgradesEnabled;
         internal static ConfigEntry<bool> RepairAllOnHoldEnabled;
         internal static ConfigEntry<bool> PortalPressOrHoldEnabled;
+        internal static ConfigEntry<bool> SmelterFillOnHoldEnabled;
         internal static ConfigEntry<float> ChopTierBonus;
         internal static ConfigEntry<float> PickaxeTierBonus;
 
@@ -124,7 +125,7 @@ namespace ValheimQuickFix
                 "Make a better tool material count for more than a higher upgrade level: axes and pickaxes deal extra chop / mining damage to trees, logs, stumps and rocks, growing with the tool's tier (stone 0, flint 1, bronze 2, iron 3 for axes). Combat damage is not affected.");
 
             RepairAllOnHoldEnabled = Config.Bind(
-                "Inventory",
+                "Crafting",
                 "RepairAllOnHold",
                 true,
                 "Holding E on a workbench, forge or any other station that can repair repairs every damaged item you carry at once, instead of one per click of the Repair button. The station's hover text says so.");
@@ -134,6 +135,12 @@ namespace ValheimQuickFix
                 "PortalPressOrHold",
                 false,
                 "Pressing E on a portal sends you through it, and holding E opens the tag dialog to rename it. The opening of the portal can be aimed at, not only its frame.");
+
+            SmelterFillOnHoldEnabled = Config.Bind(
+                "Crafting",
+                "SmelterFillOnHold",
+                true,
+                "Holding E on the ore or fuel slot of a smelter, kiln, blast furnace, spinning wheel or other processing station fills it as full as it goes from what you carry, instead of one piece per press. A tap still adds one.");
 
             ChopTierBonus = Config.Bind(
                 "Gear",
