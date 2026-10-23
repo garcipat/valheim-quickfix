@@ -8,8 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- More bears is now off by default. A config file you already have keeps its setting, so turn `MoreBears` off there
-  if you don't want it.
 - The mod description now lists every fix, including Meaningful tool upgrades, Fair resource rounding and More bears.
 
 ## [0.4.0] - 2026-10-23
