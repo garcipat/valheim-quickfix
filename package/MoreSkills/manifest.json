@@ -1,0 +1,10 @@
+{
+  "name": "MoreSkills",
+  "author": "garcipat",
+  "version_number": "0.0.0",
+  "website_url": "https://github.com/garcipat/valheim-quickfix",
+  "description": "New skills you level by playing. Hauling: pull loaded carts more easily the more you haul.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2351"
+  ]
+}

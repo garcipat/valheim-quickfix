@@ -1,12 +1,14 @@
 # Valheim mods — Agent Instructions
 
-Three small client-side BepInEx plugins (C#, .NET Framework 4.8, HarmonyX) built from one repo:
+Four small client-side BepInEx plugins (C#, .NET Framework 4.8, HarmonyX) built from one repo:
 
 - **ValheimQuickFix** — a bundle of small, independent quality-of-life fixes for things the game gets wrong.
 - **SignIcons** — shows item icons on signs. A separate mod because it is new functionality, not a fix, and it
   carries different risk (it drives TextMeshPro through reflection).
 - **ItemCompare** — compares a hovered item's stats with the equipped one in the tooltip. Another separate mod: new
   functionality that reads and appends to tooltip text.
+- **MoreSkills** — adds new skills (Hauling: pulling loaded carts). A separate mod: new functionality that adds skill
+  types the game does not know, so it carries its own save-compatibility risk.
 
 New work that isn't a fix for something the game gets wrong belongs in its own mod, not in QuickFix.
 
