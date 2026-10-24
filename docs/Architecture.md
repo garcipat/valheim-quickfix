@@ -2,7 +2,7 @@
 
 ## Overview
 
-The repo holds three independent [BepInEx 5](https://github.com/BepInEx/BepInEx) plugins. On startup each
+The repo holds four independent [BepInEx 5](https://github.com/BepInEx/BepInEx) plugins. On startup each
 `Plugin.Awake` binds its config entries and calls `Harmony.PatchAll()`, which discovers every `[HarmonyPatch]`
 class in that assembly.
 
@@ -15,10 +15,14 @@ src/
  ├─ SignIcons/                   item icons on signs
  │   ├─ Plugin.cs
  │   └─ Patches/SignIconPatch.cs
- └─ ItemCompare/                 old -> new stats against the equipped item in tooltips
-     ├─ Plugin.cs                Mode / CompareKey config
-     ├─ StatDiff.cs              which stats, how they are compared and coloured
-     └─ Patches/TooltipComparePatch.cs
+ ├─ ItemCompare/                 old -> new stats against the equipped item in tooltips
+ │   ├─ Plugin.cs                Mode / CompareKey config
+ │   ├─ StatDiff.cs              which stats, how they are compared and coloured
+ │   └─ Patches/TooltipComparePatch.cs
+ └─ MoreSkills/                  new skills (Hauling)
+     ├─ Plugin.cs                one config section per skill
+     ├─ Core/                    custom-skill plumbing: register, load, name, hide/freeze, raiseskill
+     └─ Patches/HaulingPatch.cs  levelling and cart mass
 package/<Mod>/                   Thunderstore skeleton (manifest, thunderstore.toml, icon, README, CHANGELOG)
 ```
 

@@ -1,0 +1,39 @@
+# Config for the Thunderstore CLI (tcli). Keep [package] in sync with manifest.json (scripts/package.sh checks that).
+# versionNumber is a placeholder: the release version comes from the tag (tcli build --package-version). Build + publish: see docs/Development.md.
+[config]
+schemaVersion = "0.0.1"
+
+[package]
+namespace = "garcipat"
+name = "MoreSkills"
+versionNumber = "0.0.0"
+description = "New skills you level by playing. Hauling: pull loaded carts more easily the more you haul."
+websiteUrl = "https://github.com/garcipat/valheim-quickfix"
+containsNsfwContent = false
+
+[package.dependencies]
+denikson-BepInExPack_Valheim = "5.4.2351"
+
+[build]
+icon = "./icon.png"
+readme = "./README.md"
+outdir = "../../dist/thunderstore"
+
+[[build.copy]]
+source = "../../src/MoreSkills/bin/Release/net48/MoreSkills.dll"
+target = ""
+
+[[build.copy]]
+source = "./CHANGELOG.md"
+target = ""
+
+[[build.copy]]
+source = "../../LICENSE"
+target = ""
+
+[publish]
+repository = "https://thunderstore.io"
+communities = [ "valheim" ]
+
+[publish.categories]
+valheim = [ "client-side", "tweaks", "utility" ]

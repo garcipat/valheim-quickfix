@@ -23,6 +23,7 @@ on:
           - ValheimQuickFix
           - SignIcons
           - ItemCompare
+          - MoreSkills
       version:
         description: Version for the dry run (no release is created)
         default: 0.0.0-dryrun
@@ -31,6 +32,7 @@ on:
       - 'ValheimQuickFix-v*'
       - 'SignIcons-v*'
       - 'ItemCompare-v*'
+      - 'MoreSkills-v*'
 
 permissions:
   contents: read

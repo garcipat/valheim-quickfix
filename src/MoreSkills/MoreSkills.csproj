@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>MoreSkills</AssemblyName>
+    <RootNamespace>ValheimMoreSkills</RootNamespace>
+    <Product>More Skills</Product>
+    <Description>New skills that you level by playing, starting with Hauling for pulling carts.</Description>
+  </PropertyGroup>
+
+</Project>
