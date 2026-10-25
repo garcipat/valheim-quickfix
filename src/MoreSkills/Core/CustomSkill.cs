@@ -13,13 +13,15 @@ namespace ValheimMoreSkills.Core
     {
         private readonly Func<Sprite> _icon;
 
-        internal CustomSkill(string identifier, string name, string description, Func<Sprite> icon, ConfigEntry<bool> enabled)
+        internal CustomSkill(string identifier, string name, string description, Func<Sprite> icon, ConfigEntry<bool> enabled,
+            float increaseStep = 1f)
         {
             Type = TypeOf(identifier);
             Name = name;
             Description = description;
             _icon = icon;
             Enabled = enabled;
+            IncreaseStep = increaseStep;
         }
 
         internal Skills.SkillType Type { get; }
@@ -39,6 +41,12 @@ namespace ValheimMoreSkills.Core
         internal string Description { get; }
 
         internal ConfigEntry<bool> Enabled { get; }
+
+        /// <summary>
+        /// The skill definition's <c>m_increseStep</c>: what <c>RaiseSkill(type)</c> with factor 1 adds. Matters for
+        /// skills the game itself raises with factor 1, like a build tool's piece table skill.
+        /// </summary>
+        internal float IncreaseStep { get; }
 
         /// <summary>
         /// The skills dialog and the skill-up message localize <c>"$skill_" + type.ToString().ToLower()</c>; for a value

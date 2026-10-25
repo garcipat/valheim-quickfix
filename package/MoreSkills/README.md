@@ -15,6 +15,23 @@ like vanilla, and the empty cart's own weight never changes.
 You level Hauling while you pull a moving cart: the heavier the load, the faster you level, and an empty cart gives
 nothing. The lighter feel only applies while you are the one pulling; a parked cart keeps its full weight.
 
+### Landscaping
+
+Working the ground with the hoe gets less tiring. Every use of the hoe levels Landscaping, and the hoe costs less
+stamina as it levels, up to half at level 100 (the same as Crafting does for the hammer). Durability is unchanged.
+
+### Endurance
+
+You get used to heavy loads. While you walk over the weight limit, Endurance levels, and walking overweight drains
+less stamina, up to half at level 100 (configurable with `MaxDrainReduction`). Everything else about being
+overweight stays vanilla: no running, no dodging, no stamina regen.
+
+### Paddling
+
+Paddling a ship without the sail, forward or backwards, levels Paddling and makes you paddle faster, up to 40% at
+level 100 (configurable with `MaxPaddleBonus`). Sailing is unchanged. With other players on board, the speed bonus can
+be missing when the game hands the ship to a passenger; the skill still levels.
+
 ## Configuration
 
 `BepInEx/config/dev.pgarcia.valheim.moreskills.cfg` has one section per skill. Turning a skill off hides it from
