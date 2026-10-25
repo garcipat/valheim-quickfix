@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-25
+
 ### Added
 
 - Hauling skill: level it by pulling a loaded cart (faster with heavier loads, nothing for an empty cart). The cargo
