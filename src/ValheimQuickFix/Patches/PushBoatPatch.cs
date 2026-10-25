@@ -83,6 +83,10 @@ namespace ValheimQuickFix.Patches
         // Acceleration in m/s². Found by testing in-game: lower values barely move a grounded boat.
         private const float PushStrength = 20f;
 
+        // The push only brings the boat up to this speed (m/s) along the push direction, never past it.
+        // Without a cap the acceleration piles up while E is held and a floating boat shoots off.
+        private const float MaxPushSpeed = 2f;
+
         // Ship.m_body and Ship.m_nview are private in the real game; the compile-time libs are publicized,
         // so they must be read through AccessTools rather than directly.
         private static bool _loggedHover;
@@ -231,8 +235,16 @@ namespace ValheimQuickFix.Patches
                 return;
             }
 
-            // Acceleration mode ignores mass, so the slider means the same thing for every boat.
-            body.AddForce(_pushDirection * PushStrength, ForceMode.Acceleration);
+            // Add only what is missing to reach MaxPushSpeed, at most PushStrength per second. A velocity change
+            // ignores mass, so it feels the same for every boat; a grounded boat still gets the full force against friction.
+            var missing = MaxPushSpeed - Vector3.Dot(body.velocity, _pushDirection);
+            if (missing <= 0f)
+            {
+                return;
+            }
+
+            var step = Mathf.Min(missing, PushStrength * Time.fixedDeltaTime);
+            body.AddForce(_pushDirection * step, ForceMode.VelocityChange);
         }
     }
 }

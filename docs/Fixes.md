@@ -36,6 +36,7 @@ inventory and you must re-equip it by hand.
 
 **Known limits:** no check that the boat is actually grounded; you can push a floating boat too.
 The push strength is a fixed 20 m/s² (acceleration, so it feels the same for every boat), chosen by testing in-game.
+It only accelerates the boat up to 2 m/s along the push direction, so holding E or tapping repeatedly does not stack.
 **Compatibility notes:** the real `Hoverable` interface has a member (`GetHoverOffset`) that older
 compile-time libs lack, and `Character.IsSwimming` is looked up at runtime for the same reason.
 
