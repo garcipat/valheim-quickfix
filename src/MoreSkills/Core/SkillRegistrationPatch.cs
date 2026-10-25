@@ -25,7 +25,7 @@ namespace ValheimMoreSkills.Core
                         {
                             m_skill = skill.Type,
                             m_description = skill.Description,
-                            m_increseStep = 1f,
+                            m_increseStep = skill.IncreaseStep,
                         };
                         __instance.m_skills.Add(def);
                     }
