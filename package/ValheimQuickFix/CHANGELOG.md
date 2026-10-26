@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - The mod description now lists every fix, including Meaningful tool upgrades, Fair resource rounding and More bears.
 
+### Fixed
+
+- Push boat no longer launches a floating boat meters away: holding E kept adding speed. The push now stops at a gentle
+  walking pace.
+
 ## [0.4.0] - 2026-10-23
 
 ### Added
