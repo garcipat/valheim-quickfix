@@ -403,3 +403,24 @@ solid, so the next player cannot get in while several people use the portal.
 **Known limits:** Client-side only, so each player who is being blocked needs the mod. Someone standing in the opening
 without teleporting is invisible too. The nameplate stays. A piece of gear equipped while the player is hidden shows up
 until they are restored.
+
+## Ignore workbench
+
+**Config:** `Building & Travel` → `IgnoreWorkbench` (default `false`)
+**Patches:** `Player.HaveRequirements(Piece, RequirementMode)` and `Player.CheckCanRemovePiece` (Prefix + Finalizer) —
+`Patches/IgnoreWorkbenchPatch.cs`
+
+**Problem:** every piece needs its crafting station (workbench, stonecutter, forge, ...) in range to be placed or
+deconstructed. The vanilla "No workbench" world modifier removes that, but only for a whole world.
+
+**Behavior:** only pieces whose station is the workbench (`CraftingStation.m_name == "$piece_workbench"`) are
+affected; the stonecutter, forge, black forge and other stations keep their requirement. For the local player in a
+singleplayer game (`ZNet.IsSinglePlayer`: hosting with "Start server"
+unchecked), the Prefix clears the piece prefab's `m_craftingStation` for the duration of the call and the Finalizer puts
+it back, so the station-in-range check is skipped and everything else runs as vanilla. In `HaveRequirements` this only
+happens in `CanBuild` mode: `IsKnown` and `CanAlmostBuild` still require having seen the station once, so pieces are
+unlocked as before. Materials are still consumed.
+
+**Known limits:** does nothing on an open or remote server. The build menu still shows the station next to the
+piece's requirements, greyed out with a blinking "none" when it is not in range (as with the vanilla modifier).
+

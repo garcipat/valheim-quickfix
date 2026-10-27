@@ -33,6 +33,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> SmelterFillOnHoldEnabled;
         internal static ConfigEntry<bool> GhostPortalPlayersEnabled;
         internal static ConfigEntry<bool> SittingStaminaRegenEnabled;
+        internal static ConfigEntry<bool> IgnoreWorkbenchEnabled;
         internal static ConfigEntry<float> SittingStaminaMultiplier;
         internal static ConfigEntry<float> ChopTierBonus;
         internal static ConfigEntry<float> PickaxeTierBonus;
@@ -150,6 +151,12 @@ namespace ValheimQuickFix
                 "GhostPortalPlayers",
                 true,
                 "Another player walking into a portal stays solid in its opening for a couple of seconds and blocks you from following. While they stand in the opening they are made see-through and walk-through on your screen. Only affects what you see; each player needs the mod for themselves.");
+
+            IgnoreWorkbenchEnabled = Config.Bind(
+                "Building & Travel",
+                "IgnoreWorkbench",
+                false,
+                "Build and deconstruct workbench pieces without a workbench nearby. Pieces that need another station (stonecutter, forge, ...) still need it. Materials are still needed, and you must have seen a workbench once to unlock its pieces. Only works in a singleplayer game (\"Start server\" unchecked); does nothing on a multiplayer server.");
 
             SittingStaminaRegenEnabled = Config.Bind(
                 "General",
