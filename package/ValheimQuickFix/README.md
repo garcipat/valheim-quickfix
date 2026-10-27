@@ -30,6 +30,8 @@ other players don't need it.
   or 5. Only drops rolled on your machine are affected.
 - **More bears** (off by default) — bears get a spawn roll every 17 minutes instead of every 33, up to two can live in an area, and they
   drop their trophy 20% of the time instead of 10%. Only works in singleplayer or when you host.
+- **More Writhans** (off by default) — Writhans get a spawn roll every 25 minutes instead of every 67 with a 15%
+  chance instead of 10%, and up to two can live in an area. Only works in singleplayer or when you host.
 - **Meaningful tool upgrades** (off by default) — a better tool material counts for more than a higher upgrade level.
   Axes and pickaxes deal extra chop or mining damage to trees, logs, stumps and rocks, growing with the tool's tier, so
   a level-1 iron axe out-chops a level-3 bronze one. Combat damage is unchanged. The bonus per tier can be set

@@ -27,6 +27,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> HideBeesWhenFullEnabled;
         internal static ConfigEntry<bool> HiveOnPoleSnapEnabled;
         internal static ConfigEntry<bool> MoreBearsEnabled;
+        internal static ConfigEntry<bool> MoreWrithansEnabled;
         internal static ConfigEntry<bool> MeaningfulToolUpgradesEnabled;
         internal static ConfigEntry<bool> RepairAllOnHoldEnabled;
         internal static ConfigEntry<bool> PortalPressOrHoldEnabled;
@@ -121,6 +122,12 @@ namespace ValheimQuickFix
                 "MoreBears",
                 false,
                 "Make bears easier to find: they get a spawn roll every 17 minutes instead of every 33, up to two can live in an area, and drop their trophy 20% of the time instead of 10%. Takes effect on the next game start, and only when your machine runs the spawning (singleplayer or hosting).");
+
+            MoreWrithansEnabled = Config.Bind(
+                "Enemies & Drops",
+                "MoreWrithans",
+                false,
+                "Make Writhans easier to find: they get a spawn roll every 25 minutes instead of every 67 with a 15% chance instead of 10%, and up to two can live in an area. Takes effect on the next game start, and only when your machine runs the spawning (singleplayer or hosting).");
 
             MeaningfulToolUpgradesEnabled = Config.Bind(
                 "Gear",

@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Build without a workbench (off by default): build and deconstruct workbench pieces without a workbench nearby. Pieces
   that need a stonecutter, forge or other station still need it, and materials are still needed. Only works in a
   singleplayer game. Turn it on with `IgnoreWorkbench`.
+- More Writhans (off by default): Writhans were tuned so rarely that whole Swamps could hold none. They now get a spawn
+  roll every 25 minutes instead of every 67 with a 15% chance instead of 10%, and up to two can live in an area. Needs
+  the machine running the spawning (singleplayer or host). Turn it on with `MoreWrithans`.
 
 ## [0.4.1] - 2026-10-23
 

@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using HarmonyLib;
-using UnityEngine;
 
 namespace ValheimQuickFix.Patches
 {
@@ -36,67 +34,18 @@ namespace ValheimQuickFix.Patches
 
             try
             {
-                var trophies = 0;
-                foreach (var prefab in __instance.m_prefabs)
-                {
-                    var drops = prefab != null ? prefab.GetComponent<CharacterDrop>() : null;
-                    if (drops == null)
-                    {
-                        continue;
-                    }
-
-                    foreach (var drop in drops.m_drops)
-                    {
-                        if (drop.m_prefab != null && drop.m_prefab.name == TrophyPrefab && drop.m_chance < TrophyChance)
-                        {
-                            drop.m_chance = TrophyChance;
-                            trophies++;
-                        }
-                    }
-                }
-
-                var spawns = RaiseSpawns();
+                var trophies = SpawnTuning.TuneDrops(__instance, TrophyPrefab, chance => Math.Max(chance, TrophyChance));
+                var spawns = SpawnTuning.TuneSpawns(
+                    "MoreBears",
+                    BearPrefab,
+                    interval => Math.Min(interval, SpawnInterval),
+                    max => Math.Max(max, MaxSpawned));
                 Plugin.Log.LogInfo($"MoreBears: raised {spawns} bear spawn entries and {trophies} trophy drops");
             }
             catch (Exception e)
             {
                 Plugin.Log.LogError($"MoreBears failed: {e}");
             }
-        }
-
-        // SpawnSystemList is missing from the compile-time libs, so find it and its fields by name.
-        private static int RaiseSpawns()
-        {
-            var listType = typeof(SpawnSystem).Assembly.GetType("SpawnSystemList");
-            var spawnersField = listType != null ? AccessTools.Field(listType, "m_spawners") : null;
-            var dataType = typeof(SpawnSystem.SpawnData);
-            var prefab = AccessTools.Field(dataType, "m_prefab");
-            var interval = AccessTools.Field(dataType, "m_spawnInterval");
-            var max = AccessTools.Field(dataType, "m_maxSpawned");
-            if (spawnersField == null || prefab == null || interval == null || max == null)
-            {
-                Plugin.Log.LogWarning("MoreBears: bear spawn entries not changed, SpawnSystemList or SpawnData fields are missing in this game version");
-                return 0;
-            }
-
-            var changed = 0;
-            foreach (var list in Resources.FindObjectsOfTypeAll(listType))
-            {
-                foreach (var entry in (IEnumerable)spawnersField.GetValue(list))
-                {
-                    var bear = prefab.GetValue(entry) as GameObject;
-                    if (bear == null || bear.name != BearPrefab)
-                    {
-                        continue;
-                    }
-
-                    interval.SetValue(entry, Math.Min((float)interval.GetValue(entry), SpawnInterval));
-                    max.SetValue(entry, Math.Max((int)max.GetValue(entry), MaxSpawned));
-                    changed++;
-                }
-            }
-
-            return changed;
         }
     }
 }
