@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Build without a workbench (off by default): build and deconstruct workbench pieces without a workbench nearby. Pieces
+  that need a stonecutter, forge or other station still need it, and materials are still needed. Only works in a
+  singleplayer game. Turn it on with `IgnoreWorkbench`.
+
 ## [0.4.1] - 2026-10-23
 
 ### Changed

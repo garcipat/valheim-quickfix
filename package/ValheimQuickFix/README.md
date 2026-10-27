@@ -48,6 +48,10 @@ other players don't need it.
   other processing station to fill it as full as it goes in one go. A tap still adds one piece.
 - **Portal press or hold** (off by default) — tap `E` on a portal to go through it, hold `E` to rename it. The opening
   of the portal can be aimed at, not only its frame. Walking in still works.
+- **Build without a workbench** (off by default) — build and deconstruct workbench pieces without a workbench nearby.
+  Pieces that need a stonecutter, forge or other station still need it. You still need the materials, and you must
+  have seen a workbench once to unlock its pieces.
+  Only works in a singleplayer game ("Start server" unchecked); on a multiplayer server nothing changes.
 - **Portals don't get blocked** — a player who walks into a portal stays solid in its opening for a couple of seconds
   and blocks whoever follows. While they stand there they are invisible and walk-through on your screen. Only affects
   your own view, so each player needs the mod.
@@ -81,6 +85,7 @@ with the mod installed, and changes apply after a restart.
 | `Crafting`         | `RepairAllOnHold` | `true` | Hold E on a workbench or forge to repair every item at once. |
 | `Building & Travel`          | `PortalPressOrHold` | `false` | Tap E on a portal to go through, hold E to rename it. |
 | `Crafting`         | `SmelterFillOnHold` | `true` | Hold E on a smelter's ore or fuel slot to fill it at once. |
+| `Building & Travel`  | `IgnoreWorkbench` | `false` | Build and deconstruct workbench pieces without a workbench nearby (singleplayer only). |
 | `Building & Travel`          | `GhostPortalPlayers` | `true` | Players standing in a portal opening are invisible and walk-through, so they do not block it. |
 
 ## Installation
