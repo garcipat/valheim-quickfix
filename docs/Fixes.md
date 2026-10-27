@@ -272,7 +272,30 @@ forests without finding a bear and rarely see a trophy.
 
 **Known limits:** the toggle is read at load, so turning it off needs a game restart. Spawns and drops are decided by the
 machine that owns the zone or creature, so the fix only works in singleplayer or when you host. The Plains `Unbjorn` is
-unchanged. `SpawnSystemList` is missing from the compile-time libs, so it is found by name.
+unchanged. The values were read with [CreatureProbe](ProbingCreatureData.md). `SpawnSystemList` is missing from the
+compile-time libs, so it is found by name (`Patches/SpawnTuning.cs`, shared with More Writhans).
+
+## More Writhans
+
+**Config:** `Enemies & Drops` → `MoreWrithans` (default `false`)
+**Patch:** `ZNetScene.Awake` (Postfix) — `Patches/MoreWrithansPatch.cs`
+
+**Problem:** in the live game the Swamp Writhan spawn entry (`Writhan`, in `_SpawnList_base`) rolls once every 4000 s at
+10%, day and night, with `m_maxSpawned` 1. It is also limited to the Swamp interior (`m_biomeArea` Median), at most 10 m
+altitude and 2000 to 8000 m from the world centre. That is about one Writhan per 11 hours near a suitable area, so players can search several Swamps without meeting one.
+
+**Behavior:**
+
+1. Once, when the prefabs load, each `Writhan` spawn entry gets a spawn interval of at most 1500 s, a spawn chance of
+   at least 15% and room for two alive in the area, about one Writhan per 2.8 hours. The location limits are left alone.
+2. The `TrophyWrithan` drop chance (0.1) is not changed.
+3. Values are set to a floor or ceiling, not scaled, so loading another world in the same session changes nothing more.
+   The vanilla and new spawn values are logged (`MoreWrithans: Writhan spawn entry in ...`).
+
+The values were read with [CreatureProbe](ProbingCreatureData.md).
+
+**Known limits:** the toggle is read at load, so turning it off needs a game restart. Spawns are decided by the machine
+that owns the zone, so the fix only works in singleplayer or when you host. The location `Spawner_Writhan` (night only, triggers within 60 m) is unchanged.
 
 ## Meaningful tool upgrades
 

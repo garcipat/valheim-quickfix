@@ -21,6 +21,8 @@ New work that isn't a fix for something the game gets wrong belongs in its own m
   the categories), `icon.png`, player-facing `README.md`, `CHANGELOG.md`.
 - `scripts/package.sh` — builds mods and writes `dist/<Mod>-<version>.zip`.
 - `docs/` — reference docs for developers.
+- `tools/CreatureProbe/` — a throwaway in-game plugin that logs a creature's spawn and drop data; not a mod, not
+  packaged. See `docs/ProbingCreatureData.md`.
 
 ## Conventions
 

@@ -36,4 +36,4 @@ mod packages.
 ## Docs
 
 - [Architecture](docs/Architecture.md) · [Development](docs/Development.md)
-- [QuickFix fixes](docs/Fixes.md) · [Adding a fix](docs/AddingAFix.md) · [Sign icons](docs/SignIcons.md) · [Item compare](docs/ItemCompare.md) · [More skills](docs/MoreSkills.md)
+- [QuickFix fixes](docs/Fixes.md) · [Adding a fix](docs/AddingAFix.md) · [Sign icons](docs/SignIcons.md) · [Item compare](docs/ItemCompare.md) · [More skills](docs/MoreSkills.md) · [Probing creature data](docs/ProbingCreatureData.md)
