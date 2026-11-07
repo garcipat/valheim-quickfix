@@ -447,3 +447,26 @@ unlocked as before. Materials are still consumed.
 **Known limits:** does nothing on an open or remote server. The build menu still shows the station next to the
 piece's requirements, greyed out with a blinking "none" when it is not in range (as with the vanilla modifier).
 
+
+## Bow zoom
+
+**Config:** `Gear` → `BowZoom` (default `false`), `BowZoomMagnification` (default `1.5`, 1.1 to 3)
+**Patches:** `Player.SetControls` (Prefix), `GameCamera.LateUpdate` (Postfix) — `Patches/BowZoomPatch.cs`
+
+**Problem:** aiming a bow at a distant target is hard; the game has no way to look closer while drawing.
+
+**Behavior:**
+
+1. While the local player draws a bow (`IsDrawingBow`), holding the block button (right mouse button, or its gamepad
+   binding) zooms the camera in by `BowZoomMagnification`, easing in and out over 0.15 s.
+2. Vanilla cancels the draw when you block (`Player.UpdateAttackBowDraw` resets it while `m_blocking` is set). While
+   drawing, the block input is taken away before `SetControls` sees it, so the draw keeps going and the button only
+   zooms. Releasing the attack button shoots as usual and ends the zoom.
+3. The zoom narrows the camera's field of view after the game has set its own (including any temporary FOV changes),
+   so the game's camera logic is untouched. Free-fly camera is left alone. The magnification is read every frame, so a
+   change applies without a restart.
+
+**Known limits:** with the fix on, the block button can no longer cancel a drawn bow; let go of the attack button
+instead. Holding block before starting to draw still blocks (and prevents the draw) as in vanilla. Mouse sensitivity is
+not scaled down while zoomed. `IsDrawingBow` is bound by reflection because the compile-time game libraries predate
+it; if a game update removes it, the fix logs a warning and does nothing.
