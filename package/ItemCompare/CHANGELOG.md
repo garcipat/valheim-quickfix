@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-08
+
 ### Changed
 
 - The comparison is now shown right behind each value, like `Slash: 61 (+7)` with only the number coloured, instead of
