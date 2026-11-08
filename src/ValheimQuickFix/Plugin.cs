@@ -35,6 +35,8 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> GhostPortalPlayersEnabled;
         internal static ConfigEntry<bool> SittingStaminaRegenEnabled;
         internal static ConfigEntry<bool> IgnoreWorkbenchEnabled;
+        internal static ConfigEntry<bool> BowZoomEnabled;
+        internal static ConfigEntry<float> BowZoomMagnification;
         internal static ConfigEntry<float> SittingStaminaMultiplier;
         internal static ConfigEntry<float> ChopTierBonus;
         internal static ConfigEntry<float> PickaxeTierBonus;
@@ -134,6 +136,20 @@ namespace ValheimQuickFix
                 "MeaningfulToolUpgrades",
                 false,
                 "Make a better tool material count for more than a higher upgrade level: axes and pickaxes deal extra chop / mining damage to trees, logs, stumps and rocks, growing with the tool's tier (stone 0, flint 1, bronze 2, iron 3 for axes). Combat damage is not affected.");
+
+            BowZoomEnabled = Config.Bind(
+                "Gear",
+                "BowZoom",
+                false,
+                "While drawing a bow, hold the block button (right mouse button by default) to zoom in a little. Release the attack button to shoot as usual. While drawing, the block button zooms instead of cancelling the draw.");
+
+            BowZoomMagnification = Config.Bind(
+                "Gear",
+                "BowZoomMagnification",
+                1.5f,
+                new ConfigDescription(
+                    "BowZoom: how much the view is magnified while zooming, from 1.1 (barely) to 3 (strong).",
+                    new AcceptableValueRange<float>(1.1f, 3f)));
 
             RepairAllOnHoldEnabled = Config.Bind(
                 "Crafting",

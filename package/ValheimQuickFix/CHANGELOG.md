@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Bow zoom (off by default): while drawing a bow, hold the block button (right mouse button by default) to zoom in a
+  little instead of cancelling the draw. The magnification can be set from 1.1x to 3x with `BowZoomMagnification`.
+  Turn it on with `BowZoom`.
 - Build without a workbench (off by default): build and deconstruct workbench pieces without a workbench nearby. Pieces
   that need a stonecutter, forge or other station still need it, and materials are still needed. Only works in a
   singleplayer game. Turn it on with `IgnoreWorkbench`.

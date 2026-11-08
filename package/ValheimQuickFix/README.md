@@ -48,6 +48,8 @@ other players don't need it.
   item you carry at once, instead of one per click of the Repair button. A tap opens the crafting window as before.
 - **Fill smelters on hold** — hold `E` on the ore or fuel slot of a smelter, kiln, blast furnace, spinning wheel or
   other processing station to fill it as full as it goes in one go. A tap still adds one piece.
+- **Bow zoom** (off by default) — while drawing a bow, hold the right mouse button (the block button) to zoom in a
+  little. Let go of the attack button to shoot as usual. How far it zooms can be set from 1.1x to 3x.
 - **Portal press or hold** (off by default) — tap `E` on a portal to go through it, hold `E` to rename it. The opening
   of the portal can be aimed at, not only its frame. Walking in still works.
 - **Build without a workbench** (off by default) — build and deconstruct workbench pieces without a workbench nearby.
@@ -78,6 +80,8 @@ with the mod installed, and changes apply after a restart.
 | `Enemies & Drops`  | `FairResourceRounding` | `true` | Round fractional resource drops up or down at random. |
 | `Enemies & Drops`  | `MoreBears` | `false` | Bears spawn more often and drop their trophy more often. |
 | `Gear`             | `MeaningfulToolUpgrades` | `false` | Better axe and pickaxe materials deal extra chop / mining damage. |
+| `Gear`             | `BowZoom` | `false` | Hold the block button while drawing a bow to zoom in. |
+| `Gear`             | `BowZoomMagnification` | `1.5` | How much the bow zoom magnifies, from 1.1 to 3. |
 | `Gear`             | `ChopTierBonus` | `5` | Chop damage added per axe tier (0 to 50). |
 | `Gear`             | `PickaxeTierBonus` | `8` | Mining damage added per pickaxe tier (0 to 50). |
 | `Inventory`        | `PlaceStacksKeepEquipment` | `true` | "Place stacks" leaves weapons and tools alone. |
