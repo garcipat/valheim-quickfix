@@ -3,17 +3,16 @@
 By [garcipat](https://github.com/garcipat) · [Source code on GitHub](https://github.com/garcipat/valheim-quickfix)
 
 Hover a weapon, shield, tool or piece of armor and its tooltip shows how it compares with the item you are wearing
-in that slot. Every stat that differs gets a line with the old and the new value, and the new value is coloured:
-**green** when it is better, **red** when it is worse.
+in that slot. Every stat that differs gets the difference right behind its value, coloured **green** when it is
+better and **red** when it is worse:
 
 ```
+Slash: 61 (+7)
+Weight: 5.0 (+1.0)
 vs. Iron Sword
-Slash: 54 -> 61
-Weight: 4.0 -> 5.0
 ```
 
-Stats that are the same are left out, and so is anything the game already shows: the normal tooltip is unchanged and
-the comparison is added underneath it. Lower is better for weight and stamina use, so a lighter item shows green.
+Stats that are the same get nothing, and the game's own values and lines stay as they are. Lower is better for weight and stamina use, so a lighter item shows green.
 
 Client-side only: it works on any server and nothing needs to be installed on the server. Other players are not
 affected.
@@ -21,6 +20,11 @@ affected.
 ## Using it
 
 - Open your inventory (or a chest) and hover an item you are not wearing.
+- At a workbench, forge or other crafting station, select a recipe: its description shows the differences the same
+  way. A new item compares with what you wear; an
+  upgrade compares the next level with the item's current level.
+- Weapons you have put away (with R, or because a crafting station put them on your back) still count as the ones
+  you wield.
 - Armor compares with the piece in the same slot, a shield with your shield, and a one-handed, two-handed or bow
   weapon with the weapon you wield. Torches and tools compare with their own kind.
 - Items you are already wearing, and things that are not equipment, show no comparison.
