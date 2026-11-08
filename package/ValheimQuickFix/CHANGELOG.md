@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Bow zoom (off by default): while drawing a bow, hold the block button (right mouse button by default) to zoom in a
   little instead of cancelling the draw. The magnification can be set from 1.1x to 3x with `BowZoomMagnification`.
   Turn it on with `BowZoom`.
+- Ping where you look: press `H` to ping the spot under your crosshair, up to 500 m away, without opening the map.
+  It is the game's own ping, so everyone nearby sees it in the world and on their map, even without the mod. Rebind
+  it in the game's Settings → Controls, where it is listed as "Ping".
 - Build without a workbench (off by default): build and deconstruct workbench pieces without a workbench nearby. Pieces
   that need a stonecutter, forge or other station still need it, and materials are still needed. Only works in a
   singleplayer game. Turn it on with `IgnoreWorkbench`.

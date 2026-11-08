@@ -46,7 +46,9 @@ and interface drift. TextMeshPro and `UnityEngine.UI` are not available as packa
 ## Design decisions
 
 - **Client-side only.** Mods change local behavior and never add networking, so they work on any server and are
-  not required on dedicated servers.
+  not required on dedicated servers. The one message a mod may send is one the game already sends itself, with the
+  same content: Crosshair ping sends the vanilla ping ("ChatMessage" with the ping type), so it adds no new RPC and
+  other players see exactly what a map ping shows them.
 - **Patches over replacements.** Prefix/Postfix keep vanilla logic intact and coexist better with other mods
   patching the same methods.
 - **No Jotunn.** The mods add no items, recipes, or assets, so the extra dependency isn't needed.
