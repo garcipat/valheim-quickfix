@@ -6,8 +6,8 @@ using HarmonyLib;
 namespace ValheimItemCompare.Patches
 {
     /// <summary>
-    /// Appends a "vs. equipped" block to the tooltip of an item the player hovers in a container or inventory. The
-    /// vanilla tooltip text is never touched.
+    /// Writes the difference to the equipped item behind each stat of the tooltip of an item the player hovers in a
+    /// container or inventory, as "54 (+7)". The vanilla values and lines are kept.
     /// </summary>
     /// <remarks>
     /// Only the instance <c>GetTooltip</c> is patched: the inventory grid calls it every frame while an item is hovered
@@ -44,7 +44,11 @@ namespace ValheimItemCompare.Patches
                     return;
                 }
 
-                __result += StatDiff.Build(__instance, player);
+                var worn = StatDiff.FindWorn(__instance, player);
+                if (worn != null)
+                {
+                    __result = StatDiff.Inline(__result, __instance, worn, worn.m_shared.m_name);
+                }
             }
             catch (Exception e)
             {

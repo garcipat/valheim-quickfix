@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -5,8 +6,8 @@ using System.Text;
 namespace ValheimItemCompare
 {
     /// <summary>
-    /// Builds the "old -> new" lines shown under an item's tooltip. Stats are read from the two ItemData objects, not
-    /// parsed out of the vanilla tooltip text, and labelled with the game's own localization keys.
+    /// Writes "value (+15)" differences into an item's tooltip. Stats are read from the two ItemData objects, not
+    /// parsed out of the vanilla tooltip text; the text is only searched for the line to put each difference on.
     /// </summary>
     internal static class StatDiff
     {
@@ -26,51 +27,108 @@ namespace ValheimItemCompare
             public bool HigherIsBetter;
         }
 
-        /// <summary>The comparison block for <paramref name="item"/> against what the local player wears, or "".</summary>
-        internal static string Build(ItemDrop.ItemData item, Player player)
+        /// <summary>
+        /// What <paramref name="item"/> compares with: the local player's equipped (or put-away) item of its group, or
+        /// null when it is not equipment, is itself worn, or nothing of its group is worn.
+        /// </summary>
+        internal static ItemDrop.ItemData FindWorn(ItemDrop.ItemData item, Player player)
         {
             var group = GroupOf(item);
-            if (group == null || ItemAccess.IsEquipped(item))
+            if (group == null || ItemAccess.IsEquipped(item) || ItemAccess.IsHidden(player, item))
             {
-                return "";
+                return null;
             }
 
-            var worn = FindEquipped(player, group);
-            if (worn == null)
-            {
-                return "";
-            }
-
-            var lines = new StringBuilder();
-            var oldStats = Stats(worn, group);
-            foreach (var stat in Stats(item, group).Values)
-            {
-                var old = oldStats.TryGetValue(stat.Label, out var o) ? o : Zero(stat);
-                oldStats.Remove(stat.Label);
-                Append(lines, old, stat);
-            }
-
-            // Stats only the worn item has: the hovered one drops to zero.
-            foreach (var old in oldStats.Values)
-            {
-                Append(lines, old, Zero(old));
-            }
-
-            return lines.Length == 0 ? "" : "\n\n<color=#AAAAAA>vs. " + worn.m_shared.m_name + "</color>" + lines;
+            return FindEquipped(player, group);
         }
 
-        private static void Append(StringBuilder lines, Stat old, Stat now)
+        /// <summary>
+        /// Writes the difference to <paramref name="worn"/> behind each matching stat line of the tooltip
+        /// <paramref name="text"/>, localized or still holding <c>$</c> keys, as "value (+15)" with only the number coloured. Stats with no line in the text get
+        /// a short line of their own under a "vs. <paramref name="title"/>" footer.
+        /// </summary>
+        internal static string Inline(string text, ItemDrop.ItemData item, ItemDrop.ItemData worn, string title)
         {
-            var oldText = Format(old);
-            var nowText = Format(now);
-            if (oldText == nowText)
+            var group = GroupOf(item);
+            if (group == null || GroupOf(worn) != group)
             {
-                return;
+                return text;
+            }
+
+            var result = new StringBuilder(text);
+            var extra = new StringBuilder();
+            var changed = false;
+            var oldStats = Stats(worn, group);
+            foreach (var now in Stats(item, group).Values)
+            {
+                var old = oldStats.TryGetValue(now.Label, out var o) ? o : Zero(now);
+                oldStats.Remove(now.Label);
+                changed |= InsertDelta(result, extra, old, now);
+            }
+
+            foreach (var old in oldStats.Values)
+            {
+                changed |= InsertDelta(result, extra, old, Zero(old));
+            }
+
+            if (!changed)
+            {
+                return text;
+            }
+
+            return result.Append("\n<color=#AAAAAA>vs. ").Append(Localization.instance.Localize(title)).Append("</color>")
+                .Append(extra).ToString();
+        }
+
+        private static bool InsertDelta(StringBuilder text, StringBuilder extra, Stat old, Stat now)
+        {
+            if (Format(old) == Format(now))
+            {
+                return false;
             }
 
             var better = now.HigherIsBetter ? now.Value > old.Value : now.Value < old.Value;
-            lines.Append("\n").Append(now.Label).Append(": ").Append(oldText).Append(" -> ")
-                .Append("<color=").Append(better ? Better : Worse).Append(">").Append(nowText).Append("</color>");
+            var signed = "+" + now.Format + ";-" + now.Format;
+            var delta = " (<color=" + (better ? Better : Worse) + ">"
+                + (now.Value - old.Value).ToString(signed, CultureInfo.InvariantCulture) + now.Suffix + "</color>)";
+
+            // The vanilla line is "<label>: <color=...>value</color>...": the delta goes right after the value.
+            var label = Localization.instance.Localize(now.Label);
+            var current = text.ToString();
+            var start = FindLine(current, now.Label + ":");
+            if (start < 0)
+            {
+                start = FindLine(current, label + ":");
+            }
+
+            if (start < 0)
+            {
+                extra.Append("\n").Append(label).Append(": ").Append(Format(now)).Append(delta);
+                return true;
+            }
+
+            var end = current.IndexOf('\n', start);
+            if (end < 0)
+            {
+                end = current.Length;
+            }
+
+            var close = current.IndexOf("</color>", start, end - start, StringComparison.Ordinal);
+            text.Insert(close < 0 ? end : close + "</color>".Length, delta);
+            return true;
+        }
+
+        private static int FindLine(string text, string prefix)
+        {
+            for (var at = text.IndexOf(prefix, StringComparison.Ordinal); at >= 0; at = text.IndexOf(prefix, at + 1, StringComparison.Ordinal))
+            {
+                if (at == 0 || text[at - 1] == '\n')
+                {
+                    return at;
+                }
+            }
+
+            return -1;
         }
 
         private static string Format(Stat stat)
@@ -114,7 +172,7 @@ namespace ValheimItemCompare
         {
             foreach (var candidate in player.GetInventory().GetAllItems())
             {
-                if (ItemAccess.IsEquipped(candidate) && GroupOf(candidate) == group)
+                if ((ItemAccess.IsEquipped(candidate) || ItemAccess.IsHidden(player, candidate)) && GroupOf(candidate) == group)
                 {
                     return candidate;
                 }
