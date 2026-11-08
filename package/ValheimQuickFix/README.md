@@ -59,10 +59,14 @@ other players don't need it.
 - **Portals don't get blocked** — a player who walks into a portal stays solid in its opening for a couple of seconds
   and blocks whoever follows. While they stand there they are invisible and walk-through on your screen. Only affects
   your own view, so each player needs the mod.
+- **Ping where you look** — press `H` to ping the spot under your crosshair, up to 500 m away, without opening the
+  map. Rebind it in the game's **Settings → Controls**, where it is listed as "Ping". It is the game's normal ping, so everyone nearby sees it in the world and on their map, even
+  without the mod.
 
 ## Configuration
 
-Every fix can be switched off on its own. Open the config in your mod manager (in Gale: the profile's
+Every fix can be switched off on its own. Ping where you look has no setting here: its key is in the game's
+**Settings → Controls**. Open the config in your mod manager (in Gale: the profile's
 **Config** page, `dev.pgarcia.valheim.quickfix.cfg`). The file is created the first time you start the game
 with the mod installed, and changes apply after a restart.
 

@@ -89,7 +89,6 @@ slot, so your layout is not restored.
 **Known limits:** a displaced item loses its hotbar slot if it was on the hotbar. Works together with
 *Stack on take all*: after slots are restored, partial stacks are topped up, earliest slot first.
 
-
 ## Floors count as a roof
 
 **Config:** `Building & Travel` → `FloorsNotLeaky` (default `true`)
@@ -447,7 +446,6 @@ unlocked as before. Materials are still consumed.
 **Known limits:** does nothing on an open or remote server. The build menu still shows the station next to the
 piece's requirements, greyed out with a blinking "none" when it is not in range (as with the vanilla modifier).
 
-
 ## Bow zoom
 
 **Config:** `Gear` → `BowZoom` (default `false`), `BowZoomMagnification` (default `1.5`, 1.1 to 3)
@@ -470,3 +468,42 @@ piece's requirements, greyed out with a blinking "none" when it is not in range 
 instead. Holding block before starting to draw still blocks (and prevents the draw) as in vanilla. Mouse sensitivity is
 not scaled down while zoomed. `IsDrawingBow` is bound by reflection because the compile-time game libraries predate
 it; if a game update removes it, the fix logs a warning and does nothing.
+
+## Crosshair ping
+
+**Config:** none. The key (default `H`) is a control in the game's own Settings → Controls, listed as "Ping"; there is
+no toggle. Bindings are physical key positions, so the default is a key that is free in vanilla and in the same place on QWERTY,
+QWERTZ and AZERTY (`Z` would be `Y` on QWERTZ; `T` is the emote wheel).
+**Patches:** `ZInput.ResetKBMButtons` (Postfix), `KeyboardMouseSettings.Initialize` (Prefix), `Player.Update`
+(Postfix) and `Chat.OnNewChatMessage` (Prefix + Finalizer) — `Patches/CrosshairPingPatch.cs`
+
+**Problem:** the game can only ping from the map (middle-click), so pointing something out means opening the map and
+guessing where it is.
+
+**Behavior:**
+
+1. After the game builds its keyboard buttons (`ZInput.ResetKBMButtons`, run from every `ZInput.Load`), a rebindable
+   button `CrosshairPing` bound to `<Keyboard>/h` is added with the game's own `AddButton`. The game then saves and
+   loads it like its own controls (`PlatformPrefs` key `kbmBinding_CrosshairPing`), and "Reset to default" covers it.
+   If `ZInput` already exists when the plugin loads, `ZInput.Load` is called once to add it.
+2. Before the Controls page sets up its rows (`KeyboardMouseSettings.Initialize`), the AutoPickup row is copied (rows
+   in the second column are mirrored, key left and name right, so the template must come from the first) and switched
+   on, its label set to "Ping" (its `Localize` component removed so it is not translated back) and a `KeySetting` for
+   the new button added to `m_keys`. The page then wires up the row's button and shows its key like the others. The rows sit in a fixed-size `GridLayoutGroup`
+   (700 × 560) filled column by column, two columns of 19, all taken, so a 39th row would start a third column
+   outside the viewport. When the grid is full it is grown by one cell (`cellSize.y + spacing.y`) and the new row is
+   moved after AutoPickup, so it lands in the first column and the second column keeps its rows.
+3. When the key goes down for the local player, and `Player.TakeInput` allows input (no chat, menu, inventory or map
+   open), a ray is cast from the camera along its forward direction, up to 500 m, against terrain, pieces, static
+   objects, vehicles, characters and items. The player's own colliders are skipped.
+4. The nearest hit is sent as the vanilla ping: the routed "ChatMessage" RPC to everyone with type `Ping`, as
+   `Chat.SendPing` sends it. Unlike `SendPing`, the point keeps its own height instead of the player's, so the "PING"
+   label sits on the target. The map only uses x and z. Nothing happens when the ray hits nothing (the sky).
+5. With the map closed, `Chat.OnNewChatMessage` drops pings farther than `Minimap.m_nomapPingDistance` (50 m), both the
+   label and the map marker. For the local player's own pings the Prefix lifts that limit for the call and the
+   Finalizer restores it, so a far ping still shows up for you. Your own message is handled synchronously, so nothing
+   else sees the changed value.
+
+**Known limits:** other players only see a ping farther than 50 m from them if their map is open when it arrives, the
+same as for a map ping. The Controls row is placed by guessing the layout from the rows already there, so a change
+to that page in a game update can misplace it; the key still works. The label is English only. The marker fades after the usual few seconds; it does not leave a pin.

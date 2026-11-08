@@ -221,6 +221,7 @@ namespace ValheimQuickFix
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();
+            Patches.CrosshairPingPatch.RegisterWithRunningInput();
         }
 
         private void OnDestroy()
