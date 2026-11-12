@@ -36,6 +36,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> SittingStaminaRegenEnabled;
         internal static ConfigEntry<bool> IgnoreWorkbenchEnabled;
         internal static ConfigEntry<bool> BowZoomEnabled;
+        internal static ConfigEntry<bool> ForgetDeletedPinsEnabled;
         internal static ConfigEntry<float> BowZoomMagnification;
         internal static ConfigEntry<float> SittingStaminaMultiplier;
         internal static ConfigEntry<float> ChopTierBonus;
@@ -180,6 +181,12 @@ namespace ValheimQuickFix
                 "IgnoreWorkbench",
                 false,
                 "Build and deconstruct workbench pieces without a workbench nearby. Pieces that need another station (stonecutter, forge, ...) still need it. Materials are still needed, and you must have seen a workbench once to unlock its pieces. Only works in a singleplayer game (\"Start server\" unchecked); does nothing on a multiplayer server.");
+
+            ForgetDeletedPinsEnabled = Config.Bind(
+                "General",
+                "ForgetDeletedPins",
+                true,
+                "Pins you delete from your map stay deleted when you read a map table, even if another player's copy is still on the table. Each world keeps its own list, saved with your character. To get a deleted pin back, turn this off, read the table, then turn it back on.");
 
             SittingStaminaRegenEnabled = Config.Bind(
                 "General",

@@ -507,3 +507,31 @@ guessing where it is.
 **Known limits:** other players only see a ping farther than 50 m from them if their map is open when it arrives, the
 same as for a map ping. The Controls row is placed by guessing the layout from the rows already there, so a change
 to that page in a game update can misplace it; the key still works. The label is English only. The marker fades after the usual few seconds; it does not leave a pin.
+
+## Forget deleted pins
+
+**Config:** `General` → `ForgetDeletedPins` (default `true`)
+**Patches:** `Minimap.RemovePin(Vector3, float)` (Prefix), `Minimap.AddSharedMapData` (Prefix + Postfix) — `Patches/ForgetDeletedPinsPatch.cs`
+
+**Problem:** reading a map table adds every pin on it that you have no pin within 1 m of. A pin another player put on
+the table comes back every time you read the table after you deleted it. Pins you placed yourself never come back,
+because the game skips table pins with your own player ID.
+
+**Behavior:**
+
+1. Deleting a pin on the map (right-click, long touch or the gamepad button, which all go through
+   `RemovePin(Vector3, float)`) records its position, icon type and name. The prefix finds the pin with the game's
+   private `GetClosestPin`, the same lookup `RemovePin` does next. `RemovePin(PinData)` is not patched: it is small
+   enough for the JIT to inline. Death markers are not recorded. Pins removed by the game itself (boss stones, events,
+   player markers) call `RemovePin(PinData)` directly and are not recorded.
+2. The list is kept per world (key `dev.pgarcia.quickfix.DeletedPins.<world UID>`) in the character's
+   `Player.m_customData`, so it is saved with the character and survives restarts.
+3. After `AddSharedMapData`, every pin owned by another player (`m_ownerID != 0`) that matches an entry (same type and
+   name, within 1 m, the game's own rule for "the same pin") is removed again. Pins of your own, accepted ones included
+   (owner 0), are never touched.
+4. Before `AddSharedMapData`, entries that match a pin on your map are dropped: the pin is back (for example after
+   reading the table with the fix off), so you want it. Deleting it again records it again.
+
+**Known limits:** if the only new thing on the table was a forgotten pin, the game still says the map was updated.
+A pin someone renames, moves or re-places with another icon is a new pin and shows up. Entries are never pruned when
+the pin leaves the table; each one is a short line of text.
