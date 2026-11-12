@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-12
+
 ### Added
 
 - Deleted pins stay deleted: a pin you delete from your map no longer comes back when you read a map table, even if
