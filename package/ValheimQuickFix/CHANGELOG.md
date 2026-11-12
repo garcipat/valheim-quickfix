@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Deleted pins stay deleted: a pin you delete from your map no longer comes back when you read a map table, even if
+  another player's copy is still on it. Each world keeps its own list, saved with your character. Turn it off with
+  `ForgetDeletedPins`.
 - Bow zoom (off by default): while drawing a bow, hold the block button (right mouse button by default) to zoom in a
   little instead of cancelling the draw. The magnification can be set from 1.1x to 3x with `BowZoomMagnification`.
   Turn it on with `BowZoom`.

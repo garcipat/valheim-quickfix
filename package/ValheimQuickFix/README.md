@@ -62,6 +62,8 @@ other players don't need it.
 - **Ping where you look** — press `H` to ping the spot under your crosshair, up to 500 m away, without opening the
   map. Rebind it in the game's **Settings → Controls**, where it is listed as "Ping". It is the game's normal ping, so everyone nearby sees it in the world and on their map, even
   without the mod.
+- **Deleted pins stay deleted** — a pin you delete from your map no longer comes back when you read a map table, even
+  if another player's copy is still on it. Each world keeps its own list, saved with your character.
 
 ## Configuration
 
@@ -97,6 +99,7 @@ with the mod installed, and changes apply after a restart.
 | `Crafting`         | `SmelterFillOnHold` | `true` | Hold E on a smelter's ore or fuel slot to fill it at once. |
 | `Building & Travel`  | `IgnoreWorkbench` | `false` | Build and deconstruct workbench pieces without a workbench nearby (singleplayer only). |
 | `Building & Travel`          | `GhostPortalPlayers` | `true` | Players standing in a portal opening are invisible and walk-through, so they do not block it. |
+| `General`          | `ForgetDeletedPins` | `true` | Pins you delete stay deleted when you read a map table. |
 
 ## Installation
 
