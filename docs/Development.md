@@ -91,26 +91,34 @@ Notes:
 
 ## Releasing
 
-A release is a **tag `<Mod>-vX.Y.Z` pushed on `main`**, for example `SignIcons-v0.2.0` or `ValheimQuickFix-v1.0.0-rc.1`. The
+A release is a **tag `<Mod>-vX.Y.Z` on `main`**, for example `SignIcons-v0.2.0` or `ValheimQuickFix-v1.0.0-rc.1`. The
 prefix keeps the mods' versions independent, and the tag is the only place a version is written: no version in any file.
+The tag is set by the Release workflow when a **release pull request** is merged, so the tagged commit already has the
+mod's changelog closed for that version.
 
 Use the **`release-mod` skill** (`/release-mod <Mod>`, in `.claude/skills/release-mod/`). It checks you are on an up-to-date
 `main`, reads the mod's `Unreleased` changelog entries, proposes the next version with the reasons (new feature or breaking
-change → minor while 0.x, fixes only → patch; first release → 0.1.0), asks you to confirm, then creates and pushes the tag.
-By hand, the same is `git tag -a <Mod>-vX.Y.Z -m "..." && git push origin <Mod>-vX.Y.Z`.
+change → minor while 0.x, fixes only → patch; first release → 0.1.0), and asks you to confirm. Then it opens the release
+pull request `Release <Mod> X.Y.Z` from a branch `release/<Mod>-vX.Y.Z`, whose only change is
+`scripts/update-changelog.sh` renaming `Unreleased` to `## [X.Y.Z] - date`. You merge it (`main` needs a code-owner review,
+so typically `gh pr merge <n> --squash --admin --delete-branch`).
 
-The `Release` workflow (`.github/workflows/release.yml`) then:
+The merge starts the `Release` workflow (`.github/workflows/release.yml`), which:
 
-1. works out the mod and version from the tag and refuses tags that are not on `main` (`scripts/resolve-release.sh`);
-2. renames `Unreleased` to `## [X.Y.Z] - date` on its copy of the changelog and uses those entries as the release notes
-   (`scripts/update-changelog.sh`); it stops if there are none;
+1. works out the mod and version from the branch name, and refuses a merge commit that is not on `main`, a changelog
+   without the `[X.Y.Z]` section, or a tag that already exists elsewhere (`scripts/resolve-release.sh`). Pull requests from
+   other branches, and closed ones that were not merged, start no release;
+2. reads the `[X.Y.Z]` section as the release notes (`scripts/update-changelog.sh`);
 3. builds with that version and packages the zip (`scripts/package.sh --version X.Y.Z`);
-4. creates the GitHub release `<Mod> X.Y.Z` with the zip (a hyphenated version is a pre-release);
-5. opens a pull request `Changelog: release <Mod> X.Y.Z` with the renamed changelog section, from a
-   `release/changelog-<Mod>-X.Y.Z` branch (`main` only takes pull requests, so the workflow cannot push to it). Merge it
-   before other changes touch the changelog. It skips this with a warning if the mod's `Unreleased` entries changed on
-   `main` since the tag; then rename the section by hand. Needs "Allow GitHub Actions to create pull requests" under
-   Settings → Actions → General; without it the branch is pushed and the warning says to open the pull request yourself.
+4. tags the merge commit `<Mod>-vX.Y.Z` (a re-run keeps a tag it already made on the same commit);
+5. creates the GitHub release `<Mod> X.Y.Z` with the zip (a hyphenated version is a pre-release).
+
+**By hand:** pushing a tag on `main` (`git tag -a <Mod>-vX.Y.Z -m "..." && git push origin <Mod>-vX.Y.Z`) still releases.
+Then the workflow renames `Unreleased` on its own copy for the notes, and afterwards pushes a
+`release/changelog-<Mod>-X.Y.Z` branch with the renamed section and tries to open a pull request `Changelog: release
+<Mod> X.Y.Z` for it. That needs "Allow GitHub Actions to create pull requests" under Settings → Actions → General;
+without it, open the pull request yourself and merge it before other changes touch the changelog. It skips this with a
+warning if the mod's `Unreleased` entries changed on `main` since the tag; then rename the section by hand.
 
 **Dry run:** Actions → Release → *Run workflow*, pick the mod and a version. It builds the package from `main`
 and uploads it as a workflow artifact. No tag, no release, no commit. (`/release-mod <Mod> dry-run` starts it for you.)

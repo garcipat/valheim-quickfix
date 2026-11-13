@@ -38,13 +38,14 @@ New work that isn't a fix for something the game gets wrong belongs in its own m
 - **No dependencies** beyond BepInEx, HarmonyX, Unity, and the game assemblies. Do not add
   Jotunn or other mods as dependencies without a reason documented in `docs/Architecture.md`.
 - Match the existing code style (4-space indent, block-scoped namespaces, `internal` by default).
-- **Versions live in the release tag, not in files.** A release is a tag `<Mod>-vX.Y.Z` pushed on `main`; the Release
+- **Versions live in the release tag, not in files.** A release is a tag `<Mod>-vX.Y.Z` on `main`; the Release
   workflow builds that version into the DLL and stamps it into the
   zip's manifest. `manifest.json` and `thunderstore.toml` hold a `0.0.0` placeholder, and local builds report `0.0.0-dev`.
   Never write a real version into those files.
 - To release, use the `release-mod` skill (`/release-mod <Mod>`): it reads the mod's changelog, proposes the version,
-  and after one confirmation pushes the tag. The workflow does the rest and opens a pull request with the renamed changelog section
-  back to `main`. A new mod must be added to the workflow's options and tag patterns.
+  and after one confirmation opens a release pull request from `release/<Mod>-vX.Y.Z` that renames `[Unreleased]` to
+  that version. Merging it makes the workflow tag the merge commit and publish the release, so the tagged commit already
+  has the closed changelog. A new mod must be added to the workflow's options and tag patterns.
 - Every player-visible change adds a line under `## [Unreleased]` in `package/<Mod>/CHANGELOG.md` in the same PR;
   those lines become the release notes, and a release without any stops.
 - `package/<Mod>/README.md` ships inside the package and is shown as the mod description, so keep it player-facing.
