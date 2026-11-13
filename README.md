@@ -11,6 +11,7 @@ package, version, and changelog.
 | **SignIcons** | Show item icons on signs with `[ItemName]`. | [README](package/SignIcons/README.md) · [Changelog](package/SignIcons/CHANGELOG.md) |
 | **ItemCompare** | Hover gear to compare it with what you wear: old -> new stats in green or red. | [README](package/ItemCompare/README.md) · [Changelog](package/ItemCompare/CHANGELOG.md) |
 | **MoreSkills** | New skills you level by playing. Hauling: pull loaded carts more easily the more you haul. | [README](package/MoreSkills/README.md) · [Changelog](package/MoreSkills/CHANGELOG.md) |
+| **MapRoutes** | Draw dotted red routes freehand on the map with a quill to plan your trips. Right-click a route to remove it. | [README](package/MapRoutes/README.md) · [Changelog](package/MapRoutes/CHANGELOG.md) |
 
 All are client-side only and need [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/).
 Install them through a mod manager such as Gale, or build them from source.
@@ -22,6 +23,7 @@ dotnet build src/ValheimQuickFix -c Release
 dotnet build src/SignIcons -c Release
 dotnet build src/ItemCompare -c Release
 dotnet build src/MoreSkills -c Release
+dotnet build src/MapRoutes -c Release
 ./scripts/package.sh          # builds every mod and writes dist/<Mod>-<version>.zip for Gale / Thunderstore
 ```
 
@@ -36,4 +38,4 @@ mod packages.
 ## Docs
 
 - [Architecture](docs/Architecture.md) · [Development](docs/Development.md)
-- [QuickFix fixes](docs/Fixes.md) · [Adding a fix](docs/AddingAFix.md) · [Sign icons](docs/SignIcons.md) · [Item compare](docs/ItemCompare.md) · [More skills](docs/MoreSkills.md) · [Probing creature data](docs/ProbingCreatureData.md)
+- [QuickFix fixes](docs/Fixes.md) · [Adding a fix](docs/AddingAFix.md) · [Sign icons](docs/SignIcons.md) · [Item compare](docs/ItemCompare.md) · [More skills](docs/MoreSkills.md) · [Map routes](docs/MapRoutes.md) · [Probing creature data](docs/ProbingCreatureData.md)

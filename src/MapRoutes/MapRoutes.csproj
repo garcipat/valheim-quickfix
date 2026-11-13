@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>MapRoutes</AssemblyName>
+    <RootNamespace>ValheimMapRoutes</RootNamespace>
+    <Product>Map Routes</Product>
+    <Description>Draw dotted routes on the map with a quill.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\*.png" LogicalName="ValheimMapRoutes.%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>
