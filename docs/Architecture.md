@@ -19,10 +19,16 @@ src/
  │   ├─ Plugin.cs                Mode / CompareKey config
  │   ├─ StatDiff.cs              which stats, how they are compared and coloured
  │   └─ Patches/TooltipComparePatch.cs
- └─ MoreSkills/                  new skills (Hauling)
-     ├─ Plugin.cs                one config section per skill
-     ├─ Core/                    custom-skill plumbing: register, load, name, hide/freeze, raiseskill
-     └─ Patches/HaulingPatch.cs  levelling and cart mass
+ ├─ MoreSkills/                  new skills (Hauling)
+ │   ├─ Plugin.cs                one config section per skill
+ │   ├─ Core/                    custom-skill plumbing: register, load, name, hide/freeze, raiseskill
+ │   └─ Patches/HaulingPatch.cs  levelling and cart mass
+ └─ MapRoutes/                   dotted routes drawn on the large map with a quill
+     ├─ RouteMap.cs              draw mode, quill button, dots, hit-testing
+     ├─ RouteStore.cs            routes in Player.m_customData, per world
+     ├─ RouteArt.cs              quill sprite and cursor, dot sprite, crossed-out red
+     ├─ Assets/                  quill PNGs for the button and the cursor, embedded in the DLL
+     └─ Patches/MinimapPatches.cs  map update, clicks, mode changes
 package/<Mod>/                   Thunderstore skeleton (manifest, thunderstore.toml, icon, README, CHANGELOG)
 ```
 
@@ -41,7 +47,7 @@ break in one (for example after a game update) doesn't affect the other.
 `Valheim.GameLibs` lets the project build in CI without owning the game. It is older than the live game
 (0.202 vs 1.0.x); patched signatures are mostly stable, but see the notes in `AGENTS.md` about private members
 and interface drift. TextMeshPro and `UnityEngine.UI` are not available as packages, so code that needs them
-(SignIcons) uses reflection.
+(SignIcons, MapRoutes) uses reflection.
 
 ## Design decisions
 

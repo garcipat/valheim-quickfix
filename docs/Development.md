@@ -14,6 +14,7 @@ dotnet build src/ValheimQuickFix -c Release
 dotnet build src/SignIcons -c Release
 dotnet build src/ItemCompare -c Release
 dotnet build src/MoreSkills -c Release
+dotnet build src/MapRoutes -c Release
 dotnet build src/SignIcons -c Release -p:PluginsDir="/path/to/Valheim/BepInEx/plugins"
 ```
 
@@ -22,7 +23,7 @@ The last form copies the DLL into the game after building. Shared settings live 
 ## Debugging
 
 - Logs: `Valheim/BepInEx/LogOutput.log`
-- Config: `Valheim/BepInEx/config/<plugin guid>.cfg` (`dev.pgarcia.valheim.quickfix.cfg`; SignIcons has none; ItemCompare uses `dev.pgarcia.valheim.itemcompare.cfg`; MoreSkills uses `dev.pgarcia.valheim.moreskills.cfg`)
+- Config: `Valheim/BepInEx/config/<plugin guid>.cfg` (`dev.pgarcia.valheim.quickfix.cfg`; SignIcons has none; ItemCompare uses `dev.pgarcia.valheim.itemcompare.cfg`; MoreSkills uses `dev.pgarcia.valheim.moreskills.cfg`; MapRoutes has none)
 - Enable the BepInEx console via `BepInEx/config/BepInEx.cfg` → `[Logging.Console] Enabled = true`
 
 ## CI
@@ -59,6 +60,7 @@ Each mod has a `package/<Mod>/thunderstore.toml` for the [Thunderstore CLI](http
 | SignIcons       | `client-side`, `building`, `utility` |
 | ItemCompare     | `client-side`, `tweaks`, `utility` |
 | MoreSkills      | `client-side`, `tweaks`, `utility` |
+| MapRoutes       | `client-side`, `tweaks`, `utility` |
 
 The category slugs are Valheim's own; the full list is at
 `https://thunderstore.io/api/experimental/community/valheim/category/`.

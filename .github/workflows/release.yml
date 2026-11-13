@@ -24,6 +24,7 @@ on:
           - SignIcons
           - ItemCompare
           - MoreSkills
+          - MapRoutes
       version:
         description: Version for the dry run (no release is created)
         default: 0.0.0-dryrun
@@ -33,6 +34,7 @@ on:
       - 'SignIcons-v*'
       - 'ItemCompare-v*'
       - 'MoreSkills-v*'
+      - 'MapRoutes-v*'
 
 permissions:
   contents: read
