@@ -37,6 +37,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> IgnoreWorkbenchEnabled;
         internal static ConfigEntry<bool> BowZoomEnabled;
         internal static ConfigEntry<bool> ForgetDeletedPinsEnabled;
+        internal static ConfigEntry<bool> PauseOnMapEnabled;
         internal static ConfigEntry<float> BowZoomMagnification;
         internal static ConfigEntry<float> SittingStaminaMultiplier;
         internal static ConfigEntry<float> ChopTierBonus;
@@ -187,6 +188,12 @@ namespace ValheimQuickFix
                 "ForgetDeletedPins",
                 true,
                 "Pins you delete from your map stay deleted when you read a map table, even if another player's copy is still on the table. Each world keeps its own list, saved with your character. To get a deleted pin back, turn this off, read the table, then turn it back on.");
+
+            PauseOnMapEnabled = Config.Bind(
+                "General",
+                "PauseOnMap",
+                true,
+                "Pause the game while the large map is open, like the Esc menu does. Only when the game can pause at all: in a singleplayer game, or while hosting with nobody connected.");
 
             SittingStaminaRegenEnabled = Config.Bind(
                 "General",
