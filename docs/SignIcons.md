@@ -22,7 +22,15 @@ text — `src/SignIcons/Patches/SignIconPatch.cs`
    is just text (`and/or`), and a closing tag such as `</color>` is not a row break.
 4. An unknown `[Name]` stays visible as text, so it also keeps a sign from counting as icon-only.
 5. Editing a sign shows the original text with its tokens, so icons survive an edit.
-6. The token is ordinary sign text, which vanilla already syncs, so the server needs nothing. Players without the mod
+6. A sign showing exactly one icon (icon-only, one row, one icon) is drawn at half width, full height
+   (`SignShrink.cs`). The sign's mesh renderers are hidden and a narrower copy of each (same mesh and materials, no
+   collider) is added as a child of the original, so it follows the game's new/worn/broken model swaps. Width is the
+   sign root's right axis (the axis the text runs along); each copy shrinks the local axis closest to it, toward the
+   center of the board's bounds. The text canvas isn't scaled, so the icon stays square: the icon layout fits it into
+   half the text area's width, so it is `min(height, width / 2)`. Colliders are never scaled, so
+   aiming, placement, and structure support are unchanged, and nothing is synced, so other players see the normal
+   sign. It reverts when the text changes to anything else.
+7. The token is ordinary sign text, which vanilla already syncs, so the server needs nothing. Players without the mod
    read the tokens as plain text, which is why the syntax uses brackets rather than a rich-text tag.
 
 **How it works:** in a sign with text, each token is replaced with an invisible placeholder inside a `<link>`; after
@@ -37,3 +45,40 @@ syntax: a `[Name]` that matches an item always becomes an icon.
 TextMeshPro is driven through reflection because no NuGet package ships it; if a game update renames the members
 it needs, the feature disables itself and logs why. Icon size and position are tuned by eye and unverified on
 every sign model.
+
+## Signs on chests
+
+**Patch:** `Sign.Interact` (Prefix) and `Sign.GetHoverText` (Postfix) — `src/SignIcons/Patches/SignOnChestPatch.cs`;
+`Player.UpdatePlacementGhost` and `WearNTear.UpdateSupport` (Prefix + Finalizer) — `src/SignIcons/Patches/SignOnChestSupportPatch.cs`
+
+**Problem:** a sign can't be placed on a chest, and a sign in front of a chest takes the crosshair, so the chest behind
+it can't be opened.
+
+**Placing and support** (`SignOnChestSupportPatch.cs`): chests have `WearNTear.m_supports == false`, which makes
+`Player.UpdatePlacementGhost` mark a sign aimed at them invalid and makes `WearNTear.UpdateSupport` ignore them as
+support. A prefix sets `m_supports = true` on the chest for the duration of those two calls (the chest under the
+placement ray; chests within 1.5 m of a sign), and a finalizer restores it. Nothing else about the checks changes, so
+every other placement rule still applies and the chest passes on its own support with the usual loss.
+
+This is the one part of the mod that isn't only local: `UpdateSupport` runs on the ZDO owner of the sign, which is
+usually the nearby player who loaded the area first. If that player doesn't have the mod, the chest gives no support
+and a sign held only by the chest breaks. The README says so.
+
+**Behavior:**
+
+1. When the hovered sign has a `Container` right behind it, Use opens the container and AltPlace + Use (Shift+E by
+   default) edits the sign. The game already passes that key to
+   `Interact` as `alt`; neither `Sign` nor `Container` used it.
+2. The hover text keeps the sign's text, then shows the container's own hover text (name, empty marker, Open key)
+   and an `AltPlace + Use` line for the sign. If vanilla's hover text isn't in its usual shape (for example without
+   ward access, where it has no Use line), it is left alone.
+3. Opening goes through `Container.Interact`, so ward and private-chest checks still apply.
+
+**How it works:** the chest is found along the same camera ray the game uses to pick the hovered object
+(`Player.FindHoverObject`: camera position and forward, `m_interactMask`): after the sign's own colliders, the next hit
+must be a `Container` within 0.75 m of the sign's surface. Anything else in between (a wall) means no chest. The
+result is cached per frame, since hover text is rebuilt every frame.
+
+**Known limits:** the hover line always names `$KEY_AltPlace`. On a non-classic gamepad layout the game reads AltKeys
+for `alt` instead (vanilla `ItemStand` switches the hint via `ZInput.IsNonClassicFunctionality`, which the reference
+assemblies in `libs/` predate), so the hint may name the wrong button there.

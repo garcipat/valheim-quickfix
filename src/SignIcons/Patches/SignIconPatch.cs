@@ -140,6 +140,7 @@ namespace ValheimSignIcons.Patches
                     state.IconOnlyRows = null;
                 }
 
+                SignShrink.Apply(sign, widget, false);
                 return;
             }
 
@@ -172,7 +173,10 @@ namespace ValheimSignIcons.Patches
 
             if (changed)
             {
-                BuildIcons(widget, state);
+                var rows = state.IconOnlyRows;
+                var shrink = rows != null && rows.Count == 1 && rows[0].Count == 1;
+                BuildIcons(widget, state, shrink ? SignShrink.Scale : 1f);
+                SignShrink.Apply(sign, widget, shrink);
             }
         }
 
@@ -238,14 +242,15 @@ namespace ValheimSignIcons.Patches
             return true;
         }
 
-        private static void BuildIcons(Component widget, SignIconState state)
+        // widthFactor narrows the area filled icons may use, for a sign drawn narrower than its text area.
+        private static void BuildIcons(Component widget, SignIconState state, float widthFactor)
         {
             state.DestroyIcons();
 
             var canvas = widget.GetComponentInParent<Canvas>();
             if (state.IconOnlyRows != null)
             {
-                BuildFilledIcons(widget, canvas, state);
+                BuildFilledIcons(widget, canvas, state, widthFactor);
             }
             else
             {
@@ -255,7 +260,7 @@ namespace ValheimSignIcons.Patches
 
         // Icons laid out in rows, centered in the widget's rect. All icons share one cell size, as large as the
         // rect allows for the tallest stack of rows and the widest row, so the rows line up.
-        private static void BuildFilledIcons(Component widget, Canvas canvas, SignIconState state)
+        private static void BuildFilledIcons(Component widget, Canvas canvas, SignIconState state, float widthFactor)
         {
             var rectTransform = widget.transform as RectTransform;
             if (rectTransform == null)
@@ -271,7 +276,7 @@ namespace ValheimSignIcons.Patches
                 widest = Mathf.Max(widest, row.Count);
             }
 
-            var cell = Mathf.Min(rect.height / rows.Count, rect.width / widest);
+            var cell = Mathf.Min(rect.height / rows.Count, rect.width * widthFactor / widest);
             var size = cell * FillFraction;
             var top = rect.center.y + cell * rows.Count * 0.5f;
 
