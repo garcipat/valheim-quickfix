@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- A wrong server password asks for the password again, with a "Wrong password" title, instead of dropping you back to
+  the menu, so you no longer have to find the server again. Press Escape (B on a gamepad) in the password box to give up. Turn it off with
+  `RetryWrongPassword`.
+
 ## [0.5.0] - 2026-11-12
 
 ### Added

@@ -38,6 +38,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> BowZoomEnabled;
         internal static ConfigEntry<bool> ForgetDeletedPinsEnabled;
         internal static ConfigEntry<bool> PauseOnMapEnabled;
+        internal static ConfigEntry<bool> RetryWrongPasswordEnabled;
         internal static ConfigEntry<float> BowZoomMagnification;
         internal static ConfigEntry<float> SittingStaminaMultiplier;
         internal static ConfigEntry<float> ChopTierBonus;
@@ -194,6 +195,12 @@ namespace ValheimQuickFix
                 "PauseOnMap",
                 true,
                 "Pause the game while the large map is open, like the Esc menu does. Only when the game can pause at all: in a singleplayer game, or while hosting with nobody connected.");
+
+            RetryWrongPasswordEnabled = Config.Bind(
+                "General",
+                "RetryWrongPassword",
+                true,
+                "After a wrong server password, ask for the password again instead of going back to the menu. Press Escape (B on a gamepad) in the password box to give up and return to the menu.");
 
             SittingStaminaRegenEnabled = Config.Bind(
                 "General",
