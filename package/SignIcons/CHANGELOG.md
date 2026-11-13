@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- A list of every item name you can put on a sign, linked from the mod description.
+
 ## [0.1.0] - 2026-10-15
 
 ### Added
