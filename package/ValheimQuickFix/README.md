@@ -52,6 +52,8 @@ other players don't need it.
   little. Let go of the attack button to shoot as usual. How far it zooms can be set from 1.1x to 3x.
 - **Portal press or hold** (off by default) — tap `E` on a portal to go through it, hold `E` to rename it. The opening
   of the portal can be aimed at, not only its frame. Walking in still works.
+- **Portal tag signs** — every tagged portal shows a sign with its tag in white inside its ring, so you can see
+  where it leads without hovering it. The sign is only on your screen: it isn't built, saved or seen by others.
 - **Build without a workbench** (off by default) — build and deconstruct workbench pieces without a workbench nearby.
   Pieces that need a stonecutter, forge or other station still need it. You still need the materials, and you must
   have seen a workbench once to unlock its pieces.
@@ -100,6 +102,7 @@ with the mod installed, and changes apply after a restart.
 | `Building & Travel`         | `HiveSnapsToPoleMiddle` | `true` | Beehives can snap to the middle of a pole. |
 | `Crafting`         | `RepairAllOnHold` | `true` | Hold E on a workbench or forge to repair every item at once. |
 | `Building & Travel`          | `PortalPressOrHold` | `false` | Tap E on a portal to go through, hold E to rename it. |
+| `Building & Travel`          | `PortalTagSign` | `true` | Tagged portals show their tag on a sign inside the ring. |
 | `Crafting`         | `SmelterFillOnHold` | `true` | Hold E on a smelter's ore or fuel slot to fill it at once. |
 | `Building & Travel`  | `IgnoreWorkbench` | `false` | Build and deconstruct workbench pieces without a workbench nearby (singleplayer only). |
 | `Building & Travel`          | `GhostPortalPlayers` | `true` | Players standing in a portal opening are invisible and walk-through, so they do not block it. |

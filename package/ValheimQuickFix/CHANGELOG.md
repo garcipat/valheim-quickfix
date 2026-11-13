@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Every tagged portal shows a sign with its tag in white inside its ring, so you can see where it leads without
+  hovering it. Only you see it; it isn't built or saved. Turn it off with `PortalTagSign`.
+
 - A wrong server password asks for the password again, with a "Wrong password" title, instead of dropping you back to
   the menu, so you no longer have to find the server again. Press Escape (B on a gamepad) in the password box to give up. Turn it off with
   `RetryWrongPassword`.

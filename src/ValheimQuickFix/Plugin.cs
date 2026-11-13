@@ -31,6 +31,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> MeaningfulToolUpgradesEnabled;
         internal static ConfigEntry<bool> RepairAllOnHoldEnabled;
         internal static ConfigEntry<bool> PortalPressOrHoldEnabled;
+        internal static ConfigEntry<bool> PortalTagSignEnabled;
         internal static ConfigEntry<bool> SmelterFillOnHoldEnabled;
         internal static ConfigEntry<bool> GhostPortalPlayersEnabled;
         internal static ConfigEntry<bool> SittingStaminaRegenEnabled;
@@ -165,6 +166,12 @@ namespace ValheimQuickFix
                 "PortalPressOrHold",
                 false,
                 "Pressing E on a portal sends you through it, and holding E opens the tag dialog to rename it. The opening of the portal can be aimed at, not only its frame.");
+
+            PortalTagSignEnabled = Config.Bind(
+                "Building & Travel",
+                "PortalTagSign",
+                true,
+                "Show a sign with the portal's tag in white inside the ring of every tagged portal, so you can see where it leads without hovering it. The sign is only on your screen: it is not built, saved or seen by other players.");
 
             SmelterFillOnHoldEnabled = Config.Bind(
                 "Crafting",

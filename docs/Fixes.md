@@ -376,6 +376,26 @@ The hint is plain English, not localized. `TextInput.m_inputField` is private an
 `readOnly` is set by reflection; the patch disables itself with a log line if the field is missing. "Held" is the `Use` button or
 the raw E key. Looking away from the portal before releasing E still sends you through.
 
+## Portal tag sign
+
+**Config:** `Building & Travel` → `PortalTagSign` (default `true`)
+**Patch:** `Patches/PortalTagSignPatch.cs`
+
+**Problem:** a portal's tag only shows while you hover it, so in a room of portals you can't see where each one leads.
+Players work around it by hanging a sign inside every portal by hand and writing `<color=#ffffff>` before the tag.
+
+**Behavior:**
+
+1. Every tagged portal shows a wooden sign centred in the upper half of its ring, with the tag in white.
+2. The sign follows the tag: renaming the portal changes it within half a second, and clearing the tag removes it.
+3. The sign is only on your screen. It is not built or saved, other players don't see it, it can't be hit or hovered,
+   and you walk through it into the portal as before.
+4. The text is the tag as the hover shows it, so tags the game filters are filtered on the sign too.
+5. Turning the setting off hides the signs.
+
+**Known limits:** the sign is on the portal's front only. Its position is tuned for the wooden portal; other portals
+get a position from the size of their opening, which may sit a little high or low.
+
 ## Smelter fill on hold
 
 **Config:** `Crafting` → `SmelterFillOnHold` (default `true`)
