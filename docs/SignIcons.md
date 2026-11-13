@@ -40,9 +40,21 @@ every sign model.
 
 ## Signs on chests
 
-**Patch:** `Sign.Interact` (Prefix) and `Sign.GetHoverText` (Postfix) — `src/SignIcons/Patches/SignOnChestPatch.cs`
+**Patch:** `Sign.Interact` (Prefix) and `Sign.GetHoverText` (Postfix) — `src/SignIcons/Patches/SignOnChestPatch.cs`;
+`Player.UpdatePlacementGhost` and `WearNTear.UpdateSupport` (Prefix + Finalizer) — `src/SignIcons/Patches/SignOnChestSupportPatch.cs`
 
-**Problem:** a sign placed on a chest takes the crosshair, so the chest behind it can't be opened.
+**Problem:** a sign can't be placed on a chest, and a sign in front of a chest takes the crosshair, so the chest behind
+it can't be opened.
+
+**Placing and support** (`SignOnChestSupportPatch.cs`): chests have `WearNTear.m_supports == false`, which makes
+`Player.UpdatePlacementGhost` mark a sign aimed at them invalid and makes `WearNTear.UpdateSupport` ignore them as
+support. A prefix sets `m_supports = true` on the chest for the duration of those two calls (the chest under the
+placement ray; chests within 1.5 m of a sign), and a finalizer restores it. Nothing else about the checks changes, so
+every other placement rule still applies and the chest passes on its own support with the usual loss.
+
+This is the one part of the mod that isn't only local: `UpdateSupport` runs on the ZDO owner of the sign, which is
+usually the nearby player who loaded the area first. If that player doesn't have the mod, the chest gives no support
+and a sign held only by the chest breaks. The README says so.
 
 **Behavior:**
 
