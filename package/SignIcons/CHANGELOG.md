@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 
 - A list of every item name you can put on a sign, linked from the mod description.
+- Signs on chests: a sign placed on a chest no longer blocks it. Looking at the sign, `E` opens the chest behind it
+  and `Shift+E` edits the sign. Signs with no chest behind them work as before.
 
 ## [0.1.0] - 2026-10-15
 

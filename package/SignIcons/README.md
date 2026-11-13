@@ -2,7 +2,7 @@
 
 By [garcipat](https://github.com/garcipat) · [Source code on GitHub](https://github.com/garcipat/valheim-quickfix)
 
-Show item icons on signs. Write an item's name in square brackets, such as `[SwordIron]`, in a sign's text and
+Show item icons on signs, and open the chest a sign is placed on. Write an item's name in square brackets, such as `[SwordIron]`, in a sign's text and
 the item's icon appears at that position.
 
 ```
@@ -32,6 +32,17 @@ the icons if they have the mod too; without it they simply read `[SwordIron]`, s
   text, a `/` is just a slash.
 - Editing a sign shows the original text with its tags, so icons survive an edit.
 - Signs hold 50 characters, and the brackets count: `[SwordIron]` is 11 of them.
+
+## Signs on chests
+
+A sign placed on a chest normally blocks it, so you can't open the chest through the sign. With this mod, looking at a
+sign that has a chest right behind it:
+
+- **E** opens the chest.
+- **Shift+E** edits the sign. Shift is the game's alternate key, so it follows your Controls settings and works on a
+  controller too.
+
+The hover text shows both keys. Signs with no chest behind them work exactly as before.
 
 ## Configuration
 

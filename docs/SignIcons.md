@@ -37,3 +37,28 @@ syntax: a `[Name]` that matches an item always becomes an icon.
 TextMeshPro is driven through reflection because no NuGet package ships it; if a game update renames the members
 it needs, the feature disables itself and logs why. Icon size and position are tuned by eye and unverified on
 every sign model.
+
+## Signs on chests
+
+**Patch:** `Sign.Interact` (Prefix) and `Sign.GetHoverText` (Postfix) — `src/SignIcons/Patches/SignOnChestPatch.cs`
+
+**Problem:** a sign placed on a chest takes the crosshair, so the chest behind it can't be opened.
+
+**Behavior:**
+
+1. When the hovered sign has a `Container` right behind it, Use opens the container and AltPlace + Use (Shift+E by
+   default) edits the sign. The game already passes that key to
+   `Interact` as `alt`; neither `Sign` nor `Container` used it.
+2. The hover text keeps the sign's text, then shows the container's own hover text (name, empty marker, Open key)
+   and an `AltPlace + Use` line for the sign. If vanilla's hover text isn't in its usual shape (for example without
+   ward access, where it has no Use line), it is left alone.
+3. Opening goes through `Container.Interact`, so ward and private-chest checks still apply.
+
+**How it works:** the chest is found along the same camera ray the game uses to pick the hovered object
+(`Player.FindHoverObject`: camera position and forward, `m_interactMask`): after the sign's own colliders, the next hit
+must be a `Container` within 0.75 m of the sign's surface. Anything else in between (a wall) means no chest. The
+result is cached per frame, since hover text is rebuilt every frame.
+
+**Known limits:** the hover line always names `$KEY_AltPlace`. On a non-classic gamepad layout the game reads AltKeys
+for `alt` instead (vanilla `ItemStand` switches the hint via `ZInput.IsNonClassicFunctionality`, which the reference
+assemblies in `libs/` predate), so the hint may name the wrong button there.
