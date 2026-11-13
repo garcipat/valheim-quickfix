@@ -539,24 +539,18 @@ the pin leaves the table; each one is a short line of text.
 ## Pause on map
 
 **Config:** `General` → `PauseOnMap` (default `true`)
-**Patches:** `Game.UpdatePause` (Postfix); `Minimap.Update`, `UpdateMap`, `UpdateNameInput`, `UpdatePins`,
-`OnMapLeftDown`, `OnMapLeftUp` (Transpiler) — `Patches/PauseOnMapPatch.cs`
+**Patch:** `Patches/PauseOnMapPatch.cs`
 
 **Problem:** the Esc menu pauses a singleplayer game, but the large map does not. Monsters keep attacking, the day
 goes on and food runs out while you read the map or place pins.
 
 **Behavior:**
 
-1. While the large map is open, the game is held at time scale 0, the way the Esc menu pauses it. It applies under
-   the game's own condition for pausing: you are the server (singleplayer, or hosting) and nobody is connected. On a
-   server someone else runs, or with another player in your game, nothing changes.
-2. `Game.IsPaused` still reports false: it hides the key hints, and the map shows some. The postfix only overrides the
-   time scale that `UpdatePause` just wrote, so closing the map hands control straight back to the game.
-3. The map times its own UI with game time, which stops at time scale 0. The transpiler swaps `Time.deltaTime` for real
-   frame time while paused, and `Time.time` for `Time.unscaledTime` while the fix is on, in the map's UI methods.
-   Without it, every drag would end in a click, every second click would be a double click (which adds a pin), pan
-   inertia and gamepad panning would stop, and after naming a pin the name field would keep the keyboard, so the map
-   could not be closed.
+1. While the large map is open, the game is paused the way the Esc menu pauses it.
+2. It only pauses when the game itself would: in singleplayer, or while hosting with nobody connected. With another
+   player in the game, or on someone else's server, nothing changes.
+3. The map keeps working while paused: dragging, zooming, placing and naming pins, and gamepad panning.
+4. Closing the map resumes the game.
 
-**Known limits:** this is the only transpiler in QuickFix; a Postfix cannot reach those reads of the clock. If a game
-update renames one of the patched map methods, the fix logs a warning and that method keeps game time.
+**Known limits:** the map's own timing is kept running by a transpiler, the only one in QuickFix. If a game update
+changes the map code, the fix logs a warning and clicks on the map may be misread while paused.
