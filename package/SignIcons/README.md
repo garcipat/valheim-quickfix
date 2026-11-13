@@ -22,6 +22,8 @@ the icons if they have the mod too; without it they simply read `[SwordIron]`, s
 ## Using it
 
 - Use the item's **prefab name**: `SwordIron`, `Iron`, `Torch`, `Coal`. Capital letters don't matter.
+  The [full list of item names](https://github.com/garcipat/valheim-quickfix/blob/main/package/SignIcons/ItemList.md)
+  shows what to type for each item.
 - Brackets around anything that isn't an item stay as plain text, so a typo is easy to spot. Anything in brackets that
   *is* an item name becomes an icon.
 - A sign that contains **only icons** shows them large, filling the sign's text area. Several icons share the width,
