@@ -554,3 +554,22 @@ goes on and food runs out while you read the map or place pins.
 
 **Known limits:** the map's own timing is kept running by a transpiler, the only one in QuickFix. If a game update
 changes the map code, the fix logs a warning and clicks on the map may be misread while paused.
+
+## Retry wrong password
+
+**Config:** `General` → `RetryWrongPassword` (default `true`)
+**Patch:** `Patches/RetryWrongPasswordPatch.cs`
+
+**Problem:** joining a server with a mistyped password drops you back to the menu with a "Wrong password" message,
+and the server has to be found and picked again before you can retry.
+
+**Behavior:**
+
+1. After a wrong password you stay on the loading screen: the game connects to the same server again on its own and
+   the password box comes back, its title replaced by "Wrong password".
+2. Pressing Escape (or B on a gamepad) while the password box is open gives up and returns to the menu. This works
+   for any password-protected server, not only after a wrong password.
+3. Other connection errors (server full, banned, wrong version, ...) are shown as before.
+
+**Known limits:** a password given with the `-password` launch option is not retried, since the same wrong password
+would be sent again. The title keeps saying "Wrong password" until you get in or give up.

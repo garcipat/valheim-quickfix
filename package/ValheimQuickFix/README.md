@@ -66,6 +66,8 @@ other players don't need it.
   if another player's copy is still on it. Each world keeps its own list, saved with your character.
 - **The map pauses the game** — in singleplayer, opening the large map pauses the game like the Esc menu does, so
   nothing attacks you while you read it.
+- **Retry a wrong password** — a mistyped server password asks for the password again instead of sending you back to
+  the menu to find the server again. Press `Esc` (B on a gamepad) in the password box to give up.
 
 ## Configuration
 
@@ -103,6 +105,7 @@ with the mod installed, and changes apply after a restart.
 | `Building & Travel`          | `GhostPortalPlayers` | `true` | Players standing in a portal opening are invisible and walk-through, so they do not block it. |
 | `General`          | `ForgetDeletedPins` | `true` | Pins you delete stay deleted when you read a map table. |
 | `General`          | `PauseOnMap` | `true` | Opening the large map pauses a singleplayer game. |
+| `General`          | `RetryWrongPassword` | `true` | A wrong server password asks for it again; `Esc` gives up. |
 
 ## Installation
 
