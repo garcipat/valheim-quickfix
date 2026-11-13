@@ -27,7 +27,7 @@ src/
      ├─ RouteMap.cs              draw mode, quill button, dots, hit-testing
      ├─ RouteStore.cs            routes in Player.m_customData, per world
      ├─ RouteArt.cs              quill sprite and cursor, dot sprite, crossed-out red
-     ├─ Assets/                  quill PNGs, drawn by tools/MapRoutesArt/make_art.py
+     ├─ Assets/                  quill PNGs for the button and the cursor, embedded in the DLL
      └─ Patches/MinimapPatches.cs  map update, clicks, mode changes
 package/<Mod>/                   Thunderstore skeleton (manifest, thunderstore.toml, icon, README, CHANGELOG)
 ```

@@ -5,14 +5,13 @@ using UnityEngine;
 namespace ValheimMapRoutes
 {
     /// <summary>
-    /// Sprites and colors. The quill and its cursor are PNGs embedded in the DLL (drawn by
-    /// tools/MapRoutesArt/make_art.py, the same feather as the mod icon); the dot color is the red of the cross the
-    /// game draws over crossed-out pins.
+    /// Sprites and colors. The quill and its cursor are PNGs embedded in the DLL (the same feather as the mod icon);
+    /// the dot color is the red of the cross the game draws over crossed-out pins.
     /// </summary>
     internal static class RouteArt
     {
         private const int SampleSize = 32;
-        // Where make_art.py puts the nib in quill-cursor.png, counted from the top-left.
+        // The nib in quill-cursor.png, counted from the top-left.
         private static readonly Vector2 CursorHotspot = new Vector2(3f, 28f);
 
         // Used when the cross over checked pins can't be read.

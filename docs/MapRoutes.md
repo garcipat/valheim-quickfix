@@ -64,8 +64,8 @@ store reloads when the local player or world changes.
   "Draw route". The quill isn't in `m_selectedIcons`, so gamepad cycling through pin types skips it.
 - *Art* (`RouteArt`). The quill button sprite (`Assets/quill.png`, 128 px) and the cursor (`Assets/quill-cursor.png`,
   32 px) are embedded in the DLL. Both are light grey with a soft dark shadow below, like the game's map icons, and
-  drawn by `tools/MapRoutesArt/make_art.py` from the same feather as the package icon, which it also writes; rerun
-  it after changing the feather. The cursor's nib is at (3, 28) from the top-left, which is the hotspot.
+  show the same feather as the package icon. The cursor's nib is at (3, 28) from the top-left, which is the hotspot;
+  a new cursor image needs that constant in `RouteArt` updated.
 - *Dot color.* The red is the tint of the pin prefab's `Checked` child; if that is white, the red is in the sprite,
   which sits in an unreadable atlas. It is blitted into a 32×32 render texture and the average of its colorful
   pixels (saturation > 0.4, value > 0.25) is used, which leaves out the cross's dark outline. The render texture is
