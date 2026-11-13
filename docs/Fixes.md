@@ -535,3 +535,22 @@ because the game skips table pins with your own player ID.
 **Known limits:** if the only new thing on the table was a forgotten pin, the game still says the map was updated.
 A pin someone renames, moves or re-places with another icon is a new pin and shows up. Entries are never pruned when
 the pin leaves the table; each one is a short line of text.
+
+## Pause on map
+
+**Config:** `General` → `PauseOnMap` (default `true`)
+**Patch:** `Patches/PauseOnMapPatch.cs`
+
+**Problem:** the Esc menu pauses a singleplayer game, but the large map does not. Monsters keep attacking, the day
+goes on and food runs out while you read the map or place pins.
+
+**Behavior:**
+
+1. While the large map is open, the game is paused the way the Esc menu pauses it.
+2. It only pauses when the game itself would: in singleplayer, or while hosting with nobody connected. With another
+   player in the game, or on someone else's server, nothing changes.
+3. The map keeps working while paused: dragging, zooming, placing and naming pins, and gamepad panning.
+4. Closing the map resumes the game.
+
+**Known limits:** the map's own timing is kept running by a transpiler, the only one in QuickFix. If a game update
+changes the map code, the fix logs a warning and clicks on the map may be misread while paused.
