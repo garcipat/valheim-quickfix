@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   held only by a chest can break if a nearby player without the mod owns that area.
 - A sign showing a single icon, such as `[Iron]`, is drawn at half width, keeping its height and a large icon. Only its
   look changes, and only for you: you still aim at it the same way, and other players see the normal sign.
+- Signs also take an item's English name, as shown in the game, so `[Core wood]` or `[Corewood]` works as well as
+  `[RoundLog]`. Spaces, punctuation, and capital letters don't matter, and English names work whatever language
+  you play in.
 
 ## [0.1.0] - 2026-10-15
 

@@ -1,6 +1,7 @@
 # Sign Icons: item names
 
-Every item name you can put in square brackets on a sign, such as `[SwordIron]`. Capital letters don't matter.
+Every item you can put in square brackets on a sign. Use the sign text, such as `[SwordIron]`, or the English name in
+the Item column, such as `[Iron sword]`. Capital letters, spaces, and punctuation don't matter.
 
 Generated from Valheim 1.0.7. Items added by later game updates or by other mods work too; they are just not listed here.
 

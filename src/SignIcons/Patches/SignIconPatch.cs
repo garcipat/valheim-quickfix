@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using HarmonyLib;
 using UnityEngine;
@@ -8,8 +9,8 @@ using UnityEngine;
 namespace ValheimSignIcons.Patches
 {
     /// <summary>
-    /// Lets sign text contain [ItemPrefabName] tokens, for example [SwordIron], and draws the item's icon
-    /// at that position. The tag is plain sign text, so vanilla already syncs it; only players with this mod see icons.
+    /// Lets sign text contain [Item] tokens, for example [SwordIron] or [Core wood], and draws the item's icon
+    /// at that position. An item is named by its prefab name or its English name. The tag is plain sign text, so vanilla already syncs it; only players with this mod see icons.
     /// </summary>
     /// <remarks>
     /// Sign.m_textWidget is a TextMeshProUGUI, but no NuGet package ships TextMeshPro, so it is driven through reflection
@@ -77,7 +78,8 @@ namespace ValheimSignIcons.Patches
         // Invisible placeholder the icon is laid over. Wrapped in a <link> so its glyph can be found after layout.
         private const string PlaceholderFormat = "<link=\"" + LinkPrefix + "{0}\"><alpha=#00>M<alpha=#FF></link>";
 
-        private static readonly Regex IconTag = new Regex(@"\[([A-Za-z0-9_]+)\]", RegexOptions.Compiled);
+        // English names can have spaces and punctuation, such as [Core wood] or [Mead base: Minor healing].
+        private static readonly Regex IconTag = new Regex(@"\[([A-Za-z0-9_' :\-]+)\]", RegexOptions.Compiled);
 
         private static readonly FieldInfo WidgetField = AccessTools.Field(typeof(Sign), "m_textWidget");
 
@@ -162,7 +164,7 @@ namespace ValheimSignIcons.Patches
                     : IconTag.Replace(raw, match =>
                     {
                         var name = match.Groups[1].Value.Trim();
-                        return FindIcon(name) != null ? string.Format(PlaceholderFormat, name) : match.Value;
+                        return FindIcon(name) != null ? string.Format(PlaceholderFormat, ToKey(name)) : match.Value;
                     });
             }
 
@@ -371,14 +373,33 @@ namespace ValheimSignIcons.Patches
                 {
                     if (item != null)
                     {
-                        _itemsByName[item.name] = item;
+                        _itemsByName[ToKey(item.name)] = item;
+                    }
+                }
+
+                // English names second, so a prefab name always wins, and the first item keeps a shared name.
+                var english = EnglishNames.Get();
+                foreach (var item in db.m_items)
+                {
+                    var itemDrop = item != null ? item.GetComponent<ItemDrop>() : null;
+                    var token = itemDrop != null ? itemDrop.m_itemData.m_shared.m_name : null;
+                    if (token == null || !token.StartsWith("$", StringComparison.Ordinal)
+                        || !english.TryGetValue(token.Substring(1), out var englishName))
+                    {
+                        continue;
+                    }
+
+                    var key = ToKey(englishName);
+                    if (key.Length != 0 && !_itemsByName.ContainsKey(key))
+                    {
+                        _itemsByName[key] = item;
                     }
                 }
 
                 _itemsCount = db.m_items.Count;
             }
 
-            if (!_itemsByName.TryGetValue(name, out var prefab))
+            if (!_itemsByName.TryGetValue(ToKey(name), out var prefab))
             {
                 return null;
             }
@@ -386,6 +407,22 @@ namespace ValheimSignIcons.Patches
             var drop = prefab.GetComponent<ItemDrop>();
             var icons = drop != null ? drop.m_itemData.m_shared.m_icons : null;
             return icons != null && icons.Length > 0 ? icons[0] : null;
+        }
+
+        // Letters and digits only, so [Core wood], [corewood] and [Core-Wood] are the same name. Case is ignored by
+        // the lookup itself.
+        private static string ToKey(string name)
+        {
+            var key = new StringBuilder(name.Length);
+            foreach (var c in name)
+            {
+                if (char.IsLetterOrDigit(c))
+                {
+                    key.Append(c);
+                }
+            }
+
+            return key.ToString();
         }
 
         // TextMeshPro members, looked up once from the widget's runtime type.

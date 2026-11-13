@@ -2,12 +2,12 @@
 
 By [garcipat](https://github.com/garcipat) · [Source code on GitHub](https://github.com/garcipat/valheim-quickfix)
 
-Show item icons on signs, and open the chest a sign is placed on. Write an item's name in square brackets, such as `[SwordIron]`, in a sign's text and
+Show item icons on signs, and open the chest a sign is placed on. Write an item's name in square brackets, such as `[Iron sword]`, in a sign's text and
 the item's icon appears at that position.
 
 ```
-[SwordIron] Weapons
-[Iron] x10
+[Iron sword] Weapons
+[Core wood] x10
 ```
 
 A sign with **only icons** shows them large, filling the sign. Put a `/` between icons to start a new row:
@@ -21,9 +21,13 @@ the icons if they have the mod too; without it they simply read `[SwordIron]`, s
 
 ## Using it
 
-- Use the item's **prefab name**: `SwordIron`, `Iron`, `Torch`, `Coal`. Capital letters don't matter.
-  The [full list of item names](https://github.com/garcipat/valheim-quickfix/blob/main/package/SignIcons/ItemList.md)
-  shows what to type for each item.
+- Use the item's **English name** as the game shows it, such as `[Core wood]` or `[Iron sword]`, or its **prefab
+  name**, such as `[RoundLog]` or `[SwordIron]`. English names work whatever language you play in, so everyone with
+  the mod sees the same icon.
+- Capital letters, spaces, and punctuation don't matter: `[Core wood]`, `[corewood]`, and `[Core-Wood]` are the same.
+  Leaving out the spaces saves characters.
+- The [full list of item names](https://github.com/garcipat/valheim-quickfix/blob/main/package/SignIcons/ItemList.md)
+  shows both names for each item.
 - Brackets around anything that isn't an item stay as plain text, so a typo is easy to spot. Anything in brackets that
   *is* an item name becomes an icon.
 - A sign that contains **only icons** shows them large, filling the sign's text area. Several icons share the width,
@@ -34,7 +38,7 @@ the icons if they have the mod too; without it they simply read `[SwordIron]`, s
   a chest. It keeps its full height, so the icon stays large. This only changes how it looks on your screen: you aim at it as before, and other players see a normal
   sign.
 - Editing a sign shows the original text with its tags, so icons survive an edit.
-- Signs hold 50 characters, and the brackets count: `[SwordIron]` is 11 of them.
+- Signs hold 50 characters, and the brackets count: `[Corewood]` is 10 of them.
 
 ## Signs on chests
 
