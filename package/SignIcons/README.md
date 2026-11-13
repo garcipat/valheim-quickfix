@@ -30,6 +30,9 @@ the icons if they have the mod too; without it they simply read `[SwordIron]`, s
   and each `/` starts a new row, so `[A][B]/[C][D]` is two rows of two.
 - Add any text next to an icon and it shrinks to the size of the letters, so it sits in the line of text. In a sign with
   text, a `/` is just a slash.
+- A sign with **a single icon** and nothing else, such as `[Iron]`, is drawn at half size, so it makes a neat label on
+  a chest. This only changes how it looks on your screen: you aim at it as before, and other players see a normal
+  sign.
 - Editing a sign shows the original text with its tags, so icons survive an edit.
 - Signs hold 50 characters, and the brackets count: `[SwordIron]` is 11 of them.
 

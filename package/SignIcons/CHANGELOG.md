@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Signs on chests: signs can be placed on chests, and the chest holds them up. Looking at such a sign, `E` opens the
   chest behind it and `Shift+E` edits the sign. Signs with no chest behind them work as before. On a server, a sign
   held only by a chest can break if a nearby player without the mod owns that area.
+- A sign showing a single icon, such as `[Iron]`, is drawn at half size. Only its look changes, and only for you: you
+  still aim at it the same way, and other players see the normal sign.
 
 ## [0.1.0] - 2026-10-15
 

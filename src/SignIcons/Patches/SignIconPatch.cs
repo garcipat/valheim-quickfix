@@ -140,6 +140,7 @@ namespace ValheimSignIcons.Patches
                     state.IconOnlyRows = null;
                 }
 
+                SignShrink.Apply(sign, widget, false);
                 return;
             }
 
@@ -173,6 +174,9 @@ namespace ValheimSignIcons.Patches
             if (changed)
             {
                 BuildIcons(widget, state);
+
+                var rows = state.IconOnlyRows;
+                SignShrink.Apply(sign, widget, rows != null && rows.Count == 1 && rows[0].Count == 1);
             }
         }
 

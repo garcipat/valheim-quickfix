@@ -22,7 +22,13 @@ text — `src/SignIcons/Patches/SignIconPatch.cs`
    is just text (`and/or`), and a closing tag such as `</color>` is not a row break.
 4. An unknown `[Name]` stays visible as text, so it also keeps a sign from counting as icon-only.
 5. Editing a sign shows the original text with its tokens, so icons survive an edit.
-6. The token is ordinary sign text, which vanilla already syncs, so the server needs nothing. Players without the mod
+6. A sign showing exactly one icon (icon-only, one row, one icon) is drawn at half size (`SignShrink.cs`). The sign's
+   mesh renderers are hidden and a half-size copy of each (same mesh and materials, no collider) is added as a child
+   of the original, so it follows the game's new/worn/broken model swaps. The text canvas, which holds the icon, is
+   scaled the same way. Both shrink toward the center of the board's bounds. Colliders are never scaled, so
+   aiming, placement, and structure support are unchanged, and nothing is synced, so other players see the normal
+   sign. It reverts when the text changes to anything else.
+7. The token is ordinary sign text, which vanilla already syncs, so the server needs nothing. Players without the mod
    read the tokens as plain text, which is why the syntax uses brackets rather than a rich-text tag.
 
 **How it works:** in a sign with text, each token is replaced with an invisible placeholder inside a `<link>`; after
