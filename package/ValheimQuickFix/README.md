@@ -32,6 +32,10 @@ other players don't need it.
   drop their trophy 20% of the time instead of 10%. Only works in singleplayer or when you host.
 - **More Writhans** (off by default) — Writhans get a spawn roll every 25 minutes instead of every 67 with a 15%
   chance instead of 10%, and up to two can live in an area. Only works in singleplayer or when you host.
+- **Fuling camps respawn** (off by default) — a cleared Fuling village slowly refills while its totem stands: every 30
+  minutes, up to two Fulings within 50 m of a totem come back at their spots. Smash the totem to clear the camp for
+  good. The minutes and the radius can be set. Only works in singleplayer or when you host; on a server, everyone sees
+  the returning Fulings.
 - **Meaningful tool upgrades** (off by default) — a better tool material counts for more than a higher upgrade level.
   Axes and pickaxes deal extra chop or mining damage to trees, logs, stumps and rocks, growing with the tool's tier, so
   a level-1 iron axe out-chops a level-3 bronze one. Combat damage is unchanged. The bonus per tier can be set
@@ -91,6 +95,9 @@ with the mod installed, and changes apply after a restart.
 | `Enemies & Drops`          | `IgnoreTorches` | `true`  | Enemies don't attack torches as structures. |
 | `Enemies & Drops`  | `FairResourceRounding` | `true` | Round fractional resource drops up or down at random. |
 | `Enemies & Drops`  | `MoreBears` | `false` | Bears spawn more often and drop their trophy more often. |
+| `Enemies & Drops`  | `FulingCampsRespawn` | `false` | Fuling villages refill while a totem stands. |
+| `Enemies & Drops`  | `FulingCampsRespawnMinutes` | `30` | Minutes between two waves of up to two Fulings at a totem, from 10 to 120. |
+| `Enemies & Drops`  | `FulingCampsTotemRadius` | `50` | How far from a totem Fulings come back, from 10 to 100 m. |
 | `Gear`             | `MeaningfulToolUpgrades` | `false` | Better axe and pickaxe materials deal extra chop / mining damage. |
 | `Gear`             | `BowZoom` | `false` | Hold the block button while drawing a bow to zoom in. |
 | `Gear`             | `BowZoomMagnification` | `1.5` | How much the bow zoom magnifies, from 1.1 to 3. |

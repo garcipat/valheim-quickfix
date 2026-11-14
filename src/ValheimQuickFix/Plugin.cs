@@ -28,6 +28,9 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> HiveOnPoleSnapEnabled;
         internal static ConfigEntry<bool> MoreBearsEnabled;
         internal static ConfigEntry<bool> MoreWrithansEnabled;
+        internal static ConfigEntry<bool> FulingCampsRespawnEnabled;
+        internal static ConfigEntry<float> FulingCampsRespawnMinutes;
+        internal static ConfigEntry<float> FulingCampsTotemRadius;
         internal static ConfigEntry<bool> MeaningfulToolUpgradesEnabled;
         internal static ConfigEntry<bool> RepairAllOnHoldEnabled;
         internal static ConfigEntry<bool> PortalPressOrHoldEnabled;
@@ -134,6 +137,28 @@ namespace ValheimQuickFix
                 "MoreWrithans",
                 false,
                 "Make Writhans easier to find: they get a spawn roll every 25 minutes instead of every 67 with a 15% chance instead of 10%, and up to two can live in an area. Takes effect on the next game start, and only when your machine runs the spawning (singleplayer or hosting).");
+
+            FulingCampsRespawnEnabled = Config.Bind(
+                "Enemies & Drops",
+                "FulingCampsRespawn",
+                false,
+                "Fuling camps slowly refill while a totem stands: every half hour (FulingCampsRespawnMinutes), up to two cleared Fulings near a totem come back, like Growths at a tar pit. Smash the totem to clear the camp for good. Only works when your machine runs the spawning (singleplayer or hosting); on a server, everyone sees the respawned Fulings.");
+
+            FulingCampsRespawnMinutes = Config.Bind(
+                "Enemies & Drops",
+                "FulingCampsRespawnMinutes",
+                30f,
+                new ConfigDescription(
+                    "FulingCampsRespawn: minutes between two waves at the same totem, from 10 to 120. Each wave brings back up to two Fulings.",
+                    new AcceptableValueRange<float>(10f, 120f)));
+
+            FulingCampsTotemRadius = Config.Bind(
+                "Enemies & Drops",
+                "FulingCampsTotemRadius",
+                50f,
+                new ConfigDescription(
+                    "FulingCampsRespawn: how far from a totem, in metres, Fulings come back, from 10 to 100.",
+                    new AcceptableValueRange<float>(10f, 100f)));
 
             MeaningfulToolUpgradesEnabled = Config.Bind(
                 "Gear",

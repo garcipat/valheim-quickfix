@@ -296,6 +296,29 @@ The values were read with [CreatureProbe](ProbingCreatureData.md).
 **Known limits:** the toggle is read at load, so turning it off needs a game restart. Spawns are decided by the machine
 that owns the zone, so the fix only works in singleplayer or when you host. The location `Spawner_Writhan` (night only, triggers within 60 m) is unchanged.
 
+## Fuling camps respawn
+
+**Config:** `Enemies & Drops` → `FulingCampsRespawn` (default `false`), `FulingCampsRespawnMinutes` (default `30`,
+10 to 120), `FulingCampsTotemRadius` (default `50` m, 10 to 100)
+**Patch:** `Patches/FulingCampsRespawnPatch.cs`
+
+**Problem:** each Fuling in a Plains village spawns once and never comes back, so a cleared village stays empty for
+good. Tar pits, by contrast, bring each Growth back an hour after it dies.
+
+**Behavior:**
+
+1. A village Fuling that was killed can come back at its spot while a totem stands within the radius.
+2. Each totem brings back up to two Fulings at a time, at most once per interval. Each Fuling also waits the interval
+   after its own death.
+3. Fulings only come back while a player is nearby, and never inside a player base. There is no spawn animation, so
+   one can appear while you stand next to its spot.
+4. Smashing the totem stops the respawns for good; Fulings already back stay.
+5. Each returning Fuling is logged (`FulingCampsRespawn: ... respawned ...`).
+
+**Known limits:** spawns are decided by the machine that owns the area, so this only works in singleplayer or when you
+host, and on a server everyone sees the returning Fulings. The timers last for the session: after a restart, a dead Fuling's wait starts again
+when its spot is next loaded. Nothing other than Fulings respawns.
+
 ## Meaningful tool upgrades
 
 **Config:** `Gear` → `MeaningfulToolUpgrades` (default `false`), `ChopTierBonus` (default `5`) and `PickaxeTierBonus` (default `8`)
