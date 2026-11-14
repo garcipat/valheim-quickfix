@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   the menu, so you no longer have to find the server again. Press Escape (B on a gamepad) in the password box to give up. Turn it off with
   `RetryWrongPassword`.
 
+### Changed
+
+- New mod icon: a leather tool pouch with a hammer, a knife and a needle.
+
 ## [0.5.0] - 2026-11-12
 
 ### Added
