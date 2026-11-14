@@ -9,8 +9,9 @@ Implementation notes for the CampfireCompanion mod. Player-facing docs:
 **How it works:**
 
 - Creature prefabs are already in memory in the menu, because the menu's asset bundle depends on the shared bundle
-  that holds them. `CompanionSpawner` copies the prefab's `Visual` under an inactive holder, applies a star look from its
-  `LevelEffects` where the setup asks for one (the deer's 2-star antlers), strips scripts and physics, and `KeepIdle` keeps the animator in its first state.
+  that holds them. `CompanionSpawner` copies the prefab's `Visual` under an inactive holder, applies a star look from
+  its `LevelEffects` where the setup asks for one (the deer's 2-star antlers), strips scripts and physics, and
+  `KeepIdle` keeps the animator in its first state.
 - Each creature's scale, distance, turn and star look live in `Companion.cs`, tuned by eye. Placement is measured from
   `m_characterPreviewPoint`, not from a light: the character's glowing gear has a point light of its own.
 - The character selection camera moves back 2 m while a companion is shown.
