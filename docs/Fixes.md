@@ -285,10 +285,13 @@ altitude and 2000 to 8000 m from the world centre. That is about one Writhan per
 
 **Behavior:**
 
-1. Once, when the prefabs load, each `Writhan` spawn entry gets a spawn interval of at most 1500 s, a spawn chance of
-   at least 15% and room for two alive in the area, about one Writhan per 2.8 hours. The location limits are left alone.
-2. The `TrophyWrithan` drop chance (0.1) is not changed.
-3. Values are set to a floor or ceiling, not scaled, so loading another world in the same session changes nothing more.
+1. Once, when the prefabs load, each `Writhan` spawn entry gets a spawn interval of at most 2000 s and a spawn chance
+   of at least 15%. The one-alive cap and the location limits are left alone.
+2. While you travel, each Swamp area you reach that has not had a roll for a while gets one right away, so a fresh
+   area holds a Writhan 15% of the time instead of 10%, and never more than one is around you. Staying in one area,
+   one turns up about every 3.7 hours instead of 11.
+3. The `TrophyWrithan` drop chance (0.1) is not changed.
+4. Values are set to a floor or ceiling, not scaled, so loading another world in the same session changes nothing more.
    The vanilla and new spawn values are logged (`MoreWrithans: Writhan spawn entry in ...`).
 
 The values were read with [CreatureProbe](ProbingCreatureData.md).

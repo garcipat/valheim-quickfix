@@ -25,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 
 - New mod icon: a leather tool pouch with a hammer, a knife and a needle.
+- More Writhans is toned down: several Writhans could show up within minutes while crossing a Swamp. Only one lives
+  in an area at a time again, as in the base game, and the spawn roll comes every 33 minutes instead of every 25. The
+  15% chance stays, so a Swamp area holds a Writhan a bit more often than without the mod.
 
 ## [0.5.0] - 2026-11-12
 

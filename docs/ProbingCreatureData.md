@@ -57,8 +57,11 @@ The average wait for one spawn is the interval divided by the chance:
 | Wraith, vanilla | 200 s | 30%, night only | 2 | 11 min |
 | Writhan, vanilla | 4000 s | 10% | 1 | 11 h |
 
-Treat the wait as a rough "per area" figure for comparing creatures: the spawn system rolls for the zones around the
-player, not once per world.
+Treat the wait as a rough "per area" figure for a player who stays put. Only the zone a player stands in rolls, and it
+remembers when it last rolled: a zone that has not rolled for `n` intervals rolls `min(n, m_maxSpawned)` times as soon
+as a player enters it. A never-visited zone counts as having waited forever, so while travelling every new zone rolls
+`m_maxSpawned` times right away, and the interval hardly matters. The chance and the cap set the rate then, and the cap
+counts every instance in the sectors around the zone, not just inside it.
 
 Drops below a chance of 0.3 use the game's pseudo-random drop counter, which evens out streaks but keeps the average
 at `m_chance`, so a 10% trophy averages one per 10 kills.
