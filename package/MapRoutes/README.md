@@ -8,6 +8,9 @@ game uses to cross out pins.
 
 Routes are saved with your character, per world, so they are still there the next time you open the map.
 
+It also gives your pins **icons**: name a circle pin `Cave`, `Portal` or `Swamp` and it shows a cave, a portal or
+reeds instead of the circle. See [Pin icons](#pin-icons).
+
 Client-side only: it works on any server and nothing needs to be installed on the server. Other players don't see
 your routes.
 
@@ -24,6 +27,47 @@ your routes.
 
 Routes show on the large map and on the small map in the corner. You draw them on the large map. Sharing your map
 through a cartography table doesn't pass them on.
+
+## Pin icons
+
+Place a **circle** pin as usual and give it one of the names below. The circle turns into the matching icon.
+
+- The **whole name** has to match. Capital letters don't matter: `cave`, `Cave` and `CAVE` all work, but
+  `Cave near home` stays a circle.
+- With the **short name** (first column) you see only the icon, like the game's own pins.
+- With a **longer name** (last column) you see the same icon with the name under it, so you still know which ore or
+  which berries it is.
+- Only circle pins change. Fire, house, hammer and rune pins stay as they are, whatever their name.
+
+| Icon | Short name, icon only | Longer names, icon with name |
+|---|---|---|
+| Cave | `Cave` | `Troll cave`, `Frost cave` |
+| Crypt | `Crypt` | `Burial chamber`, `Sunken crypt` |
+| Dungeon | `Dungeon` | |
+| Mine | `Mine` | `Infested mine` |
+| Village | `Village` or `Camp` | `Fuling village`, `Fuling camp` |
+| Portal | `Portal` | |
+| Ship | `Ship` | `Boat`, `Karve`, `Longship` |
+| Ore | `Ore` | `Copper`, `Tin`, `Silver`, `Iron`, `Obsidian` |
+| Tar | `Tar` | `Tar pit` |
+| Berries | `Berries` | `Raspberries`, `Blueberries`, `Cloudberries` |
+| Mushroom | `Mushroom` | `Yellow mushroom`, `Blue mushroom`, `Jotun puffs`, `Magecap` |
+| Egg | `Egg` | `Dragon egg` |
+| Nest | `Nest` | `Greydwarf nest` |
+| Surtling | `Surtling` | `Fire geyser` |
+| Leviathan | `Leviathan` or `Turtle` | |
+| Lox | `Lox` | |
+| Forest | `Forest` | `Black forest` |
+| Swamp | `Swamp` | |
+| Mountain | `Mountain` | |
+| Plains | `Plains` | |
+| Mistlands | `Mistlands` or `Mist` | |
+| Ashlands | `Ashlands` or `Ash` | |
+| Deep North | `Deep North` or `North` | |
+
+The pin itself doesn't change, only how it is drawn. Without the mod it is a circle with its name, so nothing is lost
+if you remove it. Pins shared through a cartography table keep their name, so friends who have the mod see the
+icons too.
 
 ## Configuration
 
@@ -44,3 +88,6 @@ Bug reports, ideas, and source code: <https://github.com/garcipat/valheim-quickf
 ## License
 
 MIT. See the `LICENSE` file in the package, or the source repository.
+
+Pin icons by Lorc and Delapouite from [game-icons.net](https://game-icons.net), licensed under
+[CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). The Cave and Surtling icons are our own.
