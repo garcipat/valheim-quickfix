@@ -2,7 +2,7 @@
 
 ## Overview
 
-The repo holds four independent [BepInEx 5](https://github.com/BepInEx/BepInEx) plugins. On startup each
+The repo holds six independent [BepInEx 5](https://github.com/BepInEx/BepInEx) plugins. On startup each
 `Plugin.Awake` binds its config entries and calls `Harmony.PatchAll()`, which discovers every `[HarmonyPatch]`
 class in that assembly.
 
@@ -23,12 +23,17 @@ src/
  │   ├─ Plugin.cs                one config section per skill
  │   ├─ Core/                    custom-skill plumbing: register, load, name, hide/freeze, raiseskill
  │   └─ Patches/HaulingPatch.cs  levelling and cart mass
- └─ MapRoutes/                   dotted routes drawn on the large map with a quill
-     ├─ RouteMap.cs              draw mode, quill button, dots, hit-testing
-     ├─ RouteStore.cs            routes in Player.m_customData, per world
-     ├─ RouteArt.cs              quill sprite and cursor, dot sprite, crossed-out red
-     ├─ Assets/                  quill PNGs for the button and the cursor, embedded in the DLL
-     └─ Patches/MinimapPatches.cs  map update, clicks, mode changes
+ ├─ MapRoutes/                   dotted routes drawn on the large map with a quill
+ │   ├─ RouteMap.cs              draw mode, quill button, dots, hit-testing
+ │   ├─ RouteStore.cs            routes in Player.m_customData, per world
+ │   ├─ RouteArt.cs              quill sprite and cursor, dot sprite, crossed-out red
+ │   ├─ Assets/                  quill PNGs for the button and the cursor, embedded in the DLL
+ │   └─ Patches/MinimapPatches.cs  map update, clicks, mode changes
+ └─ CampfireCompanion/           a creature at the main menu campfire
+     ├─ Companion.cs             the creatures offered in the config and their prefab names
+     ├─ CompanionSpawner.cs      find the prefab, copy its Visual, stars, size, placement
+     ├─ KeepIdle.cs              keeps the copied animator in its idle state
+     └─ Patches/MenuStartPatch.cs  FejdStartup.Start
 package/<Mod>/                   Thunderstore skeleton (manifest, thunderstore.toml, icon, README, CHANGELOG)
 ```
 

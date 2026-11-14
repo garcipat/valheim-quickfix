@@ -76,7 +76,6 @@ other players don't need it.
   on the large map a thin yellow ring pulses out from it now and then.
 - **Retry a wrong password** — a mistyped server password asks for the password again instead of sending you back to
   the menu to find the server again. Press `Esc` (B on a gamepad) in the password box to give up.
-- **A Lox at the campfire** — in the main menu a Lox stands with your character at the fire.
 
 ## Configuration
 
@@ -120,7 +119,6 @@ with the mod installed, and changes apply after a restart.
 | `General`          | `PauseOnMap` | `true` | Opening the large map pauses a singleplayer game. |
 | `General`          | `VisiblePlayerMarker` | `true` | Your map arrow is larger and outlined, with a pulsing ring on the large map. |
 | `General`          | `RetryWrongPassword` | `true` | A wrong server password asks for it again; `Esc` gives up. |
-| `General`          | `MenuLox` | `true` | A Lox stands with your character at the main menu campfire. |
 
 ## Installation
 

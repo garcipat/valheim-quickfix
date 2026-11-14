@@ -1,6 +1,6 @@
 # Valheim mods — Agent Instructions
 
-Five small client-side BepInEx plugins (C#, .NET Framework 4.8, HarmonyX) built from one repo:
+Six small client-side BepInEx plugins (C#, .NET Framework 4.8, HarmonyX) built from one repo:
 
 - **ValheimQuickFix** — a bundle of small, independent quality-of-life fixes for things the game gets wrong.
 - **SignIcons** — shows item icons on signs. A separate mod because it is new functionality, not a fix, and it
@@ -11,6 +11,8 @@ Five small client-side BepInEx plugins (C#, .NET Framework 4.8, HarmonyX) built 
   types the game does not know, so it carries its own save-compatibility risk.
 - **MapRoutes** — draws dotted routes on the large map with a quill. A separate mod: new functionality that adds
   its own map button and click handling.
+- **CampfireCompanion** — stands a creature of the player's choice at the main menu campfire. A separate mod: new
+  functionality that copies creature models into the menu scene.
 
 New work that isn't a fix for something the game gets wrong belongs in its own mod, not in QuickFix.
 

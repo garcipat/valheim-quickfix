@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>CampfireCompanion</AssemblyName>
+    <RootNamespace>ValheimCampfireCompanion</RootNamespace>
+    <Product>Campfire Companion</Product>
+    <Description>A creature of your choice keeps you company at the main menu campfire.</Description>
+  </PropertyGroup>
+
+</Project>
