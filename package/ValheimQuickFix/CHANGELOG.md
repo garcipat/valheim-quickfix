@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- A Lox now stands with your character at the campfire in the main menu, and the character selection view zooms out
+  a little to keep it in the shot. Turn it off with `MenuLox`.
+
 - Walking up a built ladder lifts you smoothly onto each rung instead of jumping you onto it, so you no longer fall
   off halfway. Turn it off with `SmoothLadders`.
 
