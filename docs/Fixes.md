@@ -635,3 +635,26 @@ and the server has to be found and picked again before you can retry.
 
 **Known limits:** a password given with the `-password` launch option is not retried, since the same wrong password
 would be sent again. The title keeps saying "Wrong password" until you get in or give up.
+
+## Smooth ladders
+
+**Config:** `Building & Travel` → `SmoothLadders` (default `true`)
+**Patch:** `Patches/SmoothLaddersPatch.cs`
+
+**Problem:** the rungs of a built ladder are too far apart to walk onto, so the game makes you jump onto each one
+automatically. Every rung plays the jump sound and the falling animation, the camera bobs, and the jump can carry you
+past the rung so you fall off the ladder.
+
+**Behavior:**
+
+1. Walking up a ladder you built lifts you smoothly onto the next rung instead of jumping, and you don't count as
+   falling on the way.
+2. The lift keeps pace with your walking speed, so running up a ladder is as smooth as walking.
+3. Walking down a ladder works as before.
+4. Only ladders get the assist. Stairs, walls, terrain, rocks and every other obstacle behave as before.
+5. Jumping, dodging, swimming and sitting work as before.
+
+**Known limits:** a ladder is recognised by "ladder" in its piece's name, so a ladder from another mod with a
+different name is not smoothed. Where no rung is found ahead, the game's own jump still happens, so a ladder can
+always be climbed. The lift only reaches rungs the jump already got you onto, so the fix doesn't let you climb anything
+new.
