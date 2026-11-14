@@ -4,7 +4,7 @@ Behavior and implementation notes for the MapRoutes mod. Player-facing docs: [pa
 
 **Config:** none. Disabling the mod is the off switch; the saved routes stay in the character file.
 **Patches** (all in `src/MapRoutes/Patches/MinimapPatches.cs`): `Minimap.Update` (Postfix: button, cursor, stroke,
-right-drag pan, dots on the large and the corner map), `Minimap.SetMapMode` (Postfix: leaving the large map ends draw mode), `Minimap.SelectIcon`
+right-drag pan, dots on the large and the corner map), `Minimap.UpdatePins` (Postfix, in `PinIconPatches.cs`: pin icons), `Minimap.SetMapMode` (Postfix: leaving the large map ends draw mode), `Minimap.SelectIcon`
 (Postfix: picking a pin type ends draw mode), `Minimap.OnMapLeftDown` and `Minimap.OnMapLeftUp` (Prefix, skipped
 only in draw mode: start and end a stroke), `Minimap.RemovePinUnderPointer` (Prefix, skipped when a route was
 removed or, in draw mode, when the right press was a pan).
@@ -36,6 +36,22 @@ removed or, in draw mode, when the right press was a pan).
    happen on the large map only. They sit at whole
    multiples of the spacing along the whole route, so the spacing runs on across a stroke's short segments and dots
    don't crawl while panning. Their color is the red of the cross over checked pins (rule in "How it works").
+
+**Pin icons** (`src/MapRoutes/PinIcons.cs`):
+
+1. After `UpdatePins`, every circle pin (`PinType.Icon3`, the fourth pin in the picker) whose whole name, trimmed and
+   ignoring case, is on the list gets its icon's sprite on `m_iconElement`; any other circle pin gets `m_icon` back. The
+   pin's type and name are untouched, so nothing new is saved and the pin is a plain circle without the mod.
+2. Each icon has plain names (its own name and aliases, label hidden) and labeled names (label kept); the lists are in
+   `PinIcons.Icons` and in the README. The label is hidden by scaling its object (`m_NamePinData.PinNameGameObject`,
+   newer than the compile-time libs, read by reflection) to zero: the game turns it on and off by zoom and turns it on
+   again a second after creating it, but never touches its scale.
+3. The icons are one embedded sheet, `Assets/pin-icons.png`: 128 px cells, 7 per row, in the order of `PinIcons.Icons`,
+   loaded with mipmaps since pins are drawn far smaller. It is made by `tools/PinIcons/make-sheet.sh` from the SVGs in
+   `tools/PinIcons/svg/`; see [tools/PinIcons/README.md](../tools/PinIcons/README.md) for sources and credits.
+4. `UpdatePins` runs on many map changes, so a failure is logged once and pin icons stay off. The first run logs the
+   circle pin's sprite name (`Pin icons replace the Icon3 pin, sprite ...`), so a game change to the pin order shows
+   up in the log.
 
 **Storage:** `Player.m_customData["dev.pgarcia.maproutes.Routes.<world UID>"]`, one route per line, points as
 `x,z` separated by `;`, one decimal. It is saved with the character, like the QuickFix ForgetDeletedPins list. The
@@ -80,5 +96,5 @@ store reloads when the local player or world changes.
 
 **Known limits:** drawing and removing on the large map only. Right-drag pans only in draw mode; outside it the game's
 left-drag does. Mouse only; there's no gamepad way to pick the quill.
-Routes are not shared through cartography tables. The quill button's position assumes the five pin buttons are in a
+Routes are not shared through cartography tables. Pin icon names are English only, and only circle pins change. The quill button's position assumes the five pin buttons are in a
 row; a UI change in the game could put it somewhere odd, but the button still works.

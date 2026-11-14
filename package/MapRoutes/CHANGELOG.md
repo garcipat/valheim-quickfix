@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Pin icons: a circle pin whose whole name is a known name, such as `Cave`, `Portal`, `Ore` or `Swamp`, shows a
+  matching icon instead of the circle. Short names show only the icon; longer names such as `Troll cave` or `Copper`
+  keep their name under it. The README lists all names.
+
 ## [0.1.0] - 2026-11-13
 
 ### Added

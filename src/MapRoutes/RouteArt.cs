@@ -186,7 +186,8 @@ namespace ValheimMapRoutes
             }
         }
 
-        private static Texture2D LoadPng(string name)
+        // Mipmaps keep an image smooth when it is drawn much smaller than its pixels, as the pin icons are.
+        internal static Texture2D LoadPng(string name, bool mipmaps = false)
         {
             try
             {
@@ -208,7 +209,7 @@ namespace ValheimMapRoutes
                         }
                         read += n;
                     }
-                    var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false) { filterMode = FilterMode.Bilinear };
+                    var tex = new Texture2D(2, 2, TextureFormat.RGBA32, mipmaps) { filterMode = FilterMode.Bilinear };
                     return tex.LoadImage(bytes) ? tex : null;
                 }
             }
