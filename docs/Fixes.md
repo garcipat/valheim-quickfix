@@ -598,6 +598,22 @@ goes on and food runs out while you read the map or place pins.
 **Known limits:** the map's own timing is kept running by a transpiler, the only one in QuickFix. If a game update
 changes the map code, the fix logs a warning and clicks on the map may be misread while paused.
 
+## Visible player marker
+
+**Config:** `General` → `VisiblePlayerMarker` (default `true`)
+**Patch:** `Patches/VisiblePlayerMarkerPatch.cs`
+
+**Problem:** the arrow that shows where you are on the map is small and has no edge. On snow, sand or a map full of
+pins it is hard to find.
+
+**Behavior:**
+
+1. Your arrow on the minimap and on the large map is drawn larger, with a dark outline.
+2. On the large map, a thin yellow ring keeps pulsing out from the arrow and fading, so your eye finds it at a glance.
+   It keeps pulsing while the map pauses the game. The minimap has no ring, since your arrow is always in its centre.
+3. Other players' markers, pins and the ship marker are unchanged.
+4. Turning the setting off brings back the plain arrow right away.
+
 ## Retry wrong password
 
 **Config:** `General` → `RetryWrongPassword` (default `true`)

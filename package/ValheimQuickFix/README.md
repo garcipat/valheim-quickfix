@@ -72,6 +72,8 @@ other players don't need it.
   if another player's copy is still on it. Each world keeps its own list, saved with your character.
 - **The map pauses the game** — in singleplayer, opening the large map pauses the game like the Esc menu does, so
   nothing attacks you while you read it.
+- **Find yourself on the map** — your arrow on the minimap and the large map is a bit larger with a dark outline, and
+  on the large map a thin yellow ring pulses out from it now and then.
 - **Retry a wrong password** — a mistyped server password asks for the password again instead of sending you back to
   the menu to find the server again. Press `Esc` (B on a gamepad) in the password box to give up.
 
@@ -115,6 +117,7 @@ with the mod installed, and changes apply after a restart.
 | `Building & Travel`          | `GhostPortalPlayers` | `true` | Players standing in a portal opening are invisible and walk-through, so they do not block it. |
 | `General`          | `ForgetDeletedPins` | `true` | Pins you delete stay deleted when you read a map table. |
 | `General`          | `PauseOnMap` | `true` | Opening the large map pauses a singleplayer game. |
+| `General`          | `VisiblePlayerMarker` | `true` | Your map arrow is larger and outlined, with a pulsing ring on the large map. |
 | `General`          | `RetryWrongPassword` | `true` | A wrong server password asks for it again; `Esc` gives up. |
 
 ## Installation

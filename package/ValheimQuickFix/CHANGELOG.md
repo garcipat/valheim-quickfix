@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Your arrow on the minimap and the large map is easier to find: it is larger and has a dark outline, and on the large
+  map a thin yellow ring keeps pulsing out from it. Turn it off with `VisiblePlayerMarker`.
+
 - Fuling villages can slowly refill while a totem stands: every 30 minutes, up to two Fulings within 50 m of a totem
   come back at their spots. Smash the totem to clear the camp for good. The minutes and the radius can be set. Only
   works in singleplayer or when you host. Off by default; turn it on with `FulingCampsRespawn`.
