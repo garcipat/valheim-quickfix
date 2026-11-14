@@ -2,27 +2,17 @@
 
 By [garcipat](https://github.com/garcipat) · [Source code on GitHub](https://github.com/garcipat/valheim-quickfix)
 
-Your character no longer sits alone at the main menu campfire. Pick a creature and it stands on the other side of
-the fire, looking into the flames and playing its idle animation: a Lox, a troll, a wolf, a Fuling shaman, Haldor and
-more, or a random one each time the menu loads.
-
-It is only scenery in the menu. It makes no sound, can't be touched, and nothing changes once you load a world.
-Client-side only; other players are not affected.
+Pick a creature to keep your character company at the main menu campfire: a Lox, a troll, a wolf, Haldor and
+many more, or a random one each time. Client-side only.
 
 ## Configuration
 
-The settings are in `Valheim/BepInEx/config/dev.pgarcia.valheim.campfirecompanion.cfg`, or in your mod manager's config
-editor. Changes show right away while you are in the main menu.
+`Valheim/BepInEx/config/dev.pgarcia.valheim.campfirecompanion.cfg`, or your mod manager's config editor.
 
 | Setting | Default | What it does |
 | ------- | ------- | ------------ |
-| `Companion` | `None` | The creature at the fire. `None` leaves the menu as it is; `Random` picks a new one each time the menu loads. |
-| `Stars` | `0` | Star level from 0 to 2: starred creatures get the colouring and extra parts they have in the world. |
-
-The companions, by biome: Deer, Greydwarf, Troll, Bear, Draugr, Skeleton, Ghost, Wraith, Blob, Oozer, Kvastur,
-Surtling, Wolf, Fenring, Ulv, Drake, Cultist, Lox, Unbjorn, Fuling, Fuling Berserker, Fuling Shaman, Seeker Soldier,
-Dvergr, Asksvin, Charred Mage, Morgen, Fallen Valkyrie, Moose, and the traders Haldor, Hildir and the Bog Witch. The
-biggest ones are shrunk a little so they fit next to the fire.
+| `Companion` | `None` | The creature at the fire, or `Random`. |
+| `Stars` | `0` | Its star level, 0 to 2. |
 
 ## Installation
 

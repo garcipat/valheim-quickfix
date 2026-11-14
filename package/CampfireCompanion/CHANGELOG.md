@@ -8,6 +8,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- Pick a creature to stand with your character at the main menu campfire: a Lox, a troll, a wolf, Haldor and more,
-  or a random one each time. It plays its idle animation and can wear up to two stars. The character selection view
-  zooms out a little to keep it in the shot.
+- Pick a creature to keep your character company at the main menu campfire, or a random one each time.
