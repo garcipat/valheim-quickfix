@@ -5,22 +5,23 @@ using UnityEngine;
 namespace ValheimQuickFix.Patches
 {
     /// <summary>
-    /// Holding the block button while drawing a bow zooms the camera in. Vanilla cancels the draw when you block
+    /// Holding the block button while a bow or crossbow is the current weapon zooms the camera in, drawn or not, so
+    /// the zoom lasts across shots. Vanilla blocks with that button and cancels a draw while blocking
     /// (<c>Player.UpdateAttackBowDraw</c> resets the draw while <c>m_blocking</c> is set), so a Prefix on
-    /// <c>Player.SetControls</c> takes the block input away while the local player draws a bow and remembers it as
-    /// "zooming". A Postfix on <c>GameCamera.LateUpdate</c> then narrows the camera's field of view on top of the one
-    /// the game set, easing in and out, so the game's own FOV handling keeps running.
+    /// <c>Player.SetControls</c> takes the block input away while the local player holds a bow or crossbow and
+    /// remembers it as "zooming". A Postfix on <c>GameCamera.LateUpdate</c> then narrows the camera's field of view on
+    /// top of the one the game set, easing in and out, so the game's own FOV handling keeps running.
     /// </summary>
     internal static class BowZoomPatch
     {
-        // IsDrawingBow is newer than the compile-time game libs, so it is bound at runtime.
-        private static readonly Func<Player, bool> IsDrawingBow = BindIsDrawingBow();
-
         private static readonly AccessTools.FieldRef<GameCamera, Camera> CameraRef =
             AccessTools.FieldRefAccess<GameCamera, Camera>("m_camera");
 
         private static readonly AccessTools.FieldRef<GameCamera, bool> FreeFlyRef =
             AccessTools.FieldRefAccess<GameCamera, bool>("m_freeFly");
+
+        // Crossbows is newer than the compile-time game libs; skill ids are saved with the character, so 14 is stable.
+        private const Skills.SkillType Crossbows = (Skills.SkillType)14;
 
         // Time to ease fully in or out of the zoom.
         private const float EaseSeconds = 0.15f;
@@ -30,7 +31,13 @@ namespace ValheimQuickFix.Patches
 
         private static bool IsZoomable(Player player)
         {
-            return IsDrawingBow != null && player != null && player == Player.m_localPlayer && IsDrawingBow(player);
+            if (player == null || player != Player.m_localPlayer)
+            {
+                return false;
+            }
+
+            var skill = player.GetCurrentWeapon()?.m_shared.m_skillType;
+            return skill == Skills.SkillType.Bows || skill == Crossbows;
         }
 
         [HarmonyPatch(typeof(Player), nameof(Player.SetControls))]
@@ -95,18 +102,6 @@ namespace ValheimQuickFix.Patches
                     Plugin.Log.LogError($"BowZoom patch failed: {e}");
                 }
             }
-        }
-
-        private static Func<Player, bool> BindIsDrawingBow()
-        {
-            var method = AccessTools.Method(typeof(Player), "IsDrawingBow");
-            if (method == null)
-            {
-                Plugin.Log.LogWarning("BowZoom: Player.IsDrawingBow not found; bow zoom is disabled.");
-                return null;
-            }
-
-            return AccessTools.MethodDelegate<Func<Player, bool>>(method);
         }
     }
 }

@@ -497,23 +497,21 @@ piece's requirements, greyed out with a blinking "none" when it is not in range 
 **Config:** `Gear` → `BowZoom` (default `false`), `BowZoomMagnification` (default `1.5`, 1.1 to 3)
 **Patches:** `Player.SetControls` (Prefix), `GameCamera.LateUpdate` (Postfix) — `Patches/BowZoomPatch.cs`
 
-**Problem:** aiming a bow at a distant target is hard; the game has no way to look closer while drawing.
+**Problem:** aiming a bow or crossbow at a distant target is hard; the game has no way to look closer.
 
 **Behavior:**
 
-1. While the local player draws a bow (`IsDrawingBow`), holding the block button (right mouse button, or its gamepad
-   binding) zooms the camera in by `BowZoomMagnification`, easing in and out over 0.15 s.
-2. Vanilla cancels the draw when you block (`Player.UpdateAttackBowDraw` resets it while `m_blocking` is set). While
-   drawing, the block input is taken away before `SetControls` sees it, so the draw keeps going and the button only
-   zooms. Releasing the attack button shoots as usual and ends the zoom.
-3. The zoom narrows the camera's field of view after the game has set its own (including any temporary FOV changes),
-   so the game's camera logic is untouched. Free-fly camera is left alone. The magnification is read every frame, so a
-   change applies without a restart.
+1. While a bow or crossbow is the local player's current weapon, holding the block button (right mouse button, or its
+   gamepad binding) zooms the camera in by `BowZoomMagnification`, easing in and out over 0.15 s.
+2. The zoom does not depend on drawing or reloading: it stays on while you draw, shoot, reload and draw again, and ends
+   when you let go of the button or put the weapon away.
+3. With a bow or crossbow in hand, the block button only zooms and never blocks, so holding it never cancels a draw or
+   stops one from starting.
+4. The zoom is applied on top of the game's own field of view, so the game's camera behaves as usual otherwise.
+   Free-fly camera is left alone. The magnification is read every frame, so a change applies without a restart.
 
-**Known limits:** with the fix on, the block button can no longer cancel a drawn bow; let go of the attack button
-instead. Holding block before starting to draw still blocks (and prevents the draw) as in vanilla. Mouse sensitivity is
-not scaled down while zoomed. `IsDrawingBow` is bound by reflection because the compile-time game libraries predate
-it; if a game update removes it, the fix logs a warning and does nothing.
+**Known limits:** with the fix on, you cannot block while holding a bow or crossbow. Mouse sensitivity is not scaled
+down while zoomed.
 
 ## Crosshair ping
 

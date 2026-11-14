@@ -172,7 +172,7 @@ namespace ValheimQuickFix
                 "Gear",
                 "BowZoom",
                 false,
-                "While drawing a bow, hold the block button (right mouse button by default) to zoom in a little. Release the attack button to shoot as usual. While drawing, the block button zooms instead of cancelling the draw.");
+                "With a bow or crossbow in hand, hold the block button (right mouse button by default) to zoom in a little, whether or not you are drawing. The zoom stays on across shots until you let go. With a bow or crossbow in hand, the block button only zooms; it no longer blocks.");
 
             BowZoomMagnification = Config.Bind(
                 "Gear",

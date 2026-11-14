@@ -31,6 +31,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - More Writhans is toned down: several Writhans could show up within minutes while crossing a Swamp. Only one lives
   in an area at a time again, as in the base game, and the spawn roll comes every 33 minutes instead of every 25. The
   15% chance stays, so a Swamp area holds a Writhan a bit more often than without the mod.
+- Bow zoom works whenever a bow or crossbow is in your hands, not only while drawing, and stays on across shots for as
+  long as you hold the block button, so you can fire several arrows or bolts without losing it. With a bow or crossbow
+  in hand, the block button now only zooms and no longer blocks.
 
 ## [0.5.0] - 2026-11-12
 
