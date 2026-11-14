@@ -87,7 +87,7 @@ namespace ValheimCampfireCompanion
                 return;
             }
 
-            _current = Spawn(prefab, setup, Plugin.Stars.Value, menu.m_characterPreviewPoint, menu.m_cameraMarkerMain);
+            _current = Spawn(prefab, setup, menu.m_characterPreviewPoint, menu.m_cameraMarkerMain);
             if (_pulledBackMenu != menu)
             {
                 _pulledBackMenu = menu;
@@ -126,7 +126,7 @@ namespace ValheimCampfireCompanion
             return null;
         }
 
-        private static GameObject Spawn(GameObject prefab, CompanionSetup setup, int stars, Transform anchor, Transform cameraMarker)
+        private static GameObject Spawn(GameObject prefab, CompanionSetup setup, Transform anchor, Transform cameraMarker)
         {
             var left = -cameraMarker.right;
             left.y = 0f;
@@ -155,7 +155,7 @@ namespace ValheimCampfireCompanion
             visual.transform.localPosition = Vector3.zero;
             visual.transform.localRotation = Quaternion.identity;
             visual.transform.localScale = source.lossyScale;
-            ApplyStars(source, visual, stars);
+            ApplyStars(source, visual, setup.Stars);
             Strip(visual);
 
             foreach (var animator in visual.GetComponentsInChildren<Animator>(true))

@@ -12,7 +12,6 @@ many more, or a random one each time. Client-side only.
 | Setting | Default | What it does |
 | ------- | ------- | ------------ |
 | `Companion` | `None` | The creature at the fire, or `Random`. |
-| `Stars` | `0` | Its star level, 0 to 2. |
 
 ## Installation
 

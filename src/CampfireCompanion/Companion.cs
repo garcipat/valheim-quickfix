@@ -53,13 +53,16 @@ namespace ValheimCampfireCompanion
         internal readonly float Gap;
         // Degrees clockwise (seen from above) for models that don't face their own forward (Haldor sits facing back).
         internal readonly float Turn;
+        // Star level whose look the creature wears (the deer's 2-star antlers).
+        internal readonly int Stars;
 
-        internal CompanionSetup(string prefab, float scale, float gap, float turn = 0f)
+        internal CompanionSetup(string prefab, float scale, float gap, float turn = 0f, int stars = 0)
         {
             Prefab = prefab;
             Scale = scale;
             Gap = gap;
             Turn = turn;
+            Stars = stars;
         }
     }
 
@@ -69,7 +72,7 @@ namespace ValheimCampfireCompanion
 
         private static readonly Dictionary<Companion, CompanionSetup> Setups = new Dictionary<Companion, CompanionSetup>
         {
-            { Companion.Deer, new CompanionSetup("Deer", 1f, 3.14f) },
+            { Companion.Deer, new CompanionSetup("Deer", 1f, 3.14f, stars: 2) },
             { Companion.Greydwarf, new CompanionSetup("Greydwarf", 1f, 2.89f) },
             { Companion.Troll, new CompanionSetup("Troll", 0.72f, 1.14f) },
             { Companion.Bear, new CompanionSetup("Bjorn", 1.05f, 2.64f) },

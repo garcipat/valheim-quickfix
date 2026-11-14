@@ -16,7 +16,6 @@ namespace ValheimCampfireCompanion
         internal static ManualLogSource Log;
 
         internal static ConfigEntry<Companion> Choice;
-        internal static ConfigEntry<int> Stars;
 
         private Harmony _harmony;
 
@@ -26,13 +25,8 @@ namespace ValheimCampfireCompanion
 
             Choice = Config.Bind("General", "Companion", Companion.None,
                 "The creature that stands with your character at the main menu campfire. None leaves the menu as it is; Random picks a different one each time the menu loads.");
-            Stars = Config.Bind("General", "Stars", 0,
-                new ConfigDescription(
-                    "Star level of the companion, from 0 to 2. Starred creatures get the colouring and extra parts they have in the world.",
-                    new AcceptableValueRange<int>(0, 2)));
 
             Choice.SettingChanged += (_, __) => CompanionSpawner.Refresh();
-            Stars.SettingChanged += (_, __) => CompanionSpawner.Refresh();
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();
