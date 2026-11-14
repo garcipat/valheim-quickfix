@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Pin icons: a circle pin whose whole name is a known name, such as `Cave`, `Portal`, `Ore` or `Swamp`, shows a
   matching icon instead of the circle. Short names show only the icon; longer names such as `Troll cave` or `Copper`
   keep their name under it. The README lists all names.
+- Biome borders: the large map shows faint gray dashed lines where one land biome meets another, only in explored areas
+  and not over open water. Off by default; turn them on with `BiomeBorders` in the `General` config section.
 
 ## [0.1.0] - 2026-11-13
 

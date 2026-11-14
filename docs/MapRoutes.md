@@ -2,7 +2,9 @@
 
 Behavior and implementation notes for the MapRoutes mod. Player-facing docs: [package/MapRoutes/README.md](../package/MapRoutes/README.md).
 
-**Config:** none. Disabling the mod is the off switch; the saved routes stay in the character file.
+**Config:** `General.BiomeBorders` (default off) shows the biome borders; it takes effect the next time the large map
+is drawn. Routes have no setting: disabling the mod is their off switch, and the saved routes stay in the character
+file.
 **Patches** (all in `src/MapRoutes/Patches/MinimapPatches.cs`): `Minimap.Update` (Postfix: button, cursor, stroke,
 right-drag pan, dots on the large and the corner map), `Minimap.UpdatePins` (Postfix, in `PinIconPatches.cs`: pin icons), `Minimap.SetMapMode` (Postfix: leaving the large map ends draw mode), `Minimap.SelectIcon`
 (Postfix: picking a pin type ends draw mode), `Minimap.OnMapLeftDown` and `Minimap.OnMapLeftUp` (Prefix, skipped
@@ -52,6 +54,25 @@ removed or, in draw mode, when the right press was a pan).
 4. `UpdatePins` runs on many map changes, so a failure is logged once and pin icons stay off. The first run logs the
    circle pin's sprite name (`Pin icons replace the Icon3 pin, sprite ...`), so a game change to the pin order shows
    up in the log.
+
+**Biome borders** (`src/MapRoutes/BiomeBorders.cs`):
+
+1. The first time the large map is drawn after the game built its map textures (`m_hasGenerated`), every pair of
+   neighbouring map pixels whose colors in `m_mapTexture` differ is a border edge. That texture holds one flat color
+   per biome, so this finds the biome borders without asking the world generator. Mountain, Deep North and Ocean are
+   all white there, so a Mountain/Deep North border has no line. A pair is skipped when either pixel's height in
+   `m_heightTexture` is more than 3 m below `ZoneSystem.m_waterLevel`, or below it at all for a white pixel, so coasts,
+   rivers and the sea get no line. The 3 m are for the Swamp, whose ground lies around the water level.
+2. The edges lie on the pixel grid. They are chained corner to corner into lines, ending at line ends and at
+   junctions where three or more biomes meet; what is left are closed loops. Lines of 4 edges or fewer are dropped.
+   Each line, a staircase as traced, is smoothed with a moving average over 5 corners, twice (the ends stay put, so
+   lines still meet at junctions), thinned with Ramer-Douglas-Peucker at 0.4 map pixels and stored in world space.
+   The count is logged once (`Biome borders: ... lines, ... points`).
+3. They are drawn as dashes with the routes' pooled images and zoom scaling: the dot sprite stretched to 6 by 1.5 UI
+   units, turned along the line, every 11 units, in light gray at 30% opacity (the map is mostly dark). Their layer is the first child of `m_mapImageLarge`, below the
+   routes. The lines sit above the fog, so a dash is placed only where the map pixel at its middle is explored by the player
+   (`m_explored`) or shared through a cartography table (`m_exploredOthers`). Large map only; the corner map has none.
+   The game's textures are never written.
 
 **Storage:** `Player.m_customData["dev.pgarcia.maproutes.Routes.<world UID>"]`, one route per line, points as
 `x,z` separated by `;`, one decimal. It is saved with the character, like the QuickFix ForgetDeletedPins list. The
