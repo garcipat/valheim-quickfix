@@ -37,6 +37,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> PortalTagSignEnabled;
         internal static ConfigEntry<bool> SmelterFillOnHoldEnabled;
         internal static ConfigEntry<bool> GhostPortalPlayersEnabled;
+        internal static ConfigEntry<bool> SmoothLaddersEnabled;
         internal static ConfigEntry<bool> SittingStaminaRegenEnabled;
         internal static ConfigEntry<bool> IgnoreWorkbenchEnabled;
         internal static ConfigEntry<bool> BowZoomEnabled;
@@ -210,6 +211,12 @@ namespace ValheimQuickFix
                 "GhostPortalPlayers",
                 true,
                 "Another player walking into a portal stays solid in its opening for a couple of seconds and blocks you from following. While they stand in the opening they are made see-through and walk-through on your screen. Only affects what you see; each player needs the mod for themselves.");
+
+            SmoothLaddersEnabled = Config.Bind(
+                "Building & Travel",
+                "SmoothLadders",
+                true,
+                "Walk smoothly up the ladders you build, instead of the game jumping you onto each rung, which can throw you off the ladder. Walking down, stairs and every other obstacle are not affected.");
 
             IgnoreWorkbenchEnabled = Config.Bind(
                 "Building & Travel",

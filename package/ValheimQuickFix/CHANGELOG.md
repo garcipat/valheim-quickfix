@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Walking up a built ladder lifts you smoothly onto each rung instead of jumping you onto it, so you no longer fall
+  off halfway. Turn it off with `SmoothLadders`.
+
 - Your arrow on the minimap and the large map is easier to find: it is larger and has a dark outline, and on the large
   map a thin yellow ring keeps pulsing out from it. Turn it off with `VisiblePlayerMarker`.
 
