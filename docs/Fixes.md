@@ -634,24 +634,6 @@ and the server has to be found and picked again before you can retry.
 **Known limits:** a password given with the `-password` launch option is not retried, since the same wrong password
 would be sent again. The title keeps saying "Wrong password" until you get in or give up.
 
-## Lox at the menu campfire
-
-**Config:** `General` → `MenuLox` (default `true`)
-**Patch:** `Patches/MenuLoxPatch.cs`
-
-**Problem:** your character sits alone at the main menu campfire.
-
-**Behavior:**
-
-1. A Lox, a bit smaller than in the world, stands at the main menu campfire on the other side of the fire from your
-   character, facing the fire, and plays its idle animation.
-2. The character selection view is zoomed out a little, so the Lox stays in the shot next to your character.
-3. It is only scenery: it makes no sound, has no AI and can't be touched. Nothing changes once you load a world.
-4. It shows from the very first launch; no world has to be loaded first.
-
-**Known limits:** if a game update moves the Lox model, the Lox is left out and the menu looks as it does without the
-mod. Changing the setting takes effect the next time the menu loads.
-
 ## Smooth ladders
 
 **Config:** `Building & Travel` → `SmoothLadders` (default `true`)

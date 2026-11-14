@@ -28,6 +28,7 @@ on:
           - ItemCompare
           - MoreSkills
           - MapRoutes
+          - CampfireCompanion
       version:
         description: Version for the dry run (no release is created)
         default: 0.0.0-dryrun
@@ -41,6 +42,7 @@ on:
       - 'ItemCompare-v*'
       - 'MoreSkills-v*'
       - 'MapRoutes-v*'
+      - 'CampfireCompanion-v*'
 
 permissions:
   contents: read

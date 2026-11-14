@@ -45,7 +45,6 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> PauseOnMapEnabled;
         internal static ConfigEntry<bool> VisiblePlayerMarkerEnabled;
         internal static ConfigEntry<bool> RetryWrongPasswordEnabled;
-        internal static ConfigEntry<bool> MenuLoxEnabled;
         internal static ConfigEntry<float> BowZoomMagnification;
         internal static ConfigEntry<float> SittingStaminaMultiplier;
         internal static ConfigEntry<float> ChopTierBonus;
@@ -248,12 +247,6 @@ namespace ValheimQuickFix
                 "RetryWrongPassword",
                 true,
                 "After a wrong server password, ask for the password again instead of going back to the menu. Press Escape (B on a gamepad) in the password box to give up and return to the menu.");
-
-            MenuLoxEnabled = Config.Bind(
-                "General",
-                "MenuLox",
-                true,
-                "A Lox stands with your character at the campfire in the main menu. Only for looks; takes effect the next time the menu loads.");
 
             SittingStaminaRegenEnabled = Config.Bind(
                 "General",

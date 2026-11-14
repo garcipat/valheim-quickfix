@@ -1,0 +1,10 @@
+{
+  "name": "CampfireCompanion",
+  "author": "garcipat",
+  "version_number": "0.0.0",
+  "website_url": "https://github.com/garcipat/valheim-quickfix",
+  "description": "A creature of your choice keeps you company at the main menu campfire: a Lox, a troll, Haldor and more.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2351"
+  ]
+}
