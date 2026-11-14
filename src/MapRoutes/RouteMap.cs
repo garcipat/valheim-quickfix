@@ -29,6 +29,12 @@ namespace ValheimMapRoutes
         // A right press that moved more than this many screen pixels was a pan, not a click.
         private const float DragThreshold = 6f;
         private const int MaxDots = 6000;
+        // Biome borders are dashes, in the same units and zoom scaling as the dots: this long and thick, with this
+        // gap. Light gray and mostly see-through, since the map is mostly dark and they are only a detail.
+        private const float DashLength = 6f;
+        private const float DashGap = 5f;
+        private const float DashThickness = 1.5f;
+        private static readonly Color BorderColor = new Color(0.86f, 0.86f, 0.82f, 0.3f);
 
         // ZInput.pointerPosition is newer than the compile-time libs.
         private static readonly MethodInfo PointerPositionGetter = AccessTools.PropertyGetter(typeof(ZInput), "pointerPosition");
@@ -58,6 +64,7 @@ namespace ValheimMapRoutes
 
         private static readonly DotLayer LargeDots = new DotLayer();
         private static readonly DotLayer SmallDots = new DotLayer();
+        private static readonly DotLayer BorderDots = new DotLayer();
         private static GameObject _button;
         private static Behaviour _buttonFrame;
         private static bool _broken;
@@ -178,6 +185,7 @@ namespace ValheimMapRoutes
                 ContinueStroke(view);
                 Pan(minimap, view);
             }
+            DrawBorders(minimap, view);
             DrawRoutes(minimap, view, LargeDots, 1f);
         }
 
@@ -599,11 +607,52 @@ namespace ValheimMapRoutes
 
         private static void DrawRoutes(Minimap minimap, MapView view, DotLayer layer, float scale)
         {
+            Prepare(layer, view, scale, "MapRoutes");
+            var red = RouteArt.Red(minimap);
+            foreach (var route in RouteStore.Routes)
+            {
+                DrawLine(layer, view, route, red);
+                if (route.Count == 1)
+                {
+                    var only = view.ToLocal(route[0]);
+                    if (only.x >= 0f && only.y >= 0f && only.x <= view.Size.x && only.y <= view.Size.y)
+                    {
+                        PlaceDot(layer, only, red);
+                    }
+                }
+            }
+            HideUnused(layer);
+        }
+
+        // The biome borders, under the routes, only where the map is explored.
+        private static void DrawBorders(Minimap minimap, MapView view)
+        {
+            Prepare(BorderDots, view, 1f, "MapRoutesBiomeBorders", below: true);
+            if (Plugin.BiomeBordersEnabled.Value && BiomeBorders.Refresh(minimap))
+            {
+                var scale = BorderDots.Size / DotSize;
+                var dash = new Vector2(DashLength * scale, DashThickness * scale);
+                var period = (DashLength + DashGap) * scale;
+                foreach (var line in BiomeBorders.Lines)
+                {
+                    DrawDashes(view, line, dash, period);
+                }
+            }
+            HideUnused(BorderDots);
+        }
+
+        // Creates the layer's root under the map image on first use, and sets its dot size for the zoom.
+        private static void Prepare(DotLayer layer, MapView view, float scale, string name, bool below = false)
+        {
             if (layer.Root == null)
             {
-                var root = new GameObject("MapRoutes", typeof(RectTransform));
+                var root = new GameObject(name, typeof(RectTransform));
                 layer.Root = (RectTransform)root.transform;
                 layer.Root.SetParent(view.Rect, false);
+                if (below)
+                {
+                    layer.Root.SetAsFirstSibling();
+                }
                 layer.Root.anchorMin = Vector2.zero;
                 layer.Root.anchorMax = Vector2.one;
                 layer.Root.offsetMin = Vector2.zero;
@@ -615,25 +664,54 @@ namespace ValheimMapRoutes
             scale *= Mathf.Clamp(Mathf.Pow(FullSizeZoom / Mathf.Max(view.Uv.width, 0.0001f), ZoomPower), MinZoomScale, 1f);
             layer.Size = DotSize * scale;
             layer.Spacing = DotSpacing * scale;
-
-            var red = RouteArt.Red(minimap);
             layer.Used = 0;
-            foreach (var route in RouteStore.Routes)
+        }
+
+        private static void DrawLine(DotLayer layer, MapView view, List<Vector3> line, Color color)
+        {
+            var along = 0f;
+            for (var i = 1; i < line.Count; i++)
             {
-                var along = 0f;
-                for (var i = 1; i < route.Count; i++)
+                along = DrawSegment(layer, view.ToLocal(line[i - 1]), view.ToLocal(line[i]), along, view.Size, color);
+            }
+        }
+
+        // Like DrawSegment, but a dash, turned along the segment, starts at whole multiples of the period along the
+        // line. A dash is only placed where the map is explored at its middle.
+        private static void DrawDashes(MapView view, List<Vector3> line, Vector2 dash, float period)
+        {
+            var along = 0f;
+            for (var i = 1; i < line.Count; i++)
+            {
+                var a = view.ToLocal(line[i - 1]);
+                var b = view.ToLocal(line[i]);
+                var length = (b - a).magnitude;
+                if (length >= 0.01f && Clip(a, b, view.Size, out var t0, out var t1))
                 {
-                    along = DrawSegment(layer, view.ToLocal(route[i - 1]), view.ToLocal(route[i]), along, view.Size, red);
-                }
-                if (route.Count == 1)
-                {
-                    var only = view.ToLocal(route[0]);
-                    if (only.x >= 0f && only.y >= 0f && only.x <= view.Size.x && only.y <= view.Size.y)
+                    var direction = (b - a) / length;
+                    var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    for (var d = Mathf.Ceil((along + t0 * length) / period) * period - along; d <= t1 * length; d += period)
                     {
-                        PlaceDot(layer, only, red);
+                        var middle = a + direction * (d + dash.x / 2f);
+                        if (!BiomeBorders.IsExplored(view.ToWorld(middle)))
+                        {
+                            continue;
+                        }
+                        if (!PlaceDot(BorderDots, middle, BorderColor))
+                        {
+                            return;
+                        }
+                        var rect = (RectTransform)BorderDots.Dots[BorderDots.Used - 1].transform;
+                        rect.sizeDelta = dash;
+                        rect.localRotation = Quaternion.Euler(0f, 0f, angle);
                     }
                 }
+                along += length;
             }
+        }
+
+        private static void HideUnused(DotLayer layer)
+        {
             for (var i = layer.Used; i < layer.Dots.Count; i++)
             {
                 if (layer.Dots[i].gameObject.activeSelf)
@@ -742,7 +820,7 @@ namespace ValheimMapRoutes
             return true;
         }
 
-        private static float DistanceToSegment(Vector2 p, Vector2 a, Vector2 b)
+        internal static float DistanceToSegment(Vector2 p, Vector2 a, Vector2 b)
         {
             var ab = b - a;
             var t = ab.sqrMagnitude < 0.0001f ? 0f : Mathf.Clamp01(Vector2.Dot(p - a, ab) / ab.sqrMagnitude);

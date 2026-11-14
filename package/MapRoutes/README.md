@@ -11,6 +11,10 @@ Routes are saved with your character, per world, so they are still there the nex
 It also gives your pins **icons**: name a circle pin `Cave`, `Portal` or `Swamp` and it shows a cave, a portal or
 reeds instead of the circle. See [Pin icons](#pin-icons).
 
+The large map also shows faint **dashed lines along the borders between biomes**, so you can see where the Black
+Forest ends and the Swamp begins. They only show on land and only where you have explored, and you can turn them off
+(see [Configuration](#configuration)).
+
 Client-side only: it works on any server and nothing needs to be installed on the server. Other players don't see
 your routes.
 
@@ -71,7 +75,9 @@ icons too.
 
 ## Configuration
 
-There are no settings. To hide your routes, disable the mod in your mod manager. They come back when you enable it
+- **General → BiomeBorders** (default on): the dashed biome borders on the large map. Turn it off for the plain map.
+
+Routes have no setting. To hide your routes, disable the mod in your mod manager. They come back when you enable it
 again.
 
 ## Installation
