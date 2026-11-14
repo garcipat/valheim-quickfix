@@ -136,7 +136,7 @@ namespace ValheimQuickFix
                 "Enemies & Drops",
                 "MoreWrithans",
                 false,
-                "Make Writhans easier to find: they get a spawn roll every 25 minutes instead of every 67 with a 15% chance instead of 10%, and up to two can live in an area. Takes effect on the next game start, and only when your machine runs the spawning (singleplayer or hosting).");
+                "Make Writhans easier to find: they get a spawn roll every 33 minutes instead of every 67 with a 15% chance instead of 10%, and still only one lives in an area at a time. Takes effect on the next game start, and only when your machine runs the spawning (singleplayer or hosting).");
 
             FulingCampsRespawnEnabled = Config.Bind(
                 "Enemies & Drops",

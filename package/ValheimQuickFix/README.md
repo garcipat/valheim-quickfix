@@ -30,8 +30,8 @@ other players don't need it.
   or 5. Only drops rolled on your machine are affected.
 - **More bears** (off by default) — bears get a spawn roll every 17 minutes instead of every 33, up to two can live in an area, and they
   drop their trophy 20% of the time instead of 10%. Only works in singleplayer or when you host.
-- **More Writhans** (off by default) — Writhans get a spawn roll every 25 minutes instead of every 67 with a 15%
-  chance instead of 10%, and up to two can live in an area. Only works in singleplayer or when you host.
+- **More Writhans** (off by default) — Writhans get a spawn roll every 33 minutes instead of every 67 with a 15%
+  chance instead of 10%, and still only one lives in an area at a time. Only works in singleplayer or when you host.
 - **Fuling camps respawn** (off by default) — a cleared Fuling village slowly refills while its totem stands: every 30
   minutes, up to two Fulings within 50 m of a totem come back at their spots. Smash the totem to clear the camp for
   good. The minutes and the radius can be set. Only works in singleplayer or when you host; on a server, everyone sees
