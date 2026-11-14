@@ -2,7 +2,7 @@
 
 Behavior and implementation notes for the MapRoutes mod. Player-facing docs: [package/MapRoutes/README.md](../package/MapRoutes/README.md).
 
-**Config:** `General.BiomeBorders` (default on) shows the biome borders; it takes effect the next time the large map
+**Config:** `General.BiomeBorders` (default off) shows the biome borders; it takes effect the next time the large map
 is drawn. Routes have no setting: disabling the mod is their off switch, and the saved routes stay in the character
 file.
 **Patches** (all in `src/MapRoutes/Patches/MinimapPatches.cs`): `Minimap.Update` (Postfix: button, cursor, stroke,

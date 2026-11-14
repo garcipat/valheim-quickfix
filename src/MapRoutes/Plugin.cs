@@ -25,7 +25,7 @@ namespace ValheimMapRoutes
             BiomeBordersEnabled = Config.Bind(
                 "General",
                 "BiomeBorders",
-                true,
+                false,
                 "Draw faint dotted lines along the borders between land biomes on the large map, where it is explored.");
 
             _harmony = new Harmony(PluginGuid);
