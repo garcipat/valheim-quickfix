@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Fuling villages can slowly refill while a totem stands: every 30 minutes, up to two Fulings within 50 m of a totem
+  come back at their spots. Smash the totem to clear the camp for good. The minutes and the radius can be set. Only
+  works in singleplayer or when you host. Off by default; turn it on with `FulingCampsRespawn`.
+
 - Every tagged portal shows a sign with its tag in white inside its ring, so you can see where it leads without
   hovering it. Only you see it; it isn't built or saved. Turn it off with `PortalTagSign`.
 
