@@ -101,7 +101,7 @@ with the mod installed, and changes apply after a restart.
 | `Enemies & Drops`  | `FulingCampsRespawnMinutes` | `30` | Minutes between two waves of up to two Fulings at a totem, from 10 to 120. |
 | `Enemies & Drops`  | `FulingCampsTotemRadius` | `50` | How far from a totem Fulings come back, from 10 to 100 m. |
 | `Gear`             | `MeaningfulToolUpgrades` | `false` | Better axe and pickaxe materials deal extra chop / mining damage. |
-| `Gear`             | `BowZoom` | `false` | Hold the block button while drawing a bow to zoom in. |
+| `Gear`             | `BowZoom` | `false` | Hold the block button with a bow or crossbow in hand to zoom in; the zoom stays on across shots. |
 | `Gear`             | `BowZoomMagnification` | `1.5` | How much the bow zoom magnifies, from 1.1 to 3. |
 | `Gear`             | `ChopTierBonus` | `5` | Chop damage added per axe tier (0 to 50). |
 | `Gear`             | `PickaxeTierBonus` | `8` | Mining damage added per pickaxe tier (0 to 50). |
