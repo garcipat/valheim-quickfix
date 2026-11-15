@@ -21,15 +21,15 @@ outdir = "../../dist/thunderstore"
 
 [[build.copy]]
 source = "../../src/SignIcons/bin/Release/net48/SignIcons.dll"
-target = ""
+target = "/"
 
 [[build.copy]]
 source = "./CHANGELOG.md"
-target = ""
+target = "/"
 
 [[build.copy]]
 source = "../../LICENSE"
-target = ""
+target = "/"
 
 [publish]
 repository = "https://thunderstore.io"

@@ -7,11 +7,16 @@ name: Release
 #    <Mod>-vX.Y.Z, so the tagged commit already carries the closed changelog, and that section becomes the release
 #    notes. The tag is the only place the version is written: it is built into the DLL and stamped into the zip's
 #    manifest. The release-mod skill opens the pull request for you.
+#    Add the label `publish-thunderstore` to the release pull request (the release-mod skill does when you say yes) and
+#    the same package is also uploaded to Thunderstore, in a separate job after the release exists. That needs the
+#    repository secret TCLI_AUTH_TOKEN (a service account token of the Thunderstore team named in
+#    package/<Mod>/thunderstore.toml). Thunderstore has no pre-release versions, so a hyphenated version is never uploaded.
 #  - By hand: push a tag <Mod>-vX.Y.Z on main. The "Unreleased" entries are renamed on the runner and become the release
 #    notes; main gets the renamed section afterwards through a pull request (it needs "Allow GitHub Actions to create
 #    pull requests" in the repo settings, else the branch is pushed and the pull request has to be opened by hand).
 #  - Dry run: Actions > Release > Run workflow, pick the mod and a version. Builds the package from main's current
-#    state and uploads it as a workflow artifact; no release, no tag, nothing is committed.
+#    state and uploads it as a workflow artifact, together with the Thunderstore package built from the same files (to
+#    prove the tcli config works); no release, no tag, nothing is committed, nothing is uploaded to Thunderstore.
 #
 # Add every new mod to the options list and to the tag patterns below (scripts/package.sh checks this).
 
@@ -59,6 +64,10 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+    outputs:
+      mod: ${{ steps.target.outputs.mod }}
+      version: ${{ steps.target.outputs.version }}
+      publish: ${{ steps.thunderstore.outputs.publish }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -94,6 +103,41 @@ jobs:
           MOD: ${{ steps.target.outputs.mod }}
           VERSION: ${{ steps.target.outputs.version }}
         run: ./scripts/package.sh --version "$VERSION" "$MOD"
+
+      # The Thunderstore package is built before anything is tagged or released, so a broken tcli config stops the run
+      # early. A dry run builds it too, but never publishes it.
+      - name: Decide whether to publish to Thunderstore
+        id: thunderstore
+        if: >-
+          github.event_name == 'pull_request' &&
+          contains(github.event.pull_request.labels.*.name, 'publish-thunderstore')
+        env:
+          PRERELEASE: ${{ steps.target.outputs.prerelease }}
+        run: |
+          if [ "$PRERELEASE" = "true" ]; then
+            echo "::warning::Thunderstore has no pre-release versions; not publishing this one."
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install tcli
+        if: steps.thunderstore.outputs.publish == 'true' || steps.target.outputs.dry_run == 'true'
+        run: ./scripts/install-tcli.sh
+
+      - name: Build the Thunderstore package
+        if: steps.thunderstore.outputs.publish == 'true' || steps.target.outputs.dry_run == 'true'
+        env:
+          MOD: ${{ steps.target.outputs.mod }}
+          VERSION: ${{ steps.target.outputs.version }}
+        run: tcli build --config-path "package/$MOD/thunderstore.toml" --package-version "$VERSION"
+
+      - name: Keep the Thunderstore package for the publish job
+        if: steps.thunderstore.outputs.publish == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: thunderstore-package
+          path: dist/thunderstore/*.zip
+          if-no-files-found: error
 
       # A release pull request leaves the tag to this workflow. Tags pushed with the workflow's own token don't start
       # another run. A re-run finds the tag on the same commit and keeps it.
@@ -168,4 +212,40 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.target.outputs.mod }}-${{ steps.target.outputs.version }}
-          path: dist/*.zip
+          path: |
+            dist/*.zip
+            dist/thunderstore/*.zip
+
+  # Separate from the release job so a failed upload (bad token, Thunderstore down) can be re-run on its own: the
+  # GitHub release already exists by then and must not be created twice.
+  publish:
+    needs: release
+    if: needs.release.outputs.publish == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: thunderstore-package
+          path: dist/thunderstore
+
+      - name: Install tcli
+        run: ./scripts/install-tcli.sh
+
+      - name: Publish to Thunderstore
+        env:
+          TCLI_AUTH_TOKEN: ${{ secrets.TCLI_AUTH_TOKEN }}
+          MOD: ${{ needs.release.outputs.mod }}
+          VERSION: ${{ needs.release.outputs.version }}
+        run: |
+          if [ -z "$TCLI_AUTH_TOKEN" ]; then
+            echo "::error::Repository secret TCLI_AUTH_TOKEN is not set; create a service account token on the Thunderstore team and add it under Settings > Secrets and variables > Actions, then re-run this job."
+            exit 1
+          fi
+          package="$(ls dist/thunderstore/*-"$MOD-$VERSION.zip")"
+          tcli publish --config-path "package/$MOD/thunderstore.toml" --file "$package"

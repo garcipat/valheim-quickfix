@@ -49,6 +49,8 @@ New work that isn't a fix for something the game gets wrong belongs in its own m
   and after one confirmation opens a release pull request from `release/<Mod>-vX.Y.Z` that renames `[Unreleased]` to
   that version. Merging it makes the workflow tag the merge commit and publish the release, so the tagged commit already
   has the closed changelog. A new mod must be added to the workflow's options and tag patterns.
+  The skill also asks whether to upload to Thunderstore; yes labels the pull request `publish-thunderstore` and the
+  workflow's `publish` job uploads it (secret `TCLI_AUTH_TOKEN`; setup in `docs/Development.md`).
 - Every player-visible change adds a line under `## [Unreleased]` in `package/<Mod>/CHANGELOG.md` in the same PR;
   those lines become the release notes, and a release without any stops.
 - `package/<Mod>/README.md` ships inside the package and is shown as the mod description, so keep it player-facing.
