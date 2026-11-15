@@ -717,3 +717,22 @@ point at it and get "too far".
 
 **Known limits:** the distances are fixed. The chest close distance is set when the game starts, so turning the
 toggle on or off mid-game only changes it after a restart.
+
+## Favorites first in the build menu
+
+**Config:** `Building & Travel` → `FavoritesFirst` (default `true`)
+**Patch:** `Patches/FavoritesFirstPatch.cs`
+
+**Problem:** pieces you mark as favorites only stand out in the Favorites tab. In the other tabs they sit wherever the
+game puts them, so you either scroll for them or keep switching tabs.
+
+**Behavior:**
+
+1. In the "By usage" and "By material" tabs, your favorite pieces come first, followed by everything else.
+2. This holds for "All" and for every category in those tabs. Favorites keep the game's order among themselves, and so
+   do the other pieces.
+3. The "Recent" and "Favorites" tabs are not changed.
+4. Searching still works; matching favorites are shown first.
+
+**Known limits:** a piece you mark or unmark doesn't move at once, so it doesn't jump away under the cursor. It moves
+the next time the list is shown, for example after switching tab or category, or reopening the build menu.

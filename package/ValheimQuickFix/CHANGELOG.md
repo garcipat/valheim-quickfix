@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Favorites first (`FavoritesFirst`, on by default): the build menu's "By usage" and "By material" tabs show
+  the pieces you marked as favorites first, so you no longer need the Favorites tab to find them.
+
 - Cooking XP by time (`CookingXpByTime`, on by default): food that takes longer gives more Cooking XP. Lox meat gives
   more than boar meat and bread more than either, and cauldron recipes that need a higher cauldron level give more.
 
