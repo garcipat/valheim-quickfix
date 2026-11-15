@@ -144,6 +144,7 @@ warning if the mod's `Unreleased` entries changed on `main` since the tag; then 
 **Dry run:** Actions → Release → *Run workflow*, pick the mod and a version. It builds the package from `main`
 and uploads it as a workflow artifact, plus the Thunderstore package (`thunderstore/`) built from the same files, which
 proves the tcli config. No tag, no release, no commit, no upload. (`/release-mod <Mod> dry-run` starts it for you.)
+Keep the default version `0.0.0`: tcli only takes `X.Y.Z`, so a version with a hyphen builds no Thunderstore package.
 
 Releases are listed newest first in one flat list for the whole repo; GitHub cannot group them by mod. The `<Mod> X.Y.Z`
 titles and `<Mod>-v...` tags keep them tellable apart. Players get a per-mod listing on Thunderstore.

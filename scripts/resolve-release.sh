@@ -42,7 +42,7 @@ if [ "$EVENT" = "push" ] || [ "$EVENT" = "pull_request" ]; then
   fi
 else
   mod="${MOD_INPUT:-}"
-  version="${VERSION_INPUT:-0.0.0-dryrun}"
+  version="${VERSION_INPUT:-0.0.0}"
   dry_run=true
 fi
 

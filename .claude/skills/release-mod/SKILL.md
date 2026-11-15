@@ -167,12 +167,13 @@ A dry run builds the package from `main` and uploads it as a workflow artifact. 
 commits nothing.
 
 ```bash
-gh workflow run release.yml -f mod=<Mod> -f version=0.0.0-dryrun
+gh workflow run release.yml -f mod=<Mod> -f version=0.0.0
 ```
 
 Then follow the run as in step 7 and point the user to the artifact. It holds both zips: the Gale one and, under
 `thunderstore/`, the one that would be uploaded; building it also proves the tcli config. Nothing is uploaded to
-Thunderstore. The workflow must already exist on `main`.
+Thunderstore. The workflow must already exist on `main`. Keep the version at `X.Y.Z` (`0.0.0`): tcli rejects a version
+with a hyphen, so the run would skip the Thunderstore package.
 
 ## Don'ts
 
