@@ -75,6 +75,21 @@ Vanilla only knows the skills in `Skills.SkillType`. `Core/` adds the rest:
 - **Multiplayer:** the owner simulates the ship, and that can be a passenger rather than the helmsman. Then the
   helmsman paddles at vanilla speed. Remote players are never affected.
 
+## Exploring
+
+- **Effect:** `Minimap.UpdateExplore` calls the private `Explore(Vector3 p, float radius)` every 2 s with
+  `m_exploreRadius` (100 m) around the local player, and nothing else calls that overload. A Prefix scales the `radius`
+  argument by `1 + MaxRadiusBonus * skillFactor`; no field changes.
+- **Levelling:** while that call runs, a Postfix on `Explore(int, int)` counts pixels it returns true for (not yet in
+  the player's own explored layer). The Postfix on `Explore(Vector3, float)` turns them into meters of new ground,
+  `pixels * m_pixelSize² / (2 * radius)`, and raises `meters * 0.02`. Dividing by the circle's width keeps a wider
+  circle from speeding up its own levelling. About 0.14 per second running through fresh land. Tune with
+  `GainPerMeter`.
+- **Not counted:** the first call after a gap of more than 5 s (load, respawn) and a jump of more than 60 m between
+  calls (portal). Loading the map and `exploremap` reveal through the pixel overload directly, outside the counted call.
+- **Shared maps:** cartography table data goes into a separate layer (`m_exploredOthers`), so walking through an area
+  someone shared still counts, and sharing gives nothing to anyone.
+
 ## Adding a skill
 
 1. Add a static class in `Patches/<Skill>Patch.cs` with an `Identifier`, a `Type` and a `Create(enabled)` like

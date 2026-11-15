@@ -31,6 +31,13 @@ Paddling a ship without the sail, forward or backwards, levels Paddling and make
 level 100 (configurable with `MaxPaddleBonus`). Sailing is unchanged. With other players on board, the speed bonus can
 be missing when the game hands the ship to a passenger; the skill still levels.
 
+### Exploring
+
+Uncovering the map levels Exploring, and the area you uncover around you grows with it, up to twice as wide at level
+100 (configurable with `MaxRadiusBonus`). Only ground that is new to you counts, on foot or by ship: walking known
+paths, arriving through a portal or reading a map shared at a cartography table gives nothing. Areas someone else
+shared with you still count once you go there yourself.
+
 ## Configuration
 
 `BepInEx/config/dev.pgarcia.valheim.moreskills.cfg` has one section per skill. Turning a skill off hides it from
