@@ -46,14 +46,14 @@ namespace ValheimMoreSkills.Patches
     /// <c>m_encumberedStaminaDrain</c> (10/s) and blocks regen. A Prefix scales that field by
     /// <c>1 - MaxDrainReduction * Endurance skill factor</c> and a Finalizer puts the original back, so the game's own
     /// logic runs unchanged. The Postfix raises the skill by <see cref="GainPerInterval"/> per second of walking
-    /// overweight: twice Hauling's pace, because overweight walking comes in short stretches. Level 10 after about 7
-    /// minutes of it, 50 after about 5 hours (the game's own level curve does the rest).
+    /// overweight: a bit above Hauling's pace, because overweight walking comes in short stretches. Level 10 after
+    /// about 4 minutes of it, 50 after about 3 hours (the game's own level curve does the rest).
     /// </summary>
     [HarmonyPatch(typeof(Player), "UpdateStats", typeof(float))]
     internal static class EndurancePatch
     {
         private const float Interval = 1f;
-        private const float GainPerInterval = 0.2f;
+        private const float GainPerInterval = 0.35f;
         // The game's own threshold for "moving" in the drain.
         private const float MinMoveInput = 0.1f;
         private const float MinSpeed = 0.5f;

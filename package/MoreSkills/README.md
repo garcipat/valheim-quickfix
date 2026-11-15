@@ -12,8 +12,7 @@ Pulling a loaded cart gets easier the more you do it. The cargo in a cart you pu
 levels, up to half its weight at level 100 (configurable with `MaxCargoReduction`). At level 0 carts behave exactly
 like vanilla, and the empty cart's own weight never changes.
 
-You level Hauling while you pull a moving cart: the heavier the load, the faster you level, and an empty cart gives
-nothing. The lighter feel only applies while you are the one pulling; a parked cart keeps its full weight.
+You level Hauling while you pull a moving cart: at full pace with anything in it, at half pace when it is empty. The lighter feel only applies while you are the one pulling; a parked cart keeps its full weight.
 
 ### Landscaping
 

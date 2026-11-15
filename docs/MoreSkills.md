@@ -29,10 +29,11 @@ Vanilla only knows the skills in `Skills.SkillType`. `Core/` adds the rest:
 - **Levelling:** Postfix on `Vagon.Update`. While the local player is attached, the cart's movement is counted only
   in frames where the player gives movement input (`GetMoveDir`), so hitching, standing still or being dragged
   downhill earns nothing; a jump of more than 2 m in one frame (teleport) is ignored. Once per second, if that
-  averaged at least 1 m/s, `RaiseSkill(Hauling, meters * 0.03 * clamp01(cargo / 300))`. Gain follows
-  distance, not time. At a full load and cart speed that is about 0.1 per second, a tenth of vanilla Swim and Run
-  (their pace felt far too fast for hauling in testing): level 10 after ~13 minutes of pulling, 50 after ~10 hours,
-  100 after ~56 hours. Tune with `GainPerMeter`.
+  averaged at least 1 m/s, `RaiseSkill(Hauling, meters * 0.075)` if the cart holds any item, half that
+  if it is empty. Gain follows distance, not time, and not load: scaling by cargo weight (full gain at 300, none
+  empty) made most hauling earn almost nothing. At cart speed that is about 0.25 per second, a quarter of vanilla Swim and Run
+  (their pace felt far too fast for hauling in testing, and a tenth of it barely levelled, since carts are pulled
+  rarely): level 10 after ~5 minutes of pulling, 50 after ~4 hours, 100 after ~22 hours. Tune with `GainPerMeter`.
 - **Identity:** the skill number is the identifier's stable hash with the sign bit cleared. A negative number breaks
   the name, because the localizer ends the `$skill_` word at the minus sign.
 - **Multiplayer:** only the cart's owner (the puller) simulates and sets its mass, and skills live in each player's
@@ -47,7 +48,8 @@ Vanilla only knows the skills in `Skills.SkillType`. `Core/` adds the rest:
   log a warning and leave it alone). The toggle's `SettingChanged` puts it back to `None`, and only if we set it.
   Durability (`m_placementDurabilitySkill`) is not touched.
 - **Rate:** vanilla raises a piece table skill with factor 1, so the skill definition's step (`increaseStep` on
-  `CustomSkill`) is 0.25, the same step the hammer earns for Crafting.
+  `CustomSkill`) is 1, the same a pickaxe hit gives Pickaxes. The hammer's 0.25 for Crafting barely levelled, since the
+  hoe is used far less. Level 10 after about 75 uses, 50 after about 3,600.
 - `m_skill` is not in the compile-time libs, so it is accessed by name.
 
 ## Endurance
@@ -55,10 +57,10 @@ Vanilla only knows the skills in `Skills.SkillType`. `Core/` adds the rest:
 - **Effect:** `Player.UpdateStats(float)` (local player only) drains `m_encumberedStaminaDrain` (10/s) while you move
   over the weight limit, and blocks regen. A Prefix scales that field by `1 - MaxDrainReduction * skillFactor` and
   a Finalizer restores it, so the rest of the method stays vanilla.
-- **Levelling:** the Postfix gives `RaiseSkill(Endurance, 0.2)` per second while encumbered, not attached, giving
-  movement input and actually moving (at least 0.5 m/s, so being stuck at zero stamina earns nothing). That is twice
-  Hauling's pace, since overweight walking comes in short stretches: level 10 after about 7 minutes of it, 50 after
-  about 5 hours. 1 per second (Run's pace) reached level 10 in under 2 minutes, far too fast in testing. Tune with
+- **Levelling:** the Postfix gives `RaiseSkill(Endurance, 0.35)` per second while encumbered, not attached, giving
+  movement input and actually moving (at least 0.5 m/s, so being stuck at zero stamina earns nothing). That is a bit
+  above Hauling's pace, since overweight walking comes in short stretches: level 10 after about 4 minutes of it, 50
+  after about 3 hours. 0.2 per second barely levelled and 0.5 felt too fast; 1 per second (Run's pace) reached level 10 in under 2 minutes, far too fast in testing. Tune with
   `GainPerInterval`.
 
 ## Paddling
@@ -68,8 +70,8 @@ Vanilla only knows the skills in `Skills.SkillType`. `Core/` adds the rest:
   compile-time libs have an older signature) and owns the ship, a Prefix scales that force by
   `1 + MaxPaddleBonus * skillFactor` and a Finalizer restores it.
 - **Levelling:** the Postfix counts how far the ship moves while the local player steers in Slow or Back (steps over
-  2 m are ignored). Once per second, if that averaged at least 0.5 m/s, `RaiseSkill(Paddling, meters * 0.05)`.
-  That is about 0.1 to 0.15 per second. Tune with `GainPerMeter`.
+  2 m are ignored). Once per second, if that averaged at least 0.5 m/s, `RaiseSkill(Paddling, meters * 0.125)`.
+  That is about 0.25 to 0.4 per second (0.05 per meter barely levelled). Tune with `GainPerMeter`.
 - **Multiplayer:** the owner simulates the ship, and that can be a passenger rather than the helmsman. Then the
   helmsman paddles at vanilla speed. Remote players are never affected.
 

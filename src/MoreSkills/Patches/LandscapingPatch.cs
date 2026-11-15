@@ -23,8 +23,9 @@ namespace ValheimMoreSkills.Patches
 
         private const string HoePrefab = "Hoe";
 
-        // The game raises a piece table skill with factor 1 per use; 0.25 is what a hammer placement gives Crafting.
-        private const float IncreaseStep = 0.25f;
+        // The game raises a piece table skill with factor 1 per use. 1 matches what a pickaxe hit gives Pickaxes; the
+        // 0.25 a hammer placement gives Crafting levelled far too slowly, since the hoe is used much less.
+        private const float IncreaseStep = 1f;
 
         // Not in the compile-time libs (they predate it), so it is read and written by name.
         private static readonly AccessTools.FieldRef<PieceTable, Skills.SkillType> Skill =

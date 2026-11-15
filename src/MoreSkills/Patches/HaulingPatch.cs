@@ -131,11 +131,10 @@ namespace ValheimMoreSkills.Patches
     /// <summary>
     /// Counts how far the cart moves while the local player pulls it and is walking (giving movement input), so
     /// hitching, standing still, or being dragged by a cart rolling downhill earns nothing. Once per second, if that
-    /// averaged at least <see cref="MinSpeed"/>, raise Hauling by
-    /// <c>distance * GainPerMeter * clamp01(cargo weight / ReferenceLoad)</c>; an empty cart earns nothing. At a full
-    /// load and a cart's usual 3 to 4 m/s that is about 0.1 per second, a tenth of vanilla Swim and Run: level 10
-    /// after about 13 minutes of pulling, 50 after about 10 hours, 100 after about 56 hours (the game's own level curve
-    /// does the rest).
+    /// averaged at least <see cref="MinSpeed"/>, raise Hauling by <c>distance * GainPerMeter</c> if the cart holds
+    /// anything, however much, and by <see cref="EmptyCartFactor"/> of that if it is empty. With cargo at a cart's
+    /// usual 3 to 4 m/s that is about 0.25 per second, a quarter of vanilla Swim and Run: level 10 after about 5
+    /// minutes of pulling, 50 after about 4 hours, 100 after about 22 hours (the game's own level curve does the rest).
     /// </summary>
     [HarmonyPatch(typeof(Vagon), "Update")]
     internal static class HaulingLevelPatch
@@ -144,8 +143,8 @@ namespace ValheimMoreSkills.Patches
         private const float MinSpeed = 1f;
         // A step longer than this in one frame is a teleport or a physics jump, not hauling.
         private const float MaxStep = 2f;
-        private const float ReferenceLoad = 300f;
-        private const float GainPerMeter = 0.03f;
+        private const float GainPerMeter = 0.075f;
+        private const float EmptyCartFactor = 0.5f;
 
         private static Vagon _cart;
         private static Vector3 _lastPosition;
@@ -203,12 +202,12 @@ namespace ValheimMoreSkills.Patches
                 _distance = 0f;
                 _timer = 0f;
 
-                var load = Mathf.Clamp01(__instance.m_container.GetInventory().GetTotalWeight() / ReferenceLoad);
-                if (speed < MinSpeed || load <= 0f)
+                if (speed < MinSpeed)
                 {
                     return;
                 }
 
+                var load = __instance.m_container.GetInventory().NrOfItems() == 0 ? EmptyCartFactor : 1f;
                 player.RaiseSkill(Hauling.Type, distance * GainPerMeter * load);
             }
             catch (Exception e)
