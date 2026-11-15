@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Exploring skill: level it by uncovering new map, on foot or by ship. The area you uncover around you grows as it
+  levels, up to twice as wide at level 100 (`MaxRadiusBonus`). Known ground, portals and shared maps give nothing.
+
 ### Changed
 
 - Hauling and Paddling level about 2.5 times faster, Endurance about 1.75 times, and Landscaping 4 times (each hoe

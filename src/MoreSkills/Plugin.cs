@@ -23,6 +23,8 @@ namespace ValheimMoreSkills
         internal static ConfigEntry<float> MaxDrainReduction;
         internal static ConfigEntry<bool> PaddlingEnabled;
         internal static ConfigEntry<float> MaxPaddleBonus;
+        internal static ConfigEntry<bool> ExploringEnabled;
+        internal static ConfigEntry<float> MaxRadiusBonus;
 
         private Harmony _harmony;
 
@@ -79,10 +81,25 @@ namespace ValheimMoreSkills
                     "How much harder you paddle at Paddling level 100 (0.4 = 40% more force, roughly 40% faster). Scales linearly from vanilla at level 0. Sailing is unchanged.",
                     new AcceptableValueRange<float>(0f, 1f)));
 
+            ExploringEnabled = Config.Bind(
+                "Exploring",
+                "Enabled",
+                true,
+                "Exploring skill: levels while you uncover new map (only ground new to you counts) and widens the area you uncover around you. Off: the skill is hidden, does not level and has no effect, but your level is kept.");
+
+            MaxRadiusBonus = Config.Bind(
+                "Exploring",
+                "MaxRadiusBonus",
+                1f,
+                new ConfigDescription(
+                    "How much wider the area you uncover is at Exploring level 100 (1 = twice the vanilla 100 m radius). Scales linearly from vanilla at level 0.",
+                    new AcceptableValueRange<float>(0f, 2f)));
+
             SkillRegistry.Add(Hauling.Create(HaulingEnabled));
             SkillRegistry.Add(Landscaping.Create(LandscapingEnabled));
             SkillRegistry.Add(Endurance.Create(EnduranceEnabled));
             SkillRegistry.Add(Paddling.Create(PaddlingEnabled));
+            SkillRegistry.Add(Exploring.Create(ExploringEnabled));
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();
