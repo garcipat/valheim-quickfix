@@ -7,4 +7,8 @@
     <Description>New skills that you level by playing, starting with Hauling for pulling carts.</Description>
   </PropertyGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\*.png" LogicalName="ValheimMoreSkills.%(Filename)%(Extension)" />
+  </ItemGroup>
+
 </Project>

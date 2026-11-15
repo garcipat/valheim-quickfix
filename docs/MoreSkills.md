@@ -16,7 +16,8 @@ Vanilla only knows the skills in `Skills.SkillType`. `Core/` adds the rest:
   every `Localization.SetLanguage`, through the private `Localization.AddWord` (called by name; the compile-time
   libs are publicized, so calling it directly builds but fails in the game).
 - **Icon:** each skill supplies a sprite at runtime (Hauling reuses the Cart piece icon). It is filled in at `Awake`,
-  or later in `GetSkillList` if the game had not loaded it yet.
+  or later in `GetSkillList` if the game had not loaded it yet. A skill with no fitting game sprite uses one drawn for
+  the mod (`EmbeddedIcon`): Exploring's compass, baked from `tools/SkillIcons/` into `src/MoreSkills/Assets/`.
 - **Turned off:** `GetSkillList` leaves the skill out (hidden), `LowerAllSkills` restores its level afterwards
   (frozen), and the skill's own patches return early (no levelling, no effect). The level stays in the save.
 - **Console:** a Prefix on `CheatRaiseSkill` handles `raiseskill <name> <value>` for custom skills.

@@ -28,6 +28,7 @@ New work that isn't a fix for something the game gets wrong belongs in its own m
 - `tools/CreatureProbe/` — a throwaway in-game plugin that logs a creature's spawn and drop data; not a mod, not
   packaged. See `docs/ProbingCreatureData.md`.
 - `tools/PinIcons/` — SVG sources and the script that bakes MapRoutes' pin icon sheet; not packaged.
+- `tools/SkillIcons/` — SVG sources and the script that bakes MoreSkills' drawn skill icons; not packaged.
 
 ## Conventions
 

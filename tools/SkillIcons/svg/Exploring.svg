@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Compass rose for the MoreSkills Exploring skill: a ring, four short diagonal points, four long cardinal
+       points with a red north. Each point has a lit and a shaded half. -->
+  <g stroke="#24180f" stroke-width="3" stroke-linejoin="round">
+    <circle cx="64" cy="64" r="42" fill="none" stroke-width="11"/>
+    <circle cx="64" cy="64" r="42" fill="none" stroke="#d9c9a3" stroke-width="5"/>
+    <path d="M64 64 L57 57 L94 34 Z" fill="#a8916a"/>
+    <path d="M64 64 L71 71 L94 34 Z" fill="#7d6a4b"/>
+    <path d="M64 64 L71 57 L94 94 Z" fill="#a8916a"/>
+    <path d="M64 64 L57 71 L94 94 Z" fill="#7d6a4b"/>
+    <path d="M64 64 L71 71 L34 94 Z" fill="#a8916a"/>
+    <path d="M64 64 L57 57 L34 94 Z" fill="#7d6a4b"/>
+    <path d="M64 64 L57 71 L34 34 Z" fill="#a8916a"/>
+    <path d="M64 64 L71 57 L34 34 Z" fill="#7d6a4b"/>
+    <path d="M64 5 L75 53 L64 64 Z" fill="#d4502f"/>
+    <path d="M64 5 L53 53 L64 64 Z" fill="#952c19"/>
+    <path d="M64 123 L53 75 L64 64 Z" fill="#efe3c6"/>
+    <path d="M64 123 L75 75 L64 64 Z" fill="#b29e76"/>
+    <path d="M123 64 L75 53 L64 64 Z" fill="#efe3c6"/>
+    <path d="M123 64 L75 75 L64 64 Z" fill="#b29e76"/>
+    <path d="M5 64 L53 53 L64 64 Z" fill="#efe3c6"/>
+    <path d="M5 64 L53 75 L64 64 Z" fill="#b29e76"/>
+    <circle cx="64" cy="64" r="6" fill="#d9c9a3"/>
+  </g>
+</svg>
