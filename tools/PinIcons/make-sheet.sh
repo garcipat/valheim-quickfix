@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
 # Bakes the pin icons in svg/ into the sprite sheet MapRoutes embeds: white icons with a soft dark backdrop, one
 # 128 px cell each, 7 per row, in the order below. The order must match PinIcons.Icons in src/MapRoutes/PinIcons.cs.
-# Needs ImageMagick (convert, montage). Run it after changing an icon and commit the PNG.
+# It also writes each icon at 32 px to docs/pin-icons/, where the MapRoutes README links them by their GitHub URL, so
+# keep those files where they are: released READMEs on Thunderstore load them from main.
+# Needs ImageMagick (convert, montage). Run it after changing an icon and commit the PNGs.
 set -euo pipefail
 
 here="$(cd "$(dirname "$0")" && pwd)"
 out="$here/../../src/MapRoutes/Assets/pin-icons.png"
+docs="$here/../../docs/pin-icons"
 
 icons=(Cave Crypt Dungeon Village Portal Ship Ore
        Tar Berries Mushroom Egg Nest Surtling Leviathan
        Forest Swamp Mountain Plains Mistlands Ashlands DeepNorth
        Lox Mine)
 
+mkdir -p "$docs"
 work="$(mktemp -d)"
 trap 'rm -r -- "$work"' EXIT
 
@@ -28,7 +32,8 @@ for name in "${icons[@]}"; do
         -background black -alpha shape -channel A -evaluate multiply 0.75 +channel "$work/$name-shadow.png"
     convert "$work/$name-shadow.png" "$work/$name-white.png" -composite "$work/$name.png"
     cells+=("$work/$name.png")
+    convert "$work/$name.png" -resize 32x32 "PNG32:$docs/$name.png"
 done
 
 montage "${cells[@]}" -tile 7x -geometry 128x128+0+0 -background none "PNG32:$out"
-echo "Wrote $out"
+echo "Wrote $out and $docs/"

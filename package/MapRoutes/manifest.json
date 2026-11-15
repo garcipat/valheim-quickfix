@@ -3,7 +3,7 @@
   "author": "garcipat",
   "version_number": "0.0.0",
   "website_url": "https://github.com/garcipat/valheim-quickfix",
-  "description": "Plan your trips: pick the quill above the map's pin icons and draw a dotted red route freehand. Right-click a route to remove it.",
+  "description": "Better map planning: draw routes, give pins icons by naming them, and show the borders between biomes.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2351"
   ]
