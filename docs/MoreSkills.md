@@ -89,6 +89,24 @@ Vanilla only knows the skills in `Skills.SkillType`. `Core/` adds the rest:
   calls (portal). Loading the map and `exploremap` reveal through the pixel overload directly, outside the counted call.
 - **Shared maps:** cartography table data goes into a separate layer (`m_exploredOthers`), so walking through an area
   someone shared still counts, and sharing gives nothing to anyone.
+## Brewing
+
+- **Curve:** brewing is rare, so the skill sets its own pace in potions. Level N to N+1 takes `6 * (1 + 0.06 * N)`
+  potions: level 1 is one batch, level 10 about 1.6 batches, level 50 about 4, level 100 about 7 (in total about 13
+  batches for level 10, 124 for 50, 397 for 100). `Brewing.Grant` raises one potion at a time by the game's XP for the
+  current level (`0.5 * (level + 1)^1.5 + 0.5`) divided by that count, so a batch never gives more than one level
+  (`Skill.Raise` grants one level per call and drops the rest). Tune with `PotionsPerLevel` and `CurveGrowth`.
+- **Filling:** Postfix on the private `Fermenter.AddItem`, which runs on the filling player and returns true only after
+  taking the mead base from their inventory. Gives half a batch's worth.
+- **Tapping:** a Prefix on `Fermenter.Interact` remembers the batch if the local player taps a ready fermenter they
+  may use (`GetStatus`, called by name; `PrivateArea.CheckAccess` without flashing). When `Interact` returned true,
+  the Postfix gives the other half and rolls `MaxBonusChance * skillFactor` with the level before this tap. A bonus is
+  a third of the batch, rounded up (6 → 8), spawned by this client at `m_outputPoint` after `m_tapDelay`, next to the
+  owner's normal output, with vanilla's `+N` bonus text. A batch (ZDO and start time) pays out once.
+- **Compile-time libs:** `GetContent`, `GetItemConversion`, `ZDOVars`, `ItemDrop.OnCreateNew` and
+  `DamageText.TextType.Bonus` differ from or are missing in the libs, so the patch reads the ZDO keys by their names
+  and calls the rest by name.
+- **Vanilla overlap:** none. Mead bases are a cauldron craft, which vanilla Cooking's crafting bonus already covers.
 
 ## Adding a skill
 

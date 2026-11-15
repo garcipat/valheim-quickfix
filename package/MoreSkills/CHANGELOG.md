@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - Exploring skill: level it by uncovering new map, on foot or by ship. The area you uncover around you grows as it
   levels, up to twice as wide at level 100 (`MaxRadiusBonus`). Known ground, portals and shared maps give nothing.
+- Brewing skill: level it by filling and tapping fermenters. A tap has a growing chance to give a third more potions
+  (8 instead of 6), up to 30% at level 100 (`MaxBonusChance`). The first batch reaches level 1, and each level after
+  that takes a little more brewing.
 
 ### Changed
 
