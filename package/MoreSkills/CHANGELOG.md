@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Hauling and Paddling level about 2.5 times faster, Endurance about 1.75 times, and Landscaping 4 times (each hoe
+  use now counts as much as a pickaxe hit). They were too slow for how rarely you pull a cart, paddle, walk overweight
+  or use the hoe. Your current levels are kept.
+- Hauling levels at the same pace with any load, and at half pace with an empty cart. Before, a lighter load levelled
+  slower, only a cart carrying 300 weight or more levelled at full pace, and an empty cart gave nothing.
+
 ## [0.1.0] - 2026-10-25
 
 ### Added
