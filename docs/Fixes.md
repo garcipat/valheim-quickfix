@@ -656,3 +656,26 @@ past the rung so you fall off the ladder.
 different name is not smoothed. Where no rung is found ahead, the game's own jump still happens, so a ladder can
 always be climbed. The lift only reaches rungs the jump already got you onto, so the fix doesn't let you climb anything
 new.
+
+## Longer reach
+
+**Config:** `Building & Travel` → `EnhancedInteractionReach` (default `true`)
+**Patch:** `Patches/EnhancedInteractionReachPatch.cs`
+
+**Problem:** the game lets you use things up to 5 m from your eyes, measured to where the crosshair hits. That feels
+short for chests, and much too short for dungeon entrances, whose "[E] Enter" sits back inside the doorway. Crafting
+stations are worse: they only open when you stand within a couple of metres of them, so you often walk up to one,
+point at it and get "too far".
+
+**Behavior:**
+
+1. Chests, including a cart's, can be opened from 7.5 m.
+2. Dungeon entrances, and the way out inside a dungeon, can be used from 7.5 m.
+3. Crafting stations keep the 5 m reach, but open from wherever you can point at them. Their window closes when you
+   walk about 7 m away.
+4. An open chest stays open until you walk about 8 m away, instead of 4 m, so one opened from far off doesn't close at
+   once.
+5. Doors, items, bushes, stones, portals, chairs, ladders and everything else keep the game's reach.
+
+**Known limits:** the distances are fixed. The chest close distance is set when the game starts, so turning the
+toggle on or off mid-game only changes it after a restart.

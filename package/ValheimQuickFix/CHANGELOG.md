@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Chests can be opened and caves, crypts and other dungeons entered from 7.5 m instead of 5 m, and crafting stations
+  open wherever you can point at them instead of only right next to them. Turn it off with `EnhancedInteractionReach`.
+
 - Walking up a built ladder lifts you smoothly onto each rung instead of jumping you onto it, so you no longer fall
   off halfway. Turn it off with `SmoothLadders`.
 

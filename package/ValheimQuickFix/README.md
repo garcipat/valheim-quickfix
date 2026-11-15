@@ -65,6 +65,9 @@ other players don't need it.
 - **Portals don't get blocked** — a player who walks into a portal stays solid in its opening for a couple of seconds
   and blocks whoever follows. While they stand there they are invisible and walk-through on your screen. Only affects
   your own view, so each player needs the mod.
+- **Longer reach** — open chests and enter caves, crypts and other dungeons from 7.5 m instead of 5 m, so you don't
+  have to walk right into a doorway. Workbenches, forges and other crafting stations open wherever you can point at
+  them, instead of only when you stand right next to them. Everything else keeps the game's reach.
 - **Ping where you look** — press `H` to ping the spot under your crosshair, up to 500 m away, without opening the
   map. Rebind it in the game's **Settings → Controls**, where it is listed as "Ping". It is the game's normal ping, so everyone nearby sees it in the world and on their map, even
   without the mod.
@@ -115,6 +118,7 @@ with the mod installed, and changes apply after a restart.
 | `Crafting`         | `SmelterFillOnHold` | `true` | Hold E on a smelter's ore or fuel slot to fill it at once. |
 | `Building & Travel`  | `IgnoreWorkbench` | `false` | Build and deconstruct workbench pieces without a workbench nearby (singleplayer only). |
 | `Building & Travel`          | `GhostPortalPlayers` | `true` | Players standing in a portal opening are invisible and walk-through, so they do not block it. |
+| `Building & Travel`          | `EnhancedInteractionReach` | `true` | Chests and dungeon entrances from 7.5 m, crafting stations without standing next to them. |
 | `General`          | `ForgetDeletedPins` | `true` | Pins you delete stay deleted when you read a map table. |
 | `General`          | `PauseOnMap` | `true` | Opening the large map pauses a singleplayer game. |
 | `General`          | `VisiblePlayerMarker` | `true` | Your map arrow is larger and outlined, with a pulsing ring on the large map. |
