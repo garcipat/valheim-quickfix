@@ -28,6 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   the menu, so you no longer have to find the server again. Press Escape (B on a gamepad) in the password box to give up. Turn it off with
   `RetryWrongPassword`.
 
+- The map pauses the game: while the large map is open, a singleplayer game is paused like it is in the Esc menu, so
+  nothing attacks you and no time passes while you read it. Also when hosting with nobody connected. Turn it off with
+  `PauseOnMap`.
+
 ### Changed
 
 - New mod icon: a leather tool pouch with a hammer, a knife and a needle.
@@ -42,9 +46,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- The map pauses the game: while the large map is open, a singleplayer game is paused like it is in the Esc menu, so
-  nothing attacks you and no time passes while you read it. Also when hosting with nobody connected. Turn it off with
-  `PauseOnMap`.
 - Deleted pins stay deleted: a pin you delete from your map no longer comes back when you read a map table, even if
   another player's copy is still on it. Each world keeps its own list, saved with your character. Turn it off with
   `ForgetDeletedPins`.
