@@ -37,6 +37,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> PortalTagSignEnabled;
         internal static ConfigEntry<bool> SmelterFillOnHoldEnabled;
         internal static ConfigEntry<bool> CookingXpByTimeEnabled;
+        internal static ConfigEntry<bool> ProportionalCraftBonusEnabled;
         internal static ConfigEntry<bool> GhostPortalPlayersEnabled;
         internal static ConfigEntry<bool> EnhancedInteractionReachEnabled;
         internal static ConfigEntry<bool> SmoothLaddersEnabled;
@@ -213,6 +214,12 @@ namespace ValheimQuickFix
                 "CookingXpByTime",
                 true,
                 "Food that takes longer to make gives more Cooking XP: taking food off a cooking station or oven gives XP by how long it cooked (lox meat more than boar meat, bread more than either), and cauldron recipes that need a higher cauldron level give more. Putting food on, and burnt food, give the usual amount.");
+
+            ProportionalCraftBonusEnabled = Config.Bind(
+                "Crafting",
+                "ProportionalCraftBonus",
+                true,
+                "When a craft gives a bonus from your crafting skill, you get one more batch of what the recipe makes (20 more arrows, 1 more dish) instead of always 1 more item. When crafting several at once, every craft that gets the bonus adds one batch. The chance stays the game's. Cooking stations keep their +1.");
 
             GhostPortalPlayersEnabled = Config.Bind(
                 "Building & Travel",
