@@ -6,6 +6,8 @@ Map Routes adds a few things to the large map that help you plan your trips:
 
 - **Routes:** draw the way you want to go on the map with a quill. Routes are saved with your character, per world.
 - **Pin icons:** name a circle pin `Cave`, `Portal` or `Swamp` and it shows a matching icon instead of the circle.
+- **Pin what you look at:** look at a berry bush, copper or a cave entrance and press **F8**. A pin with its icon
+  lands on the map.
 - **Biome borders:** faint dashed lines where one biome meets another. They are off until you turn them on.
 
 Each one is explained in its own section below.
@@ -41,8 +43,8 @@ Place a **circle** pin as usual and give it one of the names below. The circle t
 | Icon | Short name, icon only | Longer names, icon with name |
 |---|---|---|
 | ![Cave](https://raw.githubusercontent.com/garcipat/valheim-quickfix/main/docs/pin-icons/Cave.png) Cave | `Cave` | `Troll cave`, `Frost cave` |
-| ![Crypt](https://raw.githubusercontent.com/garcipat/valheim-quickfix/main/docs/pin-icons/Crypt.png) Crypt | `Crypt` | `Burial chamber`, `Sunken crypt` |
-| ![Dungeon](https://raw.githubusercontent.com/garcipat/valheim-quickfix/main/docs/pin-icons/Dungeon.png) Dungeon | `Dungeon` | |
+| ![Crypt](https://raw.githubusercontent.com/garcipat/valheim-quickfix/main/docs/pin-icons/Crypt.png) Crypt | `Crypt` | `Sunken crypt` |
+| ![Dungeon](https://raw.githubusercontent.com/garcipat/valheim-quickfix/main/docs/pin-icons/Dungeon.png) Dungeon | `Dungeon` | `Burial chamber` |
 | ![Mine](https://raw.githubusercontent.com/garcipat/valheim-quickfix/main/docs/pin-icons/Mine.png) Mine | `Mine` | `Infested mine` |
 | ![Village](https://raw.githubusercontent.com/garcipat/valheim-quickfix/main/docs/pin-icons/Village.png) Village | `Village` or `Camp` | `Fuling village`, `Fuling camp` |
 | ![Portal](https://raw.githubusercontent.com/garcipat/valheim-quickfix/main/docs/pin-icons/Portal.png) Portal | `Portal` | |
@@ -68,11 +70,41 @@ The pin itself doesn't change, only how it is drawn. Without the mod it is a cir
 if you remove it. Pins shared through a cartography table keep their name, so friends who have the mod see the
 icons too.
 
+## Pin what you look at
+
+Look at something you want to find again and press **F8**. A pin with its icon is put on the map at that spot, and
+you don't have to open the map. Things you can pin show an extra line, `[F8] Pin on map`, under their name.
+
+| Look at | Pin |
+|---|---|
+| Troll cave or frost cave entrance | `Cave` |
+| Burial chamber entrance | `Dungeon` |
+| Sunken crypt entrance | `Crypt` |
+| Infested mine entrance | `Mine` |
+| Any other entrance you enter with E | `Dungeon` |
+| Portal | the game's rune pin, named with the portal's tag |
+| Any ship (at the rudder) | `Ship` |
+| Raspberry, blueberry or cloudberry bush | `Berries` |
+| Any mushroom | `Mushroom` |
+| Tar at a tar pit | `Tar` |
+| Dragon egg | `Egg` |
+| Copper, tin or silver | `Ore` |
+
+The pin gets the short name, so the map shows only the icon, like the game's own pins. To tell copper from silver,
+rename the pin to `Copper` or `Silver`: it keeps the icon and shows the name under it.
+
+- It is a normal pin (a circle, or the rune for a portal). You can rename, cross out or remove it like any other pin.
+- If the same pin is already there (within about 10 m), you get "Already pinned" instead of a second pin.
+- Inside caves and dungeons nothing is pinned, because the map can't show where you are in there.
+- A ship's pin marks where the ship was when you pinned it. It doesn't follow the ship.
+- It works with the game in any language.
+
 ## Configuration
 
 - **General → BiomeBorders** (default off): faint dashed lines on the large map where one biome meets another, so
   you can see where the Black Forest ends and the Swamp begins. They only show on land and only where you have
   explored. Turn it on to see them.
+- **General → PinHotkey** (default F8): the key that pins what you look at. Set it to `None` to turn it off.
 
 Routes have no setting. To hide your routes, disable the mod in your mod manager. They come back when you enable it
 again.

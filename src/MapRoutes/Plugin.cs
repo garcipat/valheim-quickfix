@@ -2,6 +2,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
+using UnityEngine;
 
 namespace ValheimMapRoutes
 {
@@ -15,6 +16,7 @@ namespace ValheimMapRoutes
 
         internal static ManualLogSource Log;
         internal static ConfigEntry<bool> BiomeBordersEnabled;
+        internal static ConfigEntry<KeyboardShortcut> PinHotkey;
 
         private Harmony _harmony;
 
@@ -27,6 +29,13 @@ namespace ValheimMapRoutes
                 "BiomeBorders",
                 false,
                 "Draw faint dotted lines along the borders between land biomes on the large map, where it is explored.");
+
+            PinHotkey = Config.Bind(
+                "General",
+                "PinHotkey",
+                new KeyboardShortcut(KeyCode.F8),
+                "Key that pins what you look at (berries, mushrooms, copper, tin, silver, tar, dragon eggs, cave and " +
+                "dungeon entrances, portals, ships) on the map with its icon. None turns it off.");
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();

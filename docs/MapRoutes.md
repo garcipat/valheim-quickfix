@@ -3,13 +3,14 @@
 Behavior and implementation notes for the MapRoutes mod. Player-facing docs: [package/MapRoutes/README.md](../package/MapRoutes/README.md).
 
 **Config:** `General.BiomeBorders` (default off) shows the biome borders; it takes effect the next time the large map
-is drawn. Routes have no setting: disabling the mod is their off switch, and the saved routes stay in the character
+is drawn. `General.PinHotkey` (default F8, `None` turns it off) is the pin-what-you-look-at key. Routes have no setting: disabling the mod is their off switch, and the saved routes stay in the character
 file.
 **Patches** (all in `src/MapRoutes/Patches/MinimapPatches.cs`): `Minimap.Update` (Postfix: button, cursor, stroke,
 right-drag pan, dots on the large and the corner map), `Minimap.UpdatePins` (Postfix, in `PinIconPatches.cs`: pin icons), `Minimap.SetMapMode` (Postfix: leaving the large map ends draw mode), `Minimap.SelectIcon`
 (Postfix: picking a pin type ends draw mode), `Minimap.OnMapLeftDown` and `Minimap.OnMapLeftUp` (Prefix, skipped
 only in draw mode: start and end a stroke), `Minimap.RemovePinUnderPointer` (Prefix, skipped when a route was
-removed or, in draw mode, when the right press was a pan).
+removed or, in draw mode, when the right press was a pan). In `PinHotkeyPatches.cs`: `Hud.UpdateCrosshair`
+(Postfix: the pin key line) and `Player.Update` (Postfix: reads the pin key).
 
 **Behavior:**
 
@@ -54,6 +55,27 @@ removed or, in draw mode, when the right press was a pan).
 4. `UpdatePins` runs on many map changes, so a failure is logged once and pin icons stay off. The first run logs the
    circle pin's sprite name (`Pin icons replace the Icon3 pin, sprite ...`), so a game change to the pin order shows
    up in the log.
+
+**Pin what you look at** (`src/MapRoutes/PinTargets.cs`, `src/MapRoutes/PinHotkey.cs`):
+
+1. The hovered object is found as the HUD finds it (`GetComponentInParent<Hoverable>()`) and recognised by component
+   and internal names, never by hover text, so any game language works: `Teleport` by the prefab name of its parent
+   `Location` (prefix table, else `Dungeon`), `ShipControlls` by its ship's prefab,
+   `Pickable` by `m_itemPrefab`, `ItemDrop` for the dragon egg, and ore (`MineRock`, `MineRock5`, `DropOnDestroyed`)
+   by the ore in its drop table. An untouched deposit is a `Destructible` without drops that is swapped for its
+   broken variant on the first hit, so it is recognised by the drops of what it spawns (`m_spawnWhenDamaged`,
+   `m_spawnWhenDestroyed`).
+2. Every pin name is a `PinIcons` plain name (`Cave`, `Crypt`, `Mine`, `Dungeon`, `Ship`, `Berries`,
+   `Mushroom`, `Tar`, `Egg`, `Ore`), so the pin shows only its icon. The pin is a saved, unchecked `Icon3` pin at the
+   hoverable's position. A `TeleportWorld` (portal) instead gets an `Icon4` (rune) pin named with its tag
+   (`GetText`), which pin icons leave alone.
+3. Nothing happens in interiors (`InInterior`), when `Player.TakeInput` is false (chat, console, menus, text input),
+   or when a pin of the same type and name lies within 10 m (message `Already pinned`).
+4. `Minimap.AddPin` and `Character.Message` gained parameters since the compile-time libraries, so both are called
+   by reflection with defaults for the extra parameters; `Hud.m_hoverName` is `Text` there and `TextMeshProUGUI`
+   live, so its `text` is set by name.
+5. Every key press logs `Pin hotkey on '<prefab>' (<components>) in location '<location>': <pin name or nothing to
+   pin>`, which is how a wrong or missing name is found.
 
 **Biome borders** (`src/MapRoutes/BiomeBorders.cs`):
 

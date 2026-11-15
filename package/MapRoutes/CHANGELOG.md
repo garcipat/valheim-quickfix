@@ -6,8 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Pin what you look at: press F8 while looking at berries, mushrooms, copper, tin or silver, tar, a dragon egg, a cave
+  or dungeon entrance or a ship to put a pin with its icon on the map. A portal gets the rune pin with the portal's
+  tag as its name. Change the key with `PinHotkey` in `General`.
+
 ### Changed
 
+- A pin named `Burial chamber` shows the sarcophagus (Dungeon) icon instead of the crypt gate.
 - The mod description is a short overview of what the mod does, and the README shows each pin icon next to its name.
 
 ### Fixed

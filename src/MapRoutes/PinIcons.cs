@@ -36,8 +36,8 @@ namespace ValheimMapRoutes
         private static readonly Icon[] Icons =
         {
             new Icon(new[] { "Cave" }, new[] { "Troll cave", "Frost cave" }),
-            new Icon(new[] { "Crypt" }, new[] { "Burial chamber", "Sunken crypt" }),
-            new Icon(new[] { "Dungeon" }),
+            new Icon(new[] { "Crypt" }, new[] { "Sunken crypt" }),
+            new Icon(new[] { "Dungeon" }, new[] { "Burial chamber" }),
             new Icon(new[] { "Village", "Camp" }, new[] { "Fuling village", "Fuling camp" }),
             new Icon(new[] { "Portal" }),
             new Icon(new[] { "Ship" }, new[] { "Boat", "Karve", "Longship" }),
