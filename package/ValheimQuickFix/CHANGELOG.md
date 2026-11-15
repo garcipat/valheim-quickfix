@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Cooking XP by time (`CookingXpByTime`, on by default): food that takes longer gives more Cooking XP. Lox meat gives
+  more than boar meat and bread more than either, and cauldron recipes that need a higher cauldron level give more.
+
 ## [0.6.0] - 2026-11-15
 
 ### Added

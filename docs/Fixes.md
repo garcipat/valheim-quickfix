@@ -449,6 +449,25 @@ name; the patch disables itself with a log line if one is missing. Two players f
 can put a piece or two past its maximum, as vanilla can. Campfires, hearths and other `Fireplace` pieces are not covered.
 The hint is plain English, not localized.
 
+## Cooking XP by time
+
+**Config:** `Crafting` → `CookingXpByTime` (default `true`)
+**Patch:** `Patches/CookingXpByTimePatch.cs`
+
+**Problem:** every food gives the same Cooking XP. A neck tail on the spit levels you as much as lox meat or bread, which
+take far longer, and a top-tier cauldron recipe as much as the first one you unlock.
+
+**Behavior:**
+
+1. Taking cooked food off a cooking station, iron cooking station or oven gives XP by how long it cooked. Food that
+   cooks as long as boar meat gives the usual amount, food that cooks twice as long gives twice as much, and quicker
+   food a bit less.
+2. A cauldron recipe gives half the usual XP more for each cauldron level it needs above the first. A recipe that needs
+   level 3 gives twice the usual XP per item.
+3. Putting food on a station, and taking off burnt food, give the usual amount.
+
+**Known limits:** the scale is fixed. The bonus yield chance from your Cooking level is unchanged.
+
 ## Ghost portal players
 
 **Config:** `Building & Travel` → `GhostPortalPlayers` (default `true`)
