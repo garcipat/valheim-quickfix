@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-11-15
+
 ### Added
 
 - Chests can be opened and caves, crypts and other dungeons entered from 7.5 m instead of 5 m, and crafting stations
