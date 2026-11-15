@@ -36,6 +36,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> PortalPressOrHoldEnabled;
         internal static ConfigEntry<bool> PortalTagSignEnabled;
         internal static ConfigEntry<bool> SmelterFillOnHoldEnabled;
+        internal static ConfigEntry<bool> CookingXpByTimeEnabled;
         internal static ConfigEntry<bool> GhostPortalPlayersEnabled;
         internal static ConfigEntry<bool> EnhancedInteractionReachEnabled;
         internal static ConfigEntry<bool> SmoothLaddersEnabled;
@@ -206,6 +207,12 @@ namespace ValheimQuickFix
                 "SmelterFillOnHold",
                 true,
                 "Holding E on the ore or fuel slot of a smelter, kiln, blast furnace, spinning wheel or other processing station fills it as full as it goes from what you carry, instead of one piece per press. A tap still adds one.");
+
+            CookingXpByTimeEnabled = Config.Bind(
+                "Crafting",
+                "CookingXpByTime",
+                true,
+                "Food that takes longer to make gives more Cooking XP: taking food off a cooking station or oven gives XP by how long it cooked (lox meat more than boar meat, bread more than either), and cauldron recipes that need a higher cauldron level give more. Putting food on, and burnt food, give the usual amount.");
 
             GhostPortalPlayersEnabled = Config.Bind(
                 "Building & Travel",

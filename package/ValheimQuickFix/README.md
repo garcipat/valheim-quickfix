@@ -52,6 +52,8 @@ other players don't need it.
   item you carry at once, instead of one per click of the Repair button. A tap opens the crafting window as before.
 - **Fill smelters on hold** — hold `E` on the ore or fuel slot of a smelter, kiln, blast furnace, spinning wheel or
   other processing station to fill it as full as it goes in one go. A tap still adds one piece.
+- **Cooking XP by time** — food that takes longer gives more Cooking XP: lox meat more than boar meat, bread more than
+  either, and cauldron recipes that need a higher cauldron level more than the first ones.
 - **Bow zoom** (off by default) — while drawing a bow, hold the right mouse button (the block button) to zoom in a
   little. Let go of the attack button to shoot as usual. How far it zooms can be set from 1.1x to 3x.
 - **Portal press or hold** (off by default) — tap `E` on a portal to go through it, hold `E` to rename it. The opening
@@ -116,6 +118,7 @@ with the mod installed, and changes apply after a restart.
 | `Building & Travel`          | `PortalPressOrHold` | `false` | Tap E on a portal to go through, hold E to rename it. |
 | `Building & Travel`          | `PortalTagSign` | `true` | Tagged portals show their tag on a sign inside the ring. |
 | `Crafting`         | `SmelterFillOnHold` | `true` | Hold E on a smelter's ore or fuel slot to fill it at once. |
+| `Crafting`         | `CookingXpByTime` | `true` | Food that takes longer to cook gives more Cooking XP. |
 | `Building & Travel`  | `IgnoreWorkbench` | `false` | Build and deconstruct workbench pieces without a workbench nearby (singleplayer only). |
 | `Building & Travel`          | `GhostPortalPlayers` | `true` | Players standing in a portal opening are invisible and walk-through, so they do not block it. |
 | `Building & Travel`          | `EnhancedInteractionReach` | `true` | Chests and dungeon entrances from 7.5 m, crafting stations without standing next to them. |
