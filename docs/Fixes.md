@@ -468,6 +468,25 @@ take far longer, and a top-tier cauldron recipe as much as the first one you unl
 
 **Known limits:** the scale is fixed. The bonus yield chance from your Cooking level is unchanged.
 
+## Proportional craft bonus
+
+**Config:** `Crafting` → `ProportionalCraftBonus` (default `true`)
+**Patch:** `Patches/ProportionalCraftBonusPatch.cs`
+
+**Problem:** crafting a stackable item at a station with a skill (cauldron, forge, ...) has a chance, growing with that
+skill up to 25%, to give a bonus. The bonus is always 1 item, whatever the recipe makes: a recipe that makes 20 arrows
+gives 21, one that makes a single dish gives 2. When crafting several at once, the bonus also grows with every craft
+that gets it, so three bonuses give 1 + 2 + 3 = 6 extra items instead of 3.
+
+**Behavior:**
+
+1. A bonus gives one more batch of what the recipe makes: 20 more arrows, 1 more dish.
+2. When crafting several at once, each craft that gets the bonus adds one batch, no more.
+3. The chance, its skill scaling and the "+N" text and sound are the game's. Recipes that make one item give the same
+   bonus as before.
+
+**Known limits:** cooking stations (spit, oven, ...) keep their +1, which is already one batch there.
+
 ## Ghost portal players
 
 **Config:** `Building & Travel` → `GhostPortalPlayers` (default `true`)

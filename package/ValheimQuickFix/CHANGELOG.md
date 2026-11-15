@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Cooking XP by time (`CookingXpByTime`, on by default): food that takes longer gives more Cooking XP. Lox meat gives
   more than boar meat and bread more than either, and cauldron recipes that need a higher cauldron level give more.
 
+- The crafting bonus from your skill now gives one more batch of what the recipe makes (20 more arrows, 1 more dish)
+  instead of always 1 more item, and crafting several at once no longer piles extra bonuses on top of each other. Turn
+  it off with `ProportionalCraftBonus`.
+
 ## [0.6.0] - 2026-11-15
 
 ### Added
