@@ -3,7 +3,7 @@
   "author": "garcipat",
   "version_number": "0.0.0",
   "website_url": "https://github.com/garcipat/valheim-quickfix",
-  "description": "Small client-side quality-of-life fixes: restore your shield after a bow, push boats from the shore.",
+  "description": "Many small quality-of-life fixes for things Valheim gets wrong, each with its own toggle. Client-side only: other players don't need it.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2351"
   ]

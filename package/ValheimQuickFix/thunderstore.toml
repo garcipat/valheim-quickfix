@@ -7,7 +7,7 @@ schemaVersion = "0.0.1"
 namespace = "garcipat"
 name = "ValheimQuickFix"
 versionNumber = "0.0.0"
-description = "Small client-side quality-of-life fixes: restore your shield after a bow, push boats from the shore."
+description = "Many small quality-of-life fixes for things Valheim gets wrong, each with its own toggle. Client-side only: other players don't need it."
 websiteUrl = "https://github.com/garcipat/valheim-quickfix"
 containsNsfwContent = false
 

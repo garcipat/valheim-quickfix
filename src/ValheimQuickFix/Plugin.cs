@@ -43,6 +43,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> SmoothLaddersEnabled;
         internal static ConfigEntry<bool> SittingStaminaRegenEnabled;
         internal static ConfigEntry<bool> IgnoreWorkbenchEnabled;
+        internal static ConfigEntry<bool> FavoritesFirstEnabled;
         internal static ConfigEntry<bool> BowZoomEnabled;
         internal static ConfigEntry<bool> ForgetDeletedPinsEnabled;
         internal static ConfigEntry<bool> PauseOnMapEnabled;
@@ -244,6 +245,12 @@ namespace ValheimQuickFix
                 "IgnoreWorkbench",
                 false,
                 "Build and deconstruct workbench pieces without a workbench nearby. Pieces that need another station (stonecutter, forge, ...) still need it. Materials are still needed, and you must have seen a workbench once to unlock its pieces. Only works in a singleplayer game (\"Start server\" unchecked); does nothing on a multiplayer server.");
+
+            FavoritesFirstEnabled = Config.Bind(
+                "Building & Travel",
+                "FavoritesFirst",
+                true,
+                "In the build menu's \"By usage\" and \"By material\" tabs, show the pieces you marked as favorites first, so you don't have to switch to the Favorites tab to find them. A piece you mark moves up the next time the list is shown.");
 
             ForgetDeletedPinsEnabled = Config.Bind(
                 "General",
