@@ -1,6 +1,6 @@
 ---
 name: release-mod
-description: Release a new version of one of the Valheim mods in this repo — read its changelog, propose the next version, and open the release pull request that closes the changelog; merging it makes the Release workflow tag and publish <Mod>-vX.Y.Z. Use when the user asks to release, publish, tag, or ship a new version of a mod.
+description: Release a new version of one of the Valheim mods in this repo — read its changelog, propose the next version, and open the release pull request that closes the changelog; merging it makes the Release workflow tag and publish <Mod>-vX.Y.Z, and optionally upload it to Thunderstore. Use when the user asks to release, publish, tag, or ship a new version of a mod.
 argument-hint: "[Mod] [version | dry-run]"
 disable-model-invocation: true
 ---
@@ -10,7 +10,8 @@ disable-model-invocation: true
 A release is a **release pull request** from a branch `release/<Mod>-vX.Y.Z` that renames the mod's `## [Unreleased]`
 changelog section to `## [X.Y.Z] - date`. Merging it into `main` starts the Release workflow
 (`.github/workflows/release.yml`), which tags the merge commit `<Mod>-vX.Y.Z`, builds that version into the DLL, stamps it
-into the zip, uses the closed section as the release notes, and creates the GitHub release. So the changelog is closed on
+into the zip, uses the closed section as the release notes, and creates the GitHub release. If the pull request carries
+the label `publish-thunderstore`, a second job also uploads the package to Thunderstore. So the changelog is closed on
 `main` before the tag exists, and the tagged commit carries it. The tag is the only place the version is written; there
 are no version fields in files and nothing to bump.
 
@@ -100,6 +101,13 @@ Show a short summary: mod, version, tag, the commit the branch starts from (`git
 entries that will become the release notes. Then ask once with AskUserQuestion whether to open the release pull request.
 State what happens: it closes the changelog section; merging it tags the merge commit and publishes the release.
 
+In the same AskUserQuestion call, ask a second question: **publish to Thunderstore too?** (*No, GitHub release only* /
+*Yes, also upload to Thunderstore*). Skip it, and say why, when the version has a hyphen: Thunderstore has no
+pre-release versions, so the workflow would not upload it. Before offering it, check the upload can work:
+`gh secret list --json name -q '.[].name' | grep -x TCLI_AUTH_TOKEN`. If the secret is missing, say so in the question
+(the upload job would fail after the GitHub release is already out) and point to the setup in `docs/Development.md`
+under *Publishing to Thunderstore*. Never ask for, print, or set the token yourself.
+
 On yes, close the section with the same script the workflow uses, on a branch named after the tag:
 
 ```bash
@@ -111,9 +119,20 @@ gh pr create --base main --head release/<Mod>-v<version> --title "Release <Mod> 
 git switch main
 ```
 
+When the user chose Thunderstore, create the label if the repository does not have it yet and add it to the pull
+request (`--label` fails for a label that doesn't exist):
+
+```bash
+gh label create publish-thunderstore --color 1d76db --description "Also upload this release to Thunderstore" 2>/dev/null || true
+gh pr create ... --label publish-thunderstore
+```
+
+The label is the only switch: the user can still add or remove it on the pull request before merging, and the workflow
+reads it at merge time.
+
 `git diff` before the commit must show only `package/<Mod>/CHANGELOG.md`: a new `## [<version>] - <today>` heading
-under a fresh, empty `## [Unreleased]`. The body says that merging releases `<Mod>-v<version>`, then quotes the notes
-file. The date is the day the pull request is opened; if it is merged on a later day, that is fine.
+under a fresh, empty `## [Unreleased]`. The body says that merging releases `<Mod>-v<version>` (and uploads it to Thunderstore, if chosen), then quotes the
+notes file. The date is the day the pull request is opened; if it is merged on a later day, that is fine.
 
 ## 7. Merge, then follow the run
 
@@ -122,14 +141,19 @@ file. The date is the day the pull request is opened; if it is merged on a later
 - After the merge, find the run: `gh run list --workflow release.yml --event pull_request --limit 3` (retry for a few
   seconds), and give the user its URL. A merge into `main` from another branch, or a closed but unmerged release pull
   request, starts no release.
-- `gh run watch <id>` until it finishes. On failure, show the failing step's log (`gh run view <id> --log-failed`) and
+- `gh run watch <id>` until it finishes (it includes the `publish` job when the label was set). On failure, show the failing step's log (`gh run view <id> --log-failed`) and
   explain. Re-running the failed run is safe for a passing problem (it keeps a tag it already made on the same commit),
   but it runs the merge commit's code and workflow again; a problem in those needs a fix on `main` and a new release.
   Never move the tag.
 - On success verify: `gh release view <Mod>-v<version> --json name,isPrerelease,assets -q .` shows the zip and
   `git ls-remote --tags origin '<Mod>-v<version>'` shows the tag. There is no follow-up changelog pull request.
-- Tell the user the release is out and suggest importing the zip into Gale for a last check. Publishing to Thunderstore
-  is separate (`tcli`, see `docs/Development.md`).
+- If the package went to Thunderstore, its page is `https://thunderstore.io/c/valheim/p/garcipat/<Mod>/` (a new version
+  can take a minute to appear, and Gale lists it shortly after). If only the `publish` job failed, the release is fine:
+  show its log, fix the cause (usually the `TCLI_AUTH_TOKEN` secret), and re-run just that job with
+  `gh run rerun <id> --job <publish job id>`. Thunderstore refuses a version it already has, so check the page before
+  publishing by hand after a partial success.
+- Tell the user the release is out. Without Thunderstore, suggest importing the zip into Gale for a last check; to
+  publish later, upload the zip by hand (`docs/Development.md`) rather than re-releasing.
 
 ## By hand (fallback)
 
@@ -146,7 +170,9 @@ commits nothing.
 gh workflow run release.yml -f mod=<Mod> -f version=0.0.0-dryrun
 ```
 
-Then follow the run as in step 7 and point the user to the artifact. The workflow must already exist on `main`.
+Then follow the run as in step 7 and point the user to the artifact. It holds both zips: the Gale one and, under
+`thunderstore/`, the one that would be uploaded; building it also proves the tcli config. Nothing is uploaded to
+Thunderstore. The workflow must already exist on `main`.
 
 ## Don'ts
 
@@ -155,3 +181,4 @@ Then follow the run as in step 7 and point the user to the artifact. The workflo
   on the release branch.
 - Do not push tags (the workflow does), and do not force-push or delete tags.
 - Do not release a different mod than the one the user named.
+- Do not add the `publish-thunderstore` label unless the user said yes to it, and never touch the Thunderstore token.

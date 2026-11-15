@@ -79,8 +79,25 @@ Notes:
   `author` field in `package/<Mod>/manifest.json` (used only by Gale's local import) isn't uploaded.
 - `[package]` duplicates the manifest on purpose (tcli needs it). `package.sh` fails if name, description, website or
   dependencies disagree. The version is a `0.0.0` placeholder in both; pass the real one with `--package-version`.
-- This config follows the tcli project-file schema but hasn't been run against Thunderstore yet. Try `tcli build`
-  first and look at the zip before publishing.
+- `tcli build` (0.2.4) is checked locally: it writes `dist/thunderstore/<namespace>-<Mod>-<version>.zip` with the DLL,
+  icon, README, CHANGELOG, LICENSE and a generated `manifest.json`. Copy targets must be `"/"`: an empty `target` is
+  rejected. The first real upload hasn't happened yet, so look at the package page afterwards.
+- Thunderstore versions are plain `X.Y.Z`; it has no pre-releases, so a `-rc.1` version can't be uploaded.
+- `tcli publish --file <zip>` can't be combined with `--package-version`; the version is the one in the zip.
+- `scripts/install-tcli.sh` downloads the pinned, checksummed tcli release (there is no installer); CI uses it.
+
+### Uploading from the release workflow
+
+One-time setup:
+1. On thunderstore.io, create the team named in `namespace` (`garcipat`), then Settings → Teams → the team →
+   *Service Accounts*, and create an account. Copy its token.
+2. In the GitHub repo: Settings → Secrets and variables → Actions → new repository secret `TCLI_AUTH_TOKEN`.
+
+Per release, `/release-mod <Mod>` asks whether to publish to Thunderstore as well. Yes adds the label
+`publish-thunderstore` to the release pull request (you can also add or remove it by hand before merging). The `release`
+job then builds the Thunderstore package before it tags anything, and the `publish` job uploads it once the GitHub
+release exists, so a failed upload (bad token, Thunderstore down) can be re-run on its own without a second release.
+Versions with a hyphen are never uploaded.
 
 ## Adding a mod
 
@@ -113,7 +130,9 @@ The merge starts the `Release` workflow (`.github/workflows/release.yml`), which
 2. reads the `[X.Y.Z]` section as the release notes (`scripts/update-changelog.sh`);
 3. builds with that version and packages the zip (`scripts/package.sh --version X.Y.Z`);
 4. tags the merge commit `<Mod>-vX.Y.Z` (a re-run keeps a tag it already made on the same commit);
-5. creates the GitHub release `<Mod> X.Y.Z` with the zip (a hyphenated version is a pre-release).
+5. creates the GitHub release `<Mod> X.Y.Z` with the zip (a hyphenated version is a pre-release);
+6. if the release pull request has the label `publish-thunderstore`, a separate `publish` job uploads the package to
+   Thunderstore (see *Uploading from the release workflow*).
 
 **By hand:** pushing a tag on `main` (`git tag -a <Mod>-vX.Y.Z -m "..." && git push origin <Mod>-vX.Y.Z`) still releases.
 Then the workflow renames `Unreleased` on its own copy for the notes, and afterwards pushes a
@@ -123,9 +142,10 @@ without it, open the pull request yourself and merge it before other changes tou
 warning if the mod's `Unreleased` entries changed on `main` since the tag; then rename the section by hand.
 
 **Dry run:** Actions → Release → *Run workflow*, pick the mod and a version. It builds the package from `main`
-and uploads it as a workflow artifact. No tag, no release, no commit. (`/release-mod <Mod> dry-run` starts it for you.)
+and uploads it as a workflow artifact, plus the Thunderstore package (`thunderstore/`) built from the same files, which
+proves the tcli config. No tag, no release, no commit, no upload. (`/release-mod <Mod> dry-run` starts it for you.)
 
 Releases are listed newest first in one flat list for the whole repo; GitHub cannot group them by mod. The `<Mod> X.Y.Z`
 titles and `<Mod>-v...` tags keep them tellable apart. Players get a per-mod listing on Thunderstore.
 
-Publishing to Thunderstore is not part of the workflow: use `tcli` as described above.
+Publishing to Thunderstore is opt-in per release: see below.

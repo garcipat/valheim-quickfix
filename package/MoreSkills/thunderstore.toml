@@ -21,15 +21,15 @@ outdir = "../../dist/thunderstore"
 
 [[build.copy]]
 source = "../../src/MoreSkills/bin/Release/net48/MoreSkills.dll"
-target = ""
+target = "/"
 
 [[build.copy]]
 source = "./CHANGELOG.md"
-target = ""
+target = "/"
 
 [[build.copy]]
 source = "../../LICENSE"
-target = ""
+target = "/"
 
 [publish]
 repository = "https://thunderstore.io"
