@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-15
+
 ### Added
 
 - Pin icons: a circle pin whose whole name is a known name, such as `Cave`, `Portal`, `Ore` or `Swamp`, shows a
