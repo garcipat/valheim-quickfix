@@ -2,8 +2,13 @@
 
 Sources for the MapRoutes pin icon sheet (`src/MapRoutes/Assets/pin-icons.png`). Not a mod and not packaged.
 
-To change an icon, replace its SVG in `svg/`, run `./make-sheet.sh` (needs ImageMagick) and commit the PNG. To add one,
-also add it to the list in `make-sheet.sh` and to `PinIcons.Icons`, in the same position, and to the README's table.
+To change an icon, replace its SVG in `svg/`, run `./make-sheet.sh` (needs ImageMagick) and commit the PNGs. To add
+one, also add it to the list in `make-sheet.sh` and to `PinIcons.Icons`, in the same position, and to the README's
+table with its image link.
+
+The script also writes each icon at 32 px to `docs/pin-icons/`. The MapRoutes README shows them by their
+`raw.githubusercontent.com` URL on `main`, because a mod manager can't show images from inside the package. Released
+READMEs on Thunderstore keep loading them from there, so don't move or rename those files.
 
 ## Sources
 

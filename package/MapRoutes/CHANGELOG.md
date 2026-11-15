@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- The mod description is a short overview of what the mod does, and the README shows each pin icon next to its name.
+
+### Fixed
+
+- The README's links to its own sections went nowhere in mod managers; they are plain references now.
+
 ## [0.2.0] - 2026-11-15
 
 ### Added
