@@ -38,6 +38,12 @@ Uncovering the map levels Exploring, and the area you uncover around you grows w
 paths, arriving through a portal or reading a map shared at a cartography table gives nothing. Areas someone else
 shared with you still count once you go there yourself.
 
+### Brewing
+
+Filling a fermenter with mead base and tapping it when it is done both level Brewing. As it levels, a tap has a
+growing chance to give a third more potions (8 instead of 6), up to 30% at level 100 (configurable with
+`MaxBonusChance`). Your first batch takes you to level 1, and every level after that takes a little more brewing.
+
 ## Configuration
 
 `BepInEx/config/dev.pgarcia.valheim.moreskills.cfg` has one section per skill. Turning a skill off hides it from

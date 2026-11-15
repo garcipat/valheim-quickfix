@@ -25,6 +25,8 @@ namespace ValheimMoreSkills
         internal static ConfigEntry<float> MaxPaddleBonus;
         internal static ConfigEntry<bool> ExploringEnabled;
         internal static ConfigEntry<float> MaxRadiusBonus;
+        internal static ConfigEntry<bool> BrewingEnabled;
+        internal static ConfigEntry<float> MaxBonusChance;
 
         private Harmony _harmony;
 
@@ -95,11 +97,26 @@ namespace ValheimMoreSkills
                     "How much wider the area you uncover is at Exploring level 100 (1 = twice the vanilla 100 m radius). Scales linearly from vanilla at level 0.",
                     new AcceptableValueRange<float>(0f, 2f)));
 
+            BrewingEnabled = Config.Bind(
+                "Brewing",
+                "Enabled",
+                true,
+                "Brewing skill: levels while you fill and tap fermenters and gives a chance at a bigger batch. Off: the skill is hidden, does not level and has no effect, but your level is kept.");
+
+            MaxBonusChance = Config.Bind(
+                "Brewing",
+                "MaxBonusChance",
+                0.3f,
+                new ConfigDescription(
+                    "Chance per tap at Brewing level 100 to get a third more potions (8 instead of 6). Scales linearly from no chance at level 0.",
+                    new AcceptableValueRange<float>(0f, 1f)));
+
             SkillRegistry.Add(Hauling.Create(HaulingEnabled));
             SkillRegistry.Add(Landscaping.Create(LandscapingEnabled));
             SkillRegistry.Add(Endurance.Create(EnduranceEnabled));
             SkillRegistry.Add(Paddling.Create(PaddlingEnabled));
             SkillRegistry.Add(Exploring.Create(ExploringEnabled));
+            SkillRegistry.Add(Brewing.Create(BrewingEnabled));
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();
