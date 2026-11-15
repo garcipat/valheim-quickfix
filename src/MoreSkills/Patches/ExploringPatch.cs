@@ -48,8 +48,8 @@ namespace ValheimMoreSkills.Patches
         private const float MaxGap = 5f;
         // Farther than this between two calls is a teleport, not walking or sailing.
         private const float MaxStep = 60f;
-        // About 0.14 per second running through fresh land.
-        private const float GainPerMeter = 0.02f;
+        // About 0.07 per second running through fresh land.
+        private const float GainPerMeter = 0.01f;
 
         private static bool _counting;
         private static int _newPixels;
