@@ -44,6 +44,13 @@ Filling a fermenter with mead base and tapping it when it is done both level Bre
 growing chance to give a third more potions (8 instead of 6), up to 30% at level 100 (configurable with
 `MaxBonusChance`). Your first batch takes you to level 1, and every level after that takes a little more brewing.
 
+### Nourishment
+
+Every food you eat levels Nourishment, and better food levels it more. As it levels, food stays effective for longer
+before it wears off: at level 100 a food with a tenth of its time left still gives 71% of its health and stamina
+instead of 50% (configurable with `MaxFalloffReduction`). Food lasts exactly as long as in vanilla and never gives
+more than its full value.
+
 ## Configuration
 
 `BepInEx/config/dev.pgarcia.valheim.moreskills.cfg` has one section per skill. Turning a skill off hides it from

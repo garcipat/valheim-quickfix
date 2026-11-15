@@ -94,8 +94,8 @@ Vanilla only knows the skills in `Skills.SkillType`. `Core/` adds the rest:
 
 - **Curve:** brewing is rare, so the skill sets its own pace in potions. Level N to N+1 takes `6 * (1 + 0.06 * N)`
   potions: level 1 is one batch, level 10 about 1.6 batches, level 50 about 4, level 100 about 7 (in total about 13
-  batches for level 10, 124 for 50, 397 for 100). `Brewing.Grant` raises one potion at a time by the game's XP for the
-  current level (`0.5 * (level + 1)^1.5 + 0.5`) divided by that count, so a batch never gives more than one level
+  batches for level 10, 124 for 50, 397 for 100). `Core/SkillCurve` raises one potion at a time by the game's XP for
+  the current level (`0.5 * (level + 1)^1.5 + 0.5`) divided by that count, so a batch never gives more than one level
   (`Skill.Raise` grants one level per call and drops the rest). Tune with `PotionsPerLevel` and `CurveGrowth`.
 - **Filling:** Postfix on the private `Fermenter.AddItem`, which runs on the filling player and returns true only after
   taking the mead base from their inventory. Gives half a batch's worth.
@@ -108,6 +108,20 @@ Vanilla only knows the skills in `Skills.SkillType`. `Core/` adds the rest:
   `DamageText.TextType.Bonus` differ from or are missing in the libs, so the patch reads the ZDO keys by their names
   and calls the rest by name.
 - **Vanilla overlap:** none. Mead bases are a cauldron craft, which vanilla Cooking's crafting bonus already covers.
+
+## Nourishment
+
+- **Effect:** `Player.UpdateFood` sets each food's health, stamina and eitr to `full * clamp01(time / burnTime)^0.3`
+  once per second and then sets the max bars from the private `GetTotalFoodValue` (its only caller). A Prefix there
+  recomputes the values with the exponent `0.3 * (1 - MaxFalloffReduction * skillFactor)` (0.15 at level 100 by
+  default), so the bars are set once with the final values. Setting them again after vanilla would first clamp current
+  health to the lower vanilla maximum. With 10% of its time left a food gives 71% instead of 50% at level 100; duration,
+  re-eating at half time and the full value are vanilla. Eitr fields are newer than the compile-time libs and accessed
+  by name.
+- **Levelling:** Postfix on `EatFood` (true, local player) grants the food's duration in minutes on `Core/SkillCurve`:
+  level N to N+1 takes `90 * (1 + 0.06 * N)` food-minutes, so level 1 is one meal of three 30-minute foods (about 13
+  meals for level 10, 124 for 50, 397 for 100). Vanilla's half-time rule for eating again keeps it from being farmed.
+  Tune with `MinutesPerLevel` and `CurveGrowth`.
 
 ## Adding a skill
 
