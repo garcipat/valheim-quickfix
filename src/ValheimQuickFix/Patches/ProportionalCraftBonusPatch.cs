@@ -24,11 +24,37 @@ namespace ValheimQuickFix.Patches
         // All newer than the compile-time libs.
         private static readonly FieldInfo BonusChance = AccessTools.Field(typeof(InventoryGui), "m_craftBonusChance");
         private static readonly FieldInfo BonusEffect = AccessTools.Field(typeof(InventoryGui), "m_craftBonusEffect");
+        // Private in the live game (public in the compile-time libs): reading it directly fails to JIT the Prefix,
+        // which throws out of DoCrafting every frame and leaves the craft stuck with a full bar.
+        private static readonly FieldInfo CraftRecipe = AccessTools.Field(typeof(InventoryGui), "m_craftRecipe");
         private static readonly FieldInfo CraftingSkill = AccessTools.Field(typeof(CraftingStation), "m_craftingSkill");
         private static readonly MethodInfo GetAmount = AccessTools.Method(typeof(Recipe), "GetAmount");
         private static readonly MethodInfo ShowTextString = AccessTools.Method(
             typeof(DamageText), "ShowText",
             new[] { typeof(DamageText.TextType), typeof(Vector3), typeof(string), typeof(bool) });
+        // Gained a parameter since the compile-time libs, so a direct call no longer links; called by name with every
+        // parameter after the position and rotation left at its default.
+        private static readonly MethodInfo CreateEffect = AccessTools.Method(typeof(EffectList), nameof(EffectList.Create));
+
+        private static void PlayEffect(EffectList effect, Vector3 pos)
+        {
+            if (effect == null || CreateEffect == null)
+            {
+                return;
+            }
+
+            var parameters = CreateEffect.GetParameters();
+            var args = new object[parameters.Length];
+            for (var i = 0; i < args.Length; i++)
+            {
+                args[i] = parameters[i].HasDefaultValue ? parameters[i].DefaultValue
+                    : parameters[i].ParameterType.IsValueType ? Activator.CreateInstance(parameters[i].ParameterType) : null;
+            }
+            args[0] = pos;
+            args[1] = Quaternion.identity;
+            CreateEffect.Invoke(effect, args);
+        }
+
         // DamageText.TextType.Bonus; the compile-time libs predate it.
         private const DamageText.TextType BonusText = (DamageText.TextType)7;
 
@@ -45,7 +71,7 @@ namespace ValheimQuickFix.Patches
 
         private static bool Available(string part)
         {
-            if (BonusChance != null && CraftingSkill != null && GetAmount != null && AddItemTarget() != null)
+            if (BonusChance != null && CraftRecipe != null && CraftingSkill != null && GetAmount != null && AddItemTarget() != null)
             {
                 return true;
             }
@@ -104,7 +130,7 @@ namespace ValheimQuickFix.Patches
                         return;
                     }
 
-                    var recipe = __instance.m_craftRecipe;
+                    var recipe = CraftRecipe.GetValue(__instance) as Recipe;
                     var station = Player.m_localPlayer.GetCurrentCraftingStation();
                     if (recipe == null || recipe.m_item == null || station == null)
                     {
@@ -145,32 +171,40 @@ namespace ValheimQuickFix.Patches
 
             private static void Postfix(InventoryGui __instance)
             {
+                if (!_added || _bonus <= 0)
+                {
+                    return;
+                }
+
+                // Kept in its own method: if a game call there changed shape, the JIT error is thrown at this call
+                // and caught here. Thrown out of DoCrafting, it would skip the game's reset of the craft timer, and
+                // the craft would repeat every frame until the ingredients run out.
                 try
                 {
-                    if (!_added || _bonus <= 0)
-                    {
-                        return;
-                    }
-
-                    var station = Player.m_localPlayer.GetCurrentCraftingStation();
-                    var pos = (station != null ? station.transform.position : Player.m_localPlayer.transform.position)
-                              + Vector3.up;
-                    if (ShowTextString != null)
-                    {
-                        ShowTextString.Invoke(DamageText.instance, new object[] { BonusText, pos, "+" + _bonus, true });
-                    }
-                    else
-                    {
-                        DamageText.instance.ShowText(BonusText, pos, _bonus, true);
-                    }
-
-                    (BonusEffect?.GetValue(__instance) as EffectList)?.Create(pos, Quaternion.identity);
-                    Plugin.Log.LogInfo($"Bonus craft: {_hits} x {_bonus / _hits} {_recipe.m_item.name}");
+                    ShowBonus(__instance);
                 }
                 catch (Exception e)
                 {
                     Plugin.Log.LogError($"ProportionalCraftBonus patch failed: {e}");
                 }
+            }
+
+            private static void ShowBonus(InventoryGui gui)
+            {
+                var station = Player.m_localPlayer.GetCurrentCraftingStation();
+                var pos = (station != null ? station.transform.position : Player.m_localPlayer.transform.position)
+                          + Vector3.up;
+                if (ShowTextString != null)
+                {
+                    ShowTextString.Invoke(DamageText.instance, new object[] { BonusText, pos, "+" + _bonus, true });
+                }
+                else
+                {
+                    DamageText.instance.ShowText(BonusText, pos, _bonus, true);
+                }
+
+                PlayEffect(BonusEffect?.GetValue(gui) as EffectList, pos);
+                Plugin.Log.LogInfo($"Bonus craft: {_hits} x {_bonus / _hits} {_recipe.m_item.name}");
             }
 
             private static void Finalizer(InventoryGui __instance)
