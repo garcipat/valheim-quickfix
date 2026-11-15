@@ -21,22 +21,12 @@ namespace ValheimMoreSkills.Patches
                 Identifier,
                 "Exploring",
                 "Uncovering new map. Higher levels uncover a wider area around you.",
-                CartographyTableIcon,
+                Icon.Get,
                 enabled);
         }
 
-        // The game's own cartography table piece icon; null before ZNetScene exists (main menu).
-        private static Sprite CartographyTableIcon()
-        {
-            if (ZNetScene.instance == null)
-            {
-                return null;
-            }
-
-            var prefab = ZNetScene.instance.GetPrefab("piece_cartographytable");
-            var piece = prefab == null ? null : prefab.GetComponent<Piece>();
-            return piece == null ? null : piece.m_icon;
-        }
+        // A compass rose drawn for this mod: the game's cartography table icon read as a bed at skill-list size.
+        private static readonly EmbeddedIcon Icon = new EmbeddedIcon("Exploring.png");
     }
 
     /// <summary>
