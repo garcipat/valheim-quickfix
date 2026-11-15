@@ -71,8 +71,9 @@ Vanilla only knows the skills in `Skills.SkillType`. `Core/` adds the rest:
   compile-time libs have an older signature) and owns the ship, a Prefix scales that force by
   `1 + MaxPaddleBonus * skillFactor` and a Finalizer restores it.
 - **Levelling:** the Postfix counts how far the ship moves while the local player steers in Slow or Back (steps over
-  2 m are ignored). Once per second, if that averaged at least 0.5 m/s, `RaiseSkill(Paddling, meters * 0.125)`.
-  That is about 0.25 to 0.4 per second (0.05 per meter barely levelled). Tune with `GainPerMeter`.
+  2 m are ignored). Once per second, if that averaged at least 0.5 m/s, `RaiseSkill(Paddling, meters * 0.08)`.
+  That is about 0.16 to 0.25 per second (0.05 per meter barely levelled, 0.125 levelled too fast). Tune with
+  `GainPerMeter`.
 - **Multiplayer:** the owner simulates the ship, and that can be a passenger rather than the helmsman. Then the
   helmsman paddles at vanilla speed. Remote players are never affected.
 
@@ -83,8 +84,8 @@ Vanilla only knows the skills in `Skills.SkillType`. `Core/` adds the rest:
   argument by `1 + MaxRadiusBonus * skillFactor`; no field changes.
 - **Levelling:** while that call runs, a Postfix on `Explore(int, int)` counts pixels it returns true for (not yet in
   the player's own explored layer). The Postfix on `Explore(Vector3, float)` turns them into meters of new ground,
-  `pixels * m_pixelSize² / (2 * radius)`, and raises `meters * 0.02`. Dividing by the circle's width keeps a wider
-  circle from speeding up its own levelling. About 0.14 per second running through fresh land. Tune with
+  `pixels * m_pixelSize² / (2 * radius)`, and raises `meters * 0.01`. Dividing by the circle's width keeps a wider
+  circle from speeding up its own levelling. About 0.07 per second running through fresh land. Tune with
   `GainPerMeter`.
 - **Not counted:** the first call after a gap of more than 5 s (load, respawn) and a jump of more than 60 m between
   calls (portal). Loading the map and `exploremap` reveal through the pixel overload directly, outside the counted call.

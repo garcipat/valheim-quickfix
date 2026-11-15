@@ -64,7 +64,7 @@ namespace ValheimMoreSkills.Patches
     /// <remarks>
     /// The Postfix levels the skill: while the local player steers in Slow or Back, it counts how far the ship moves;
     /// once per second, if that averaged at least <see cref="MinSpeed"/>, it raises Paddling by
-    /// <c>distance * GainPerMeter</c> (about 0.25 to 0.4 per second at paddling speed). That needs no ownership, since
+    /// <c>distance * GainPerMeter</c> (about 0.16 to 0.25 per second at paddling speed). That needs no ownership, since
     /// skills are local.
     /// </remarks>
     [HarmonyPatch(typeof(Ship), "CustomFixedUpdate")]
@@ -74,7 +74,7 @@ namespace ValheimMoreSkills.Patches
         private const float MinSpeed = 0.5f;
         // A step longer than this in one physics frame is a teleport, not paddling.
         private const float MaxStep = 2f;
-        private const float GainPerMeter = 0.125f;
+        private const float GainPerMeter = 0.08f;
 
         private static readonly AccessTools.FieldRef<Ship, ZNetView> NView =
             AccessTools.FieldRefAccess<Ship, ZNetView>("m_nview");
