@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Brewing skill: level it by filling and tapping fermenters. A tap has a growing chance to give a third more potions
   (8 instead of 6), up to 30% at level 100 (`MaxBonusChance`). The first batch reaches level 1, and each level after
   that takes a little more brewing.
+- Nourishment skill: level it by eating, more for better food. Food stays effective for longer before it wears off:
+  at level 100 a food with a tenth of its time left still gives 71% instead of 50% (`MaxFalloffReduction`). Food
+  duration is unchanged.
 
 ### Changed
 

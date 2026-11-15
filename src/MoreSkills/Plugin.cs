@@ -27,6 +27,8 @@ namespace ValheimMoreSkills
         internal static ConfigEntry<float> MaxRadiusBonus;
         internal static ConfigEntry<bool> BrewingEnabled;
         internal static ConfigEntry<float> MaxBonusChance;
+        internal static ConfigEntry<bool> NourishmentEnabled;
+        internal static ConfigEntry<float> MaxFalloffReduction;
 
         private Harmony _harmony;
 
@@ -111,12 +113,27 @@ namespace ValheimMoreSkills
                     "Chance per tap at Brewing level 100 to get a third more potions (8 instead of 6). Scales linearly from no chance at level 0.",
                     new AcceptableValueRange<float>(0f, 1f)));
 
+            NourishmentEnabled = Config.Bind(
+                "Nourishment",
+                "Enabled",
+                true,
+                "Nourishment skill: levels with every food you eat and keeps food effective for longer before it wears off. Off: the skill is hidden, does not level and has no effect, but your level is kept.");
+
+            MaxFalloffReduction = Config.Bind(
+                "Nourishment",
+                "MaxFalloffReduction",
+                0.5f,
+                new ConfigDescription(
+                    "How much gentler food wears off at Nourishment level 100 (0.5 = with 10% of its time left a food still gives 71% instead of 50%). Scales linearly from vanilla at level 0. Food duration is unchanged.",
+                    new AcceptableValueRange<float>(0f, 0.9f)));
+
             SkillRegistry.Add(Hauling.Create(HaulingEnabled));
             SkillRegistry.Add(Landscaping.Create(LandscapingEnabled));
             SkillRegistry.Add(Endurance.Create(EnduranceEnabled));
             SkillRegistry.Add(Paddling.Create(PaddlingEnabled));
             SkillRegistry.Add(Exploring.Create(ExploringEnabled));
             SkillRegistry.Add(Brewing.Create(BrewingEnabled));
+            SkillRegistry.Add(Nourishment.Create(NourishmentEnabled));
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();

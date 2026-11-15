@@ -28,10 +28,6 @@ namespace ValheimMoreSkills.Patches
         private const float PotionsPerLevel = 6f;
         private const float CurveGrowth = 0.06f;
 
-        private static readonly Func<Skills, Skills.SkillType, Skills.Skill> GetSkill =
-            AccessTools.MethodDelegate<Func<Skills, Skills.SkillType, Skills.Skill>>(
-                AccessTools.Method(typeof(Skills), "GetSkill"));
-
         internal static CustomSkill Create(ConfigEntry<bool> enabled)
         {
             return new CustomSkill(
@@ -55,29 +51,10 @@ namespace ValheimMoreSkills.Patches
             return piece == null ? null : piece.m_icon;
         }
 
-        /// <summary>
-        /// Raises Brewing by <paramref name="potions"/> potions' worth, one potion at a time so a level-up in between
-        /// uses the new level's rate. A fraction of a potion is granted last.
-        /// </summary>
+        /// <summary>Raises Brewing by <paramref name="potions"/> potions' worth on its own curve.</summary>
         internal static void Grant(Player player, float potions)
         {
-            var skills = player.GetSkills();
-            while (potions > 0f)
-            {
-                var step = Mathf.Min(1f, potions);
-                potions -= step;
-
-                var level = Mathf.Floor(GetSkill(skills, Type).m_level);
-                if (level >= 100f)
-                {
-                    return;
-                }
-
-                // The game's XP for the next level; the same for every skill.
-                var requirement = Mathf.Pow(level + 1f, 1.5f) * 0.5f + 0.5f;
-                var potionsNeeded = PotionsPerLevel * (1f + CurveGrowth * level);
-                player.RaiseSkill(Type, step * requirement / potionsNeeded);
-            }
+            SkillCurve.Grant(player, Type, potions, PotionsPerLevel, CurveGrowth);
         }
 
         internal static Fermenter.ItemConversion Conversion(Fermenter fermenter, int nameHash)
