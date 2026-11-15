@@ -70,7 +70,7 @@ jobs:
       version: ${{ steps.target.outputs.version }}
       publish: ${{ steps.thunderstore.outputs.publish }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # A merged release pull request is released from its merge commit on main.
           ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
@@ -86,7 +86,7 @@ jobs:
           VERSION_INPUT: ${{ inputs.version }}
         run: ./scripts/resolve-release.sh >> "$GITHUB_OUTPUT"
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 8.0.x
 
@@ -142,7 +142,7 @@ jobs:
 
       - name: Keep the Thunderstore package for the publish job
         if: steps.thunderstore.outputs.publish == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: thunderstore-package
           path: dist/thunderstore/*.zip
@@ -218,7 +218,7 @@ jobs:
 
       - name: Upload the package (dry run)
         if: steps.target.outputs.dry_run == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.target.outputs.mod }}-${{ steps.target.outputs.version }}
           path: |
@@ -234,11 +234,11 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha }}
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: thunderstore-package
           path: dist/thunderstore
