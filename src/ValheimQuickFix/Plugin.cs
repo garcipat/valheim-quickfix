@@ -37,6 +37,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> PortalTagSignEnabled;
         internal static ConfigEntry<bool> SmelterFillOnHoldEnabled;
         internal static ConfigEntry<bool> GhostPortalPlayersEnabled;
+        internal static ConfigEntry<bool> EnhancedInteractionReachEnabled;
         internal static ConfigEntry<bool> SmoothLaddersEnabled;
         internal static ConfigEntry<bool> SittingStaminaRegenEnabled;
         internal static ConfigEntry<bool> IgnoreWorkbenchEnabled;
@@ -211,6 +212,12 @@ namespace ValheimQuickFix
                 "GhostPortalPlayers",
                 true,
                 "Another player walking into a portal stays solid in its opening for a couple of seconds and blocks you from following. While they stand in the opening they are made see-through and walk-through on your screen. Only affects what you see; each player needs the mod for themselves.");
+
+            EnhancedInteractionReachEnabled = Config.Bind(
+                "Building & Travel",
+                "EnhancedInteractionReach",
+                true,
+                "Open chests and enter caves, crypts and other dungeons from 7.5 m instead of 5 m. Crafting stations open wherever you can point at them, instead of only when you stand right next to them. Everything else keeps the game's reach.");
 
             SmoothLaddersEnabled = Config.Bind(
                 "Building & Travel",
