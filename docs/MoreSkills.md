@@ -89,6 +89,7 @@ Vanilla only knows the skills in `Skills.SkillType`. `Core/` adds the rest:
   calls (portal). Loading the map and `exploremap` reveal through the pixel overload directly, outside the counted call.
 - **Shared maps:** cartography table data goes into a separate layer (`m_exploredOthers`), so walking through an area
   someone shared still counts, and sharing gives nothing to anyone.
+
 ## Brewing
 
 - **Curve:** brewing is rare, so the skill sets its own pace in potions. Level N to N+1 takes `6 * (1 + 0.06 * N)`
