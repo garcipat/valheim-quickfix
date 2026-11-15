@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-15
+
 ### Added
 
 - Pin what you look at: press F8 while looking at berries, mushrooms, copper, tin or silver, tar, a dragon egg, a cave
