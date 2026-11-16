@@ -67,6 +67,9 @@ namespace ValheimMapRoutes
 
         internal static bool Round { get; private set; }
 
+        // The Viking map is a little bigger than the game's corner map and shows that much more of the area.
+        private const float VikingScale = 1.1f;
+
         // VikingMap: a painted shield with crossed axe and club behind the round map (viking-shield.png). The map
         // covers the shield up to just inside the rim's rivets: its radius is 290 of the image's 1024 pixels.
         private const float ShieldSize = 1024f / (2f * 290f);
@@ -112,7 +115,7 @@ namespace ValheimMapRoutes
                 PlaceBiomeName(minimap);
             }
             UpdateShield();
-            var scale = Mathf.Clamp(Plugin.MinimapScale.Value, 1f, 1.5f);
+            var scale = Round ? VikingScale : 1f;
             var screen = new Vector2Int(Screen.width, Screen.height);
             if (!Mathf.Approximately(scale, _appliedScale) || (_scaled != null && screen != _appliedScreen))
             {

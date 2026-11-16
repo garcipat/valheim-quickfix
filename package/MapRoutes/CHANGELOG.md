@@ -8,9 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- The small map in the corner can be round on a painted Viking shield (`VikingMap`) and bigger (`MinimapScale`, 1 to
-  1.5) in `General`. Both are off by default. A bigger corner map shows more of the area around you. The status effect icons
-  move left to make room.
+- `VikingMap` in `General` (off by default) puts the small map in the corner on a round, painted Viking shield. The
+  map is a little bigger and shows more of the area around you, and the status effect icons move left to make room.
 
 ## [0.3.0] - 2026-11-15
 

@@ -17,7 +17,6 @@ namespace ValheimMapRoutes
         internal static ManualLogSource Log;
         internal static ConfigEntry<bool> BiomeBordersEnabled;
         internal static ConfigEntry<KeyboardShortcut> PinHotkey;
-        internal static ConfigEntry<float> MinimapScale;
         internal static ConfigEntry<bool> VikingMap;
 
         private Harmony _harmony;
@@ -43,16 +42,8 @@ namespace ValheimMapRoutes
                 "General",
                 "VikingMap",
                 false,
-                "Make the small map in the corner of the screen round and put it on a painted Viking shield with a " +
-                "crossed axe and club.");
-
-            MinimapScale = Config.Bind(
-                "General",
-                "MinimapScale",
-                1f,
-                new ConfigDescription(
-                    "Size of the small map in the corner of the screen. 1 is the game's own size, 1.5 is half as big again.",
-                    new AcceptableValueRange<float>(1f, 1.5f)));
+                "Make the small map in the corner of the screen round, a little bigger, and put it on a painted Viking " +
+                "shield with a crossed axe and club.");
 
             _harmony = new Harmony(PluginGuid);
             _harmony.PatchAll();

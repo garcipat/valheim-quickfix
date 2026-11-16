@@ -9,7 +9,7 @@ Map Routes adds a few things to the large map that help you plan your trips:
 - **Pin what you look at:** look at a berry bush, copper or a cave entrance and press **F8**. A pin with its icon
   lands on the map.
 - **Biome borders:** faint dashed lines where one biome meets another. They are off until you turn them on.
-- **Round, bigger corner map:** put the small map in the corner on a round Viking shield, make it bigger, or both. Off until you turn it on.
+- **Viking map:** put the small map in the corner on a round Viking shield. Off until you turn it on.
 
 Each one is explained in its own section below.
 
@@ -107,11 +107,10 @@ rename the pin to `Copper` or `Silver`: it keeps the icon and shows the name und
   explored. Turn it on to see them.
 - **General → PinHotkey** (default F8): the key that pins what you look at. Set it to `None` to turn it off.
 - **General → VikingMap** (default off): makes the small map in the corner round and puts it on a painted Viking
-  shield with a crossed axe and club behind it. The status effect icons next to the map move left to make room. Pins outside the circle are hidden, as the game hides them outside
-  the square, and the biome name moves to the top middle.
-- **General → MinimapScale** (default 1): the size of the small map in the corner, from 1 (the game's own size) to
-  1.5 (half as big again). A bigger map shows more of the area around you; pins, your marker and the biome name keep their
-  size. It grows evenly around its middle, and the status effect icons move left to make room.
+  shield with a crossed axe and club behind it. The map is a little bigger and shows more of the area around you;
+  pins, your marker and the biome name keep their size. The status effect icons next to the map move left to make
+  room. Pins outside the circle are hidden, as the game hides them outside the square, and the biome name moves to
+  the top middle.
 
 Routes have no setting. To hide your routes, disable the mod in your mod manager. They come back when you enable it
 again.

@@ -4,8 +4,7 @@ Behavior and implementation notes for the MapRoutes mod. Player-facing docs: [pa
 
 **Config:** `General.BiomeBorders` (default off) shows the biome borders; it takes effect the next time the large map
 is drawn. `General.PinHotkey` (default F8, `None` turns it off) is the pin-what-you-look-at key. `General.VikingMap`
-(default off: round map on a shield) and `General.MinimapScale` (default 1, 1–1.5) shape the corner map; both apply
-live. Routes have no setting: disabling the mod is their off switch, and the saved routes stay in the character
+(default off) makes the corner map round, 1.1 times bigger and puts it on a shield; it applies live. Routes have no setting: disabling the mod is their off switch, and the saved routes stay in the character
 file.
 **Patches** (all in `src/MapRoutes/Patches/MinimapPatches.cs`): `Minimap.Update` (Postfix: button, cursor, stroke,
 right-drag pan, dots on the large and the corner map), `Minimap.UpdatePins` (Postfix, in `PinIconPatches.cs`: pin icons), `Minimap.SetMapMode` (Postfix: leaving the large map ends draw mode), `Minimap.SelectIcon`
@@ -166,7 +165,7 @@ row; a UI change in the game could put it somewhere odd, but the button still wo
 - **Status effects:** `Hud.m_statusEffectListRoot` is the right edge of the status icons (the game lays them out
   leftward from it). Each frame it is put back to its own position, then moved left if the shield image or a bigger
   map reaches past it, keeping a gap of 5% of the map's width. Turning both off leaves it where the game put it.
-- **Scale:** the largest ancestor of the map image up to `m_smallRoot` that is still a corner panel (under half the
+- **Scale** (1.1 while `VikingMap` is on, else 1): the largest ancestor of the map image up to `m_smallRoot` that is still a corner panel (under half the
   screen wide) is scaled from its original scale, then moved back so its middle stays in place.
   Reapplied when the screen size changes. A `Minimap.CenterMap` postfix then widens the map image's `uvRect` (and
   the shader's `_zoom`/`_pixelSize`) by the scale, so it shows more area at the same detail. Pins and pin names
