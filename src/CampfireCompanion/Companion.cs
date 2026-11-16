@@ -55,14 +55,18 @@ namespace ValheimCampfireCompanion
         internal readonly float Turn;
         // Star level whose look the creature wears (the deer's 2-star antlers).
         internal readonly int Stars;
+        // Animator flags the creature's own scripts would hold on, without which it never leaves its entry pose (a
+        // drake is always flying; Hildir stands when a player is near).
+        internal readonly string[] Flags;
 
-        internal CompanionSetup(string prefab, float scale, float gap, float turn = 0f, int stars = 0)
+        internal CompanionSetup(string prefab, float scale, float gap, float turn = 0f, int stars = 0, params string[] flags)
         {
             Prefab = prefab;
             Scale = scale;
             Gap = gap;
             Turn = turn;
             Stars = stars;
+            Flags = flags;
         }
     }
 
@@ -87,7 +91,7 @@ namespace ValheimCampfireCompanion
             { Companion.Wolf, new CompanionSetup("Wolf", 1f, 2.64f) },
             { Companion.Fenring, new CompanionSetup("Fenring", 0.9f, 1.64f) },
             { Companion.Ulv, new CompanionSetup("Ulv", 1.1f, 2.89f) },
-            { Companion.Drake, new CompanionSetup("Hatchling", 1f, 2.44f) },
+            { Companion.Drake, new CompanionSetup("Hatchling", 1f, 2.44f, flags: "flying") },
             { Companion.Cultist, new CompanionSetup("Fenring_Cultist", 0.95f, 2.19f) },
             { Companion.Lox, new CompanionSetup("Lox", 0.7f, 3.14f) },
             { Companion.Unbjorn, new CompanionSetup("Unbjorn", 0.9f, 2.94f) },
@@ -102,7 +106,7 @@ namespace ValheimCampfireCompanion
             { Companion.FallenValkyrie, new CompanionSetup("FallenValkyrie", 0.64f, -2.11f) },
             { Companion.Moose, new CompanionSetup("Moose", 0.9f, 2.69f) },
             { Companion.Haldor, new CompanionSetup("Haldor", 1f, 3.64f, 180f) },
-            { Companion.Hildir, new CompanionSetup("Hildir", 1f, 3.14f) },
+            { Companion.Hildir, new CompanionSetup("Hildir", 1f, 3.14f, flags: "Stand") },
             { Companion.BogWitch, new CompanionSetup("BogWitch", 0.95f, 1.94f) },
         };
 
