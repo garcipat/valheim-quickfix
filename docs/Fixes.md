@@ -653,6 +653,21 @@ pins it is hard to find.
 3. Other players' markers, pins and the ship marker are unchanged.
 4. Turning the setting off brings back the plain arrow right away.
 
+## Low health warning
+
+**Config:** `General` → `LowHealthWarning` (default `false`)
+**Patch:** `Patches/LowHealthWarningPatch.cs`
+
+**Problem:** in a fight your eyes are on the enemy, not on the health bar, so it is easy to miss that one more hit
+will kill you.
+
+**Behavior:**
+
+1. Below 10% health, a thin red border pulses around the edges of the screen.
+2. The border pulses slowly, looks the same at any health below 10%, and never covers the middle of the screen.
+3. A hit still flashes over the border as usual.
+4. The border fades out when you heal above 10%, die, or turn the setting off, and it hides with the HUD.
+
 ## Retry wrong password
 
 **Config:** `General` → `RetryWrongPassword` (default `true`)
