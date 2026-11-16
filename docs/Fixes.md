@@ -751,3 +751,20 @@ game puts them, so you either scroll for them or keep switching tabs.
 
 **Known limits:** a piece you mark or unmark doesn't move at once, so it doesn't jump away under the cursor. It moves
 the next time the list is shown, for example after switching tab or category, or reopening the build menu.
+
+## Random sleep text
+
+**Config:** `General` → `RandomSleepText` (default `true`)
+**Patch:** `Patches/RandomSleepTextPatch.cs`
+
+**Problem:** every night in bed the sleep screen shows the same "zzzZZZzzz".
+
+**Behavior:**
+
+1. Each time you go to sleep, the sleep screen shows a random line instead: snores ("Snrrrk... snrrrk..."), sleepy
+   mumbling ("...five more minutes, Odin..."), bad dreams ("Not the Bonemass... please...") and more. The game's
+   own "zzzZZZzzz" is one of them.
+2. The same line never shows two nights in a row.
+3. The dream text that comes after is the game's own and is not changed.
+
+**Known limits:** the lines are in English whatever the game's language.

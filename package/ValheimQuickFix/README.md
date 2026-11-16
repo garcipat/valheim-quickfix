@@ -83,6 +83,8 @@ other players don't need it.
   of the screen.
 - **Retry a wrong password** — a mistyped server password asks for the password again instead of sending you back to
   the menu to find the server again. Press `Esc` (B on a gamepad) in the password box to give up.
+- **Random sleep text** — going to bed shows a random snore or sleepy mumble, such as "...five more minutes, Odin..."
+  or "Not the Bonemass... please...", instead of always "zzzZZZzzz".
 
 ## Configuration
 
@@ -129,6 +131,7 @@ with the mod installed, and changes apply after a restart.
 | `General`          | `VisiblePlayerMarker` | `true` | Your map arrow is larger and outlined, with a pulsing ring on the large map. |
 | `General`          | `LowHealthWarning` | `false` | A red border pulses around the screen below 10% health. |
 | `General`          | `RetryWrongPassword` | `true` | A wrong server password asks for it again; `Esc` gives up. |
+| `General`          | `RandomSleepText` | `true` | The sleep screen shows a random snore or mumble instead of always "zzzZZZzzz". |
 
 ## Installation
 
