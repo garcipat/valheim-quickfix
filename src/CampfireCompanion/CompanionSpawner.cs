@@ -98,9 +98,11 @@ namespace ValheimCampfireCompanion
 
         private static GameObject FindPrefab(string name)
         {
+            // The creature's imported model can carry the same name (Draugr, Hildir): it has no animator controller
+            // and may face backwards, so only the game prefab, which has a ZNetView, is taken.
             foreach (var loaded in Resources.FindObjectsOfTypeAll<GameObject>())
             {
-                if (loaded.name == name && !loaded.scene.IsValid() && loaded.transform.parent == null)
+                if (loaded.name == name && !loaded.scene.IsValid() && loaded.transform.parent == null && loaded.GetComponent<ZNetView>() != null)
                 {
                     return loaded;
                 }
@@ -145,8 +147,10 @@ namespace ValheimCampfireCompanion
             // Standing left of the fire, looking right at it.
             holder.transform.rotation = Quaternion.LookRotation(-left) * Quaternion.Euler(0f, setup.Turn, 0f);
 
+            // Most creatures animate their Visual child; some (Hildir) keep the animator outside it, and a copy
+            // without one stands frozen in its rest pose, so the whole prefab is copied then.
             var source = prefab.transform.Find("Visual");
-            if (source == null)
+            if (source == null || source.GetComponentInChildren<Animator>(true) == null)
             {
                 source = prefab.transform;
             }
@@ -165,7 +169,7 @@ namespace ValheimCampfireCompanion
                 animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
             }
 
-            holder.AddComponent<KeepIdle>();
+            holder.AddComponent<KeepIdle>().Flags = setup.Flags;
             holder.SetActive(true);
 
             // Renderer bounds are only known once active; the gap is kept between the fire and the creature's side.
