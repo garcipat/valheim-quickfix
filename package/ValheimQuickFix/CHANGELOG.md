@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Low health warning (`LowHealthWarning`, off by default): below 10% health, a thin red border pulses slowly around
+  the edges of the screen.
+
 - Favorites first (`FavoritesFirst`, on by default): the build menu's "By usage" and "By material" tabs show
   the pieces you marked as favorites first, so you no longer need the Favorites tab to find them.
 

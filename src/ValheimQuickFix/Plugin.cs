@@ -48,6 +48,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> ForgetDeletedPinsEnabled;
         internal static ConfigEntry<bool> PauseOnMapEnabled;
         internal static ConfigEntry<bool> VisiblePlayerMarkerEnabled;
+        internal static ConfigEntry<bool> LowHealthWarningEnabled;
         internal static ConfigEntry<bool> RetryWrongPasswordEnabled;
         internal static ConfigEntry<float> BowZoomMagnification;
         internal static ConfigEntry<float> SittingStaminaMultiplier;
@@ -269,6 +270,12 @@ namespace ValheimQuickFix
                 "VisiblePlayerMarker",
                 true,
                 "Make your own arrow on the minimap and the large map easier to spot: it is drawn larger with a dark outline, and on the large map a thin ring keeps pulsing out from it.");
+
+            LowHealthWarningEnabled = Config.Bind(
+                "General",
+                "LowHealthWarning",
+                false,
+                "Below 10% health, a red border pulses slowly around the edges of the screen. It fades out once you heal above 10%.");
 
             RetryWrongPasswordEnabled = Config.Bind(
                 "General",
