@@ -3,14 +3,17 @@
 Behavior and implementation notes for the MapRoutes mod. Player-facing docs: [package/MapRoutes/README.md](../package/MapRoutes/README.md).
 
 **Config:** `General.BiomeBorders` (default off) shows the biome borders; it takes effect the next time the large map
-is drawn. `General.PinHotkey` (default F8, `None` turns it off) is the pin-what-you-look-at key. Routes have no setting: disabling the mod is their off switch, and the saved routes stay in the character
+is drawn. `General.PinHotkey` (default F8, `None` turns it off) is the pin-what-you-look-at key. `General.VikingMap`
+(default off: round map on a shield) and `General.MinimapScale` (default 1, 1–1.5) shape the corner map; both apply
+live. Routes have no setting: disabling the mod is their off switch, and the saved routes stay in the character
 file.
 **Patches** (all in `src/MapRoutes/Patches/MinimapPatches.cs`): `Minimap.Update` (Postfix: button, cursor, stroke,
 right-drag pan, dots on the large and the corner map), `Minimap.UpdatePins` (Postfix, in `PinIconPatches.cs`: pin icons), `Minimap.SetMapMode` (Postfix: leaving the large map ends draw mode), `Minimap.SelectIcon`
 (Postfix: picking a pin type ends draw mode), `Minimap.OnMapLeftDown` and `Minimap.OnMapLeftUp` (Prefix, skipped
 only in draw mode: start and end a stroke), `Minimap.RemovePinUnderPointer` (Prefix, skipped when a route was
 removed or, in draw mode, when the right press was a pan). In `PinHotkeyPatches.cs`: `Hud.UpdateCrosshair`
-(Postfix: the pin key line) and `Player.Update` (Postfix: reads the pin key).
+(Postfix: the pin key line) and `Player.Update` (Postfix: reads the pin key). `Minimap.IsPointVisible` (Postfix: on
+the round corner map, pins outside the circle are hidden).
 
 **Behavior:**
 
@@ -141,3 +144,32 @@ store reloads when the local player or world changes.
 left-drag does. Mouse only; there's no gamepad way to pick the quill.
 Routes are not shared through cartography tables. Pin icon names are English only, and only circle pins change. The quill button's position assumes the five pin buttons are in a
 row; a UI change in the game could put it somewhere odd, but the button still works.
+
+## Round and bigger corner map
+
+`CornerMap.cs`, run from the `Minimap.Update` postfix while the corner map shows.
+
+- **Round** (`General.VikingMap`): the corner map image (`m_mapImageSmall`) is moved into a new parent of the same rect that carries an
+  `Image` with a generated disc sprite and a `Mask` (graphic hidden). The route dots live under the map image, so
+  they are cut too. Pins are not under the mask; the `IsPointVisible` postfix hides those whose center is outside
+  the circle. Images around the map of about its size (the square frame or background) get alpha 0, so they still
+  take clicks, and a generated dark ring is drawn over the edge. Turning it off disables the mask and ring and
+  restores those colors. The mask renders the map with a copy of its material (`materialForRendering`); the game
+  sets zoom, center and fog on the original every frame, so they are copied over each frame, keeping the stencil
+  values. The biome name (`m_biomeNameSmall`) moves to the top middle, just inside the rim, and is put back when round
+  is turned off. The mask only works if the map's shader has stencil properties; a warning is logged if
+  `_Stencil` is missing. The corner map's layout is logged once when round is first applied, for debugging.
+- **Shield:** while round, the mod draws the embedded `Assets/viking-shield.png` (a shield with a
+  crossed axe and club, 512 px, generated art) behind the mask, centered. The map's radius is 290/1024 of the image,
+  just inside the rim's rivets, so the image is drawn at 1024/580 times the map's size. The 1024 px source and its
+  magenta originals are not in the repo.
+- **Status effects:** `Hud.m_statusEffectListRoot` is the right edge of the status icons (the game lays them out
+  leftward from it). Each frame it is put back to its own position, then moved left if the shield image or a bigger
+  map reaches past it, keeping a gap of 5% of the map's width. Turning both off leaves it where the game put it.
+- **Scale:** the largest ancestor of the map image up to `m_smallRoot` that is still a corner panel (under half the
+  screen wide) is scaled from its original scale, then moved back so its middle stays in place.
+  Reapplied when the screen size changes. A `Minimap.CenterMap` postfix then widens the map image's `uvRect` (and
+  the shader's `_zoom`/`_pixelSize`) by the scale, so it shows more area at the same detail. Pins and pin names
+  (children of `m_pinRootSmall`/`m_pinNameRootSmall`), the player, ship and wind markers are
+  counter-scaled each frame if they are inside the scaled panel; route dots and the rim are drawn smaller by the
+  scale. The biome name's scale is animated (its pulse), so its `fontSize` is divided by the scale instead.

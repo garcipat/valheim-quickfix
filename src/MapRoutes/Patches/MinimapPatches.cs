@@ -1,5 +1,6 @@
 using System;
 using HarmonyLib;
+using UnityEngine;
 
 namespace ValheimMapRoutes.Patches
 {
@@ -16,6 +17,45 @@ namespace ValheimMapRoutes.Patches
             catch (Exception e)
             {
                 Plugin.Log.LogError($"Drawing routes failed: {e}");
+            }
+            try
+            {
+                CornerMap.Update(__instance);
+            }
+            catch (Exception e)
+            {
+                Plugin.Log.LogError($"Shaping the corner map failed: {e}");
+            }
+        }
+    }
+
+    /// <summary>A bigger corner map shows more of the map rather than the same area larger.</summary>
+    [HarmonyPatch(typeof(Minimap), "CenterMap")]
+    internal static class MinimapCenterMapPatch
+    {
+        private static void Postfix(Minimap __instance)
+        {
+            try
+            {
+                CornerMap.Widen(__instance);
+            }
+            catch (Exception e)
+            {
+                Plugin.Log.LogError($"Widening the corner map failed: {e}");
+            }
+        }
+    }
+
+    /// <summary>On the round corner map, pins outside the circle are hidden like pins outside the square.</summary>
+    [HarmonyPatch(typeof(Minimap), "IsPointVisible")]
+    internal static class MinimapIsPointVisiblePatch
+    {
+        // The map is a RawImage, which this project can't reference.
+        private static void Postfix(Minimap __instance, Vector3 p, object map, ref bool __result)
+        {
+            if (__result && CornerMap.Round)
+            {
+                __result = CornerMap.InsideCircle(__instance, p, map as Component);
             }
         }
     }
