@@ -67,6 +67,11 @@ namespace ValheimMapRoutes
             return (Rect)UvRectProperty.GetValue(rawImage, null);
         }
 
+        internal static void SetUvRect(Component rawImage, Rect uv)
+        {
+            UvRectProperty.SetValue(rawImage, uv, null);
+        }
+
         internal static bool HasLayoutGroup(Transform transform)
         {
             return LayoutGroupType != null && transform.GetComponent(LayoutGroupType) != null;

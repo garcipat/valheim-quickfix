@@ -162,7 +162,8 @@ namespace ValheimMapRoutes
                 if (RouteStore.Refresh() && MapView.Get(minimap, out var corner, small: true))
                 {
                     var scale = minimap.m_pinSizeLarge > 0f ? minimap.m_pinSizeSmall / minimap.m_pinSizeLarge : 1f;
-                    DrawRoutes(minimap, corner, SmallDots, scale);
+                    // A bigger corner map is drawn scaled up, so the dots are scaled down to keep their size.
+                    DrawRoutes(minimap, corner, SmallDots, scale / CornerMap.Scale);
                 }
                 return;
             }

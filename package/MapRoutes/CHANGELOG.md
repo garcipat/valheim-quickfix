@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- `VikingMap` in `General` (off by default) puts the small map in the corner on a round, painted Viking shield. The
+  map is a little bigger and shows more of the area around you, and the status effect icons move left to make room.
+
 ## [0.3.0] - 2026-11-15
 
 ### Added
