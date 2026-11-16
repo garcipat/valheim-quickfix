@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Random sleep text (`RandomSleepText`, on by default): the sleep screen shows a random snore or sleepy mumble, such as
+  "...five more minutes, Odin..." or "Not the Bonemass... please...", instead of always "zzzZZZzzz".
+
 - Low health warning (`LowHealthWarning`, off by default): below 10% health, a thin red border pulses slowly around
   the edges of the screen.
 

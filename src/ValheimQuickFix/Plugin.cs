@@ -50,6 +50,7 @@ namespace ValheimQuickFix
         internal static ConfigEntry<bool> VisiblePlayerMarkerEnabled;
         internal static ConfigEntry<bool> LowHealthWarningEnabled;
         internal static ConfigEntry<bool> RetryWrongPasswordEnabled;
+        internal static ConfigEntry<bool> RandomSleepTextEnabled;
         internal static ConfigEntry<float> BowZoomMagnification;
         internal static ConfigEntry<float> SittingStaminaMultiplier;
         internal static ConfigEntry<float> ChopTierBonus;
@@ -282,6 +283,12 @@ namespace ValheimQuickFix
                 "RetryWrongPassword",
                 true,
                 "After a wrong server password, ask for the password again instead of going back to the menu. Press Escape (B on a gamepad) in the password box to give up and return to the menu.");
+
+            RandomSleepTextEnabled = Config.Bind(
+                "General",
+                "RandomSleepText",
+                true,
+                "When you go to bed, the sleep screen shows a random snore or sleepy mumble instead of always \"zzzZZZzzz\". The dream text afterwards is the game's own.");
 
             SittingStaminaRegenEnabled = Config.Bind(
                 "General",
