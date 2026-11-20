@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-20
+
 ### Added
 
 - `VikingMap` in `General` (off by default) puts the small map in the corner on a round, painted Viking shield. The
